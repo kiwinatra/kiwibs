@@ -1,0 +1,115 @@
+ru:
+  banner_title: "Приватный сервер v26"
+  banner_sub: "build 165"
+
+  prompt: "kiwi"
+
+  help_header: "КОМАНДЫ СЕРВЕРА"
+  help_hint: "Введи 'help' для списка команд"
+  unknown_cmd: "неизвестная команда"
+  cmd_hint: "Напиши 'help'"
+  cmd_done: "готово"
+  cmd_failed: "ошибка команды"
+
+  status_online: "Онлайн"
+  status_threads: "Потоки"
+  status_uptime: "Аптайм"
+  status_rooms: "Комнаты"
+  status_debug: "Дебаг"
+  status_lang: "Язык"
+  status_clients: "Клиенты"
+
+  no_clients: "нет клиентов онлайн"
+  no_rooms: "нет комнат"
+  clients_online: "Онлайн"
+
+  kick_ok: "кикнут"
+  kick_fail: "не удалось кикнуть"
+
+  send_ok: "пакет отправлен"
+  send_fail: "не удалось отправить"
+
+  set_ok: "поле обновлено"
+  set_fail: "не удалось обновить"
+
+  debug_on: "Дебаг включён"
+  debug_off: "Дебаг выключен"
+
+  exit_msg: "закрываю сервер..."
+  bye: "Пока!"
+  ctrl_c_disabled: "Ctrl+C отключён. Напиши 'exit' для выхода."
+
+  server_started: "Сервер запущен"
+  waiting: "Ожидание подключений..."
+
+  info_title: "Игрок"
+  rooms_title: "Комнаты"
+
+  col_id: "ID"
+  col_name: "Имя"
+  col_trophies: "Трофеи"
+  col_gold: "Голда"
+  col_gems: "Гемы"
+  col_room: "Комната"
+  col_type: "Тип"
+  col_map: "Карта"
+  col_players: "Игроков"
+  col_invites: "Инвайтов"
+
+en:
+  banner_title: "Private Server v26"
+  banner_sub: "build 165"
+
+  prompt: "kiwi"
+
+  help_header: "SERVER COMMANDS"
+  help_hint: "Type 'help' for command list"
+  unknown_cmd: "unknown command"
+  cmd_hint: "Type 'help'"
+  cmd_done: "done"
+  cmd_failed: "command failed"
+
+  status_online: "Online"
+  status_threads: "Threads"
+  status_uptime: "Uptime"
+  status_rooms: "Rooms"
+  status_debug: "Debug"
+  status_lang: "Lang"
+  status_clients: "Clients"
+
+  no_clients: "no clients online"
+  no_rooms: "no rooms"
+  clients_online: "Online"
+
+  kick_ok: "kicked"
+  kick_fail: "kick failed"
+
+  send_ok: "packet sent"
+  send_fail: "send failed"
+
+  set_ok: "field updated"
+  set_fail: "update failed"
+
+  debug_on: "Debug ON"
+  debug_off: "Debug OFF"
+
+  exit_msg: "shutting down..."
+  bye: "Bye!"
+  ctrl_c_disabled: "Ctrl+C disabled. Type 'exit' to quit."
+
+  server_started: "Server started"
+  waiting: "Waiting for connections..."
+
+  info_title: "Player"
+  rooms_title: "Rooms"
+
+  col_id: "ID"
+  col_name: "Name"
+  col_trophies: "Trophies"
+  col_gold: "Gold"
+  col_gems: "Gems"
+  col_room: "Room"
+  col_type: "Type"
+  col_map: "Map"
+  col_players: "Players"
+  col_invites: "Invites"
