@@ -42,7 +42,7 @@ class C:
 
 
 # ═══════════════════════════════════════════════════════════════
-#                     ПОДМЕНА print — обязательно рано
+#                     ПОДМЕНА print
 # ═══════════════════════════════════════════════════════════════
 
 import builtins
@@ -50,7 +50,6 @@ _orig_print = builtins.print
 
 
 def print(*args, **kwargs):
-    """print с поддержкой ANSI через prompt_toolkit."""
     sep = kwargs.pop("sep", " ")
     end = kwargs.pop("end", "\n")
     file = kwargs.pop("file", None)
@@ -112,6 +111,16 @@ def load_config():
         STRINGS = {}
 
 
+def save_config():
+    try:
+        with open("config.json", "w", encoding="utf-8") as f:
+            json.dump(CONFIG, f, indent=4, ensure_ascii=False)
+        return True
+    except Exception as e:
+        print(f"[CONFIG] failed to save config.json: {e}")
+        return False
+
+
 def t(key, default=None):
     if key in STRINGS:
         return STRINGS[key]
@@ -125,6 +134,9 @@ def t(key, default=None):
 DEBUG_ENABLED = True
 VERBOSE_HANDLERS = True
 SHUTDOWN = Event()
+
+MAINTENANCE_ACTIVE = False
+MAINTENANCE_END_TIME = 0.0
 
 START_TIME = time.time()
 
@@ -231,6 +243,15 @@ class Server:
                     client.close()
                     continue
 
+                # ─── Maintenance: не пускаем ───
+                if MAINTENANCE_ACTIVE:
+                    warn(f"Maintenance active — dropping {address[0]}")
+                    try:
+                        client.close()
+                    except Exception:
+                        pass
+                    continue
+
                 ClientThread(client, address).start()
                 Server.ThreadCount += 1
                 ok(f"Client thread started. Total: {Server.ThreadCount}")
@@ -239,6 +260,19 @@ class Server:
                 if not SHUTDOWN.is_set():
                     error(f"Accept loop error: {e}")
                     debug(traceback.format_exc())
+
+    def kick_all(self, reason="maintenance"):
+        """Закрывает все клиентские сокеты."""
+        clients = list(Server.Clients["Clients"].items())
+        if not clients:
+            return
+        info(f"Kicking {len(clients)} client(s) ({reason})...")
+        for low_id, entry in clients:
+            try:
+                entry["SocketInfo"].close()
+                debug(f"Closed socket for {low_id}")
+            except Exception as e:
+                warn(f"Failed to close {low_id}: {e}")
 
     def shutdown(self):
         info("Shutting down...")
@@ -393,6 +427,77 @@ class ClientThread(Thread):
 
 
 # ═══════════════════════════════════════════════════════════════
+#                     MAINTENANCE
+# ═══════════════════════════════════════════════════════════════
+
+def _maintenance_worker(minutes):
+    global MAINTENANCE_ACTIVE, MAINTENANCE_END_TIME
+
+    seconds = minutes * 60
+    MAINTENANCE_END_TIME = time.time() + seconds
+    MAINTENANCE_ACTIVE = True
+
+    # 1. Ставим флаг в config.json
+    CONFIG["Maintenance"] = True
+    save_config()
+    ok("config: Maintenance = true")
+
+    # 2. Кикаем всех
+    if Server.Instance:
+        Server.Instance.kick_all("maintenance start")
+
+    ok(f"Maintenance ACTIVE for {minutes} min")
+
+    # 3. Отсчёт
+    try:
+        while not SHUTDOWN.is_set():
+            remaining = MAINTENANCE_END_TIME - time.time()
+            if remaining <= 0:
+                break
+            m = int(remaining) // 60
+            s = int(remaining) % 60
+            # раз в 30 секунд — лог
+            if s % 30 == 0 and int(remaining) % 30 == 0:
+                info(f"Maintenance: {m:02d}:{s:02d} remaining")
+            time.sleep(1)
+    except Exception as e:
+        error(f"maintenance countdown failed: {e}")
+
+    # 4. Снимаем
+    if SHUTDOWN.is_set():
+        return
+    CONFIG["Maintenance"] = False
+    save_config()
+    MAINTENANCE_ACTIVE = False
+    ok("config: Maintenance = false")
+    ok("Maintenance INACTIVE — server accepting connections")
+
+
+def cmd_maintenance(*args):
+    global MAINTENANCE_ACTIVE
+
+    if MAINTENANCE_ACTIVE:
+        remaining = int(MAINTENANCE_END_TIME - time.time())
+        warn(f"maintenance already active ({remaining // 60:02d}:{remaining % 60:02d} left)")
+        return
+
+    if not args:
+        warn("usage: maintenance <minutes>")
+        return
+
+    try:
+        minutes = int(args[0])
+        if minutes <= 0:
+            raise ValueError
+    except ValueError:
+        warn(f"invalid minutes: {args[0]!r}")
+        return
+
+    Thread(target=_maintenance_worker, args=(minutes,), daemon=True).start()
+    ok(f"maintenance started: {minutes} min")
+
+
+# ═══════════════════════════════════════════════════════════════
 #                     CLI КОМАНДЫ
 # ═══════════════════════════════════════════════════════════════
 
@@ -406,9 +511,13 @@ def cmd_help(*_):
     print(f"  {C.CYAN}debug on|off{C.RESET}              — toggle debug logs")
     print(f"  {C.CYAN}verbose on|off{C.RESET}            — toggle handler logs")
     print()
+    print(f"  {C.CYAN}maintenance <minutes>{C.RESET}     — enable maintenance for N minutes")
+    print(f"  {C.CYAN}maintenance stop{C.RESET}          — cancel active maintenance")
+    print()
     print(f"  {C.CYAN}clients{C.RESET}                   — list online players")
     print(f"  {C.CYAN}info <low_id>{C.RESET}             — player details")
     print(f"  {C.CYAN}kick <low_id>{C.RESET}             — disconnect player")
+    print(f"  {C.CYAN}kickall{C.RESET}                   — disconnect all players")
     print()
     print(f"  {C.CYAN}rooms{C.RESET}                     — list active rooms")
     print()
@@ -536,6 +645,12 @@ def cmd_kick(*args):
         error(f"{t('kick_fail','kick failed')}: {e}")
 
 
+def cmd_kickall(*_):
+    if Server.Instance:
+        Server.Instance.kick_all("manual kickall")
+        ok("all clients kicked")
+
+
 def cmd_rooms(*_):
     if not Helpers.rooms:
         info(t('no_rooms','no rooms'))
@@ -657,9 +772,11 @@ COMMANDS = {
     'reload': cmd_reload,
     'debug': cmd_debug,
     'verbose': cmd_verbose,
+    'maintenance': cmd_maintenance,
     'clients': cmd_clients,
     'info': cmd_info,
     'kick': cmd_kick,
+    'kickall': cmd_kickall,
     'rooms': cmd_rooms,
     'send': cmd_send,
     'sendall': cmd_sendall,
