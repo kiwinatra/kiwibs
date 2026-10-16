@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="SupercellIdTabButtonLinearLayout">
+        <item name="android:gravity">center</item>
+        <item name="android:orientation">vertical</item>
+        <item name="android:paddingTop">16.0dip</item>
+        <item name="android:paddingBottom">12.0dip</item>
+    </style>
+    <style name="SupercellIdTabButtonTextView" parent="@style/SupercellEllipsizeTextView">
+        <item name="android:textSize">@dimen/XS</item>
+        <item name="android:gravity">center</item>
+        <item name="android:layout_marginTop">4.0dip</item>
+        <item name="android:minHeight">@dimen/XL</item>
+        <item name="android:lines">1</item>
+        <item name="android:textAlignment">center</item>
+    </style>
+</resources>

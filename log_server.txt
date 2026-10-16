@@ -1,0 +1,14 @@
+[PLAYER] Pins loaded: 22
+[PLAYER] CSV loaded: 35 brawlers, 171 skins, 125 SPG
+[90m[19:30:28][0m [36m[INFO ][0m [36m[1mBrawlStars-like Server[0m starting...[0m 
+[90m[19:30:28][0m [90m[DEBUG][0m [90mDebug mode: [32mON[0m[0m 
+[90m[19:30:28][0m [90m[DEBUG][0m [90mServer object created → 0.0.0.0:2556[0m 
+[90m[19:30:28][0m [90m[DEBUG][0m [90mBinding socket...[0m 
+[90m[19:30:28][0m [32m[ OK  ][0m [32mServer | Lobby started!  [37m0.0.0.0:2556[0m[0m 
+[90m[19:30:28][0m [32m[ OK  ][0m [32mServer | Battle started! [37m0.0.0.0:6969[0m[0m 
+[90m[19:30:28][0m [90m[DEBUG][0m [90mOpening DB: database/Player/plr.db[0m 
+[90m[19:30:28][0m [34m[  DB ][0m [34mEnsuring table 'plrs' exists...[0m 
+[90m[19:30:28][0m [34m[  DB ][0m [34mResetting roomID=0, online=0 for all players...[0m 
+[90m[19:30:28][0m [32m[ OK  ][0m [32mDB reset complete[0m 
+[90m[19:30:28][0m [36m[INFO ][0m [36mWaiting for connections...[0m 
+[90m[19:30:30][0m [33m[WARN ][0m [33mServer shutdown requested (Ctrl+C)[0m 

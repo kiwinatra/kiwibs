@@ -1,0 +1,62 @@
+.class final Lcom/kakaogame/KGPush$5;
+.super Ljava/lang/Object;
+.source "KGPush.java"
+
+# interfaces
+.implements Lcom/kakaogame/broker/InterfaceBrokerHandler$InterfaceBroker;
+
+
+# direct methods
+.method constructor <init>()V
+    .locals 0
+
+    .line 299
+    invoke-direct {p0}, Ljava/lang/Object;-><init>()V
+
+    return-void
+.end method
+
+
+# virtual methods
+.method public final request(Landroid/app/Activity;Lcom/kakaogame/broker/InterfaceBrokerHandler$InterfaceRequest;)Lcom/kakaogame/KGResult;
+    .locals 1
+    .annotation system Ldalvik/annotation/Signature;
+        value = {
+            "(",
+            "Landroid/app/Activity;",
+            "Lcom/kakaogame/broker/InterfaceBrokerHandler$InterfaceRequest;",
+            ")",
+            "Lcom/kakaogame/KGResult<",
+            "*>;"
+        }
+    .end annotation
+
+    const-string p1, "pushOption"
+
+    .line 302
+    invoke-virtual {p2, p1}, Lcom/kakaogame/broker/InterfaceBrokerHandler$InterfaceRequest;->getParameter(Ljava/lang/String;)Ljava/lang/Object;
+
+    move-result-object p1
+
+    check-cast p1, Ljava/lang/String;
+
+    const-string v0, "enable"
+
+    .line 303
+    invoke-virtual {p2, v0}, Lcom/kakaogame/broker/InterfaceBrokerHandler$InterfaceRequest;->getParameter(Ljava/lang/String;)Ljava/lang/Object;
+
+    move-result-object p2
+
+    check-cast p2, Ljava/lang/Boolean;
+
+    invoke-virtual {p2}, Ljava/lang/Boolean;->booleanValue()Z
+
+    move-result p2
+
+    .line 305
+    invoke-static {p1, p2}, Lcom/kakaogame/KGPush;->access$000(Ljava/lang/String;Z)Lcom/kakaogame/KGResult;
+
+    move-result-object p1
+
+    return-object p1
+.end method

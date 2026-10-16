@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="sdk_logout_button_text_size">13.0sp</dimen>
+    <dimen name="sdk_logout_dialog_width">300.0dip</dimen>
+    <dimen name="sdk_logout_idp_icon_margin_right">6.0dip</dimen>
+    <dimen name="sdk_logout_title_text_size">22.0sp</dimen>
+</resources>

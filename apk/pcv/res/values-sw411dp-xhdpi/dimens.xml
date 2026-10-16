@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="sdk_login_big_title_text_size">20.0sp</dimen>
+    <dimen name="sdk_login_button_bottom_margin">14.0dip</dimen>
+    <dimen name="sdk_login_exit_side_margin">9.0dip</dimen>
+    <dimen name="sdk_login_exit_size">23.0dip</dimen>
+    <dimen name="sdk_login_idp_icon_size">21.0dip</dimen>
+    <dimen name="sdk_login_idp_name_text_padding">10.0dip</dimen>
+    <dimen name="sdk_login_idp_name_text_size">13.0sp</dimen>
+    <dimen name="sdk_login_land_ryan_height">155.0dip</dimen>
+    <dimen name="sdk_login_land_ryan_width">180.0dip</dimen>
+    <dimen name="sdk_login_land_side_margin">24.0dip</dimen>
+    <dimen name="sdk_login_middle_title_text_size">12.0sp</dimen>
+    <dimen name="sdk_login_port_ryan_height">100.0dip</dimen>
+    <dimen name="sdk_login_port_ryan_width">142.0dip</dimen>
+    <dimen name="sdk_login_title_bottom_margin">10.0dip</dimen>
+    <dimen name="sdk_login_button_bottom_margin_lgview">30.0dip</dimen>
+</resources>

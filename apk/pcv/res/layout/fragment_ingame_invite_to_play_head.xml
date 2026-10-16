@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout android:layout_width="fill_parent" android:layout_height="fill_parent"
+  xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
+    <LinearLayout android:gravity="center_vertical" android:orientation="horizontal" android:layout_width="fill_parent" android:layout_height="fill_parent">
+        <Space android:layout_width="@dimen/list_padding_horizontal" android:layout_height="0.0dip" />
+        <ImageView android:layout_gravity="center" android:layout_width="wrap_content" android:layout_height="wrap_content" srcKey="id_logo_black.png" />
+        <Space android:layout_width="10.0dip" android:layout_height="0.0dip" />
+        <TextView android:textSize="@dimen/S" android:textColor="@color/black" android:gravity="start|center" android:layout_width="0.0dip" android:layout_height="fill_parent" android:lines="1" android:singleLine="true" android:layout_weight="1.0" android:textAllCaps="true" android:textAlignment="viewStart" fontPath="fonts/SupercellTextAndroid_ACorp_Bd.ttf" style="@style/SupercellEllipsizeTextView" textKey="ingame_invite_to_play_heading" />
+        <ImageButton android:layout_gravity="end" android:id="@id/head_close_button" android:background="@null" android:layout_width="57.0dip" android:layout_height="fill_parent" android:scaleType="centerInside" android:tint="@color/black" app:audioEffect="BUTTON_01" app:srcCompat="@drawable/cross" />
+    </LinearLayout>
+    <View android:layout_gravity="bottom" android:background="@color/gray91" android:layout_width="fill_parent" android:layout_height="2.0dip" />
+</FrameLayout>

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:clipChildren="false" android:clipToPadding="false" android:layout_width="fill_parent" android:layout_height="wrap_content" style="@style/SupercellIdTabButtonLinearLayout"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <include layout="@layout/tab_icon" />
+    <TextView android:textColor="@color/black" android:id="@id/tab_title" android:layout_width="wrap_content" android:layout_height="wrap_content" android:lines="1" android:singleLine="true" android:textAllCaps="true" fontPath="fonts/SupercellTextAndroid_ACorp_Bd.ttf" style="@style/SupercellIdTabButtonTextView" />
+</LinearLayout>

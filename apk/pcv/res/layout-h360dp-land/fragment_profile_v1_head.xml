@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout android:id="@id/root" android:clipChildren="false" android:clipToPadding="false" android:layout_width="fill_parent" android:layout_height="fill_parent"
+  xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
+    <View android:layout_gravity="end" android:background="@drawable/profile_shadow" android:layout_width="@dimen/head_shadow_width" android:layout_height="fill_parent" android:layout_marginLeft="0.0dip" android:layout_marginRight="@dimen/head_shadow_margin_end" android:layout_marginStart="0.0dip" android:layout_marginEnd="@dimen/head_shadow_margin_end" />
+    <LinearLayout android:orientation="vertical" android:id="@id/content" android:clipChildren="false" android:clipToPadding="false" android:layout_width="fill_parent" android:layout_height="fill_parent">
+        <FrameLayout android:id="@id/blueArea" android:clipChildren="false" android:layout_width="fill_parent" android:layout_height="0.0dip" android:layout_weight="1.0">
+            <RelativeLayout android:layout_gravity="center_vertical" android:layout_width="fill_parent" android:layout_height="130.0dip">
+                <ImageView android:id="@id/imageView" android:paddingLeft="32.0dip" android:paddingRight="32.0dip" android:layout_width="fill_parent" android:layout_height="28.0dip" android:scaleType="centerInside" app:insetSystemWindow="start" srcKey="supercell_id_logo_white.png" />
+                <FrameLayout android:id="@id/checkmarkstripStartGuide" android:visibility="invisible" android:layout_width="wrap_content" android:layout_height="0.0dip" android:layout_alignParentStart="true" app:insetSystemWindow="start" />
+                <ImageView android:layout_width="fill_parent" android:layout_height="@dimen/check_mark_strip_check_mark_size" android:scaleType="fitXY" android:layout_alignLeft="@id/checkmarkstripStartGuide" android:layout_alignRight="@id/checkmarkstripStartGuide" android:layout_centerVertical="true" app:srcCompat="@drawable/checkmarkstrip_left_line" />
+                <include android:id="@id/checkmarkstrip" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_centerVertical="true" android:layout_toEndOf="@id/checkmarkstripStartGuide" layout="@layout/layout_checkmarkstrip" />
+                <TextView android:textSize="@dimen/XXS" android:textColor="@color/white" android:gravity="center" android:id="@id/loggedInLabel" android:paddingLeft="16.0dip" android:paddingRight="16.0dip" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_marginBottom="22.0dip" android:layout_alignParentBottom="true" android:lineSpacingMultiplier="1.2" android:alpha="0.5" android:textAllCaps="true" app:insetSystemWindow="start" textKey="account_heading" />
+                <TextView android:textSize="@dimen/XS" android:textColor="@color/white" android:ellipsize="end" android:gravity="center" android:id="@id/emailTextView" android:paddingLeft="16.0dip" android:paddingRight="16.0dip" android:layout_width="fill_parent" android:layout_height="wrap_content" android:lines="1" android:layout_alignParentBottom="true" android:lineSpacingMultiplier="1.2" app:insetSystemWindow="start" />
+            </RelativeLayout>
+        </FrameLayout>
+        <FrameLayout android:id="@id/head_tab_bar" android:layout_width="fill_parent" android:layout_height="150.0dip">
+            <View android:id="@id/head_tab_bar_background" android:background="@color/gray95" android:layout_width="fill_parent" android:layout_height="fill_parent" />
+            <include android:id="@id/head_tab_my_games" android:layout_width="fill_parent" android:layout_height="75.0dip" layout="@layout/tab_button" />
+            <include android:id="@id/head_tab_settings" android:layout_width="fill_parent" android:layout_height="75.0dip" android:layout_marginTop="75.0dip" layout="@layout/tab_button" />
+        </FrameLayout>
+        <FrameLayout android:id="@id/navigation_bar_background" android:background="@color/gray95" android:layout_width="fill_parent" android:layout_height="wrap_content" app:insetSystemWindow="bottom" app:insetSystemWindowUsingParent="@id/head" />
+    </LinearLayout>
+</FrameLayout>

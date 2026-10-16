@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout android:paddingLeft="@dimen/list_padding_horizontal" android:paddingRight="@dimen/list_padding_horizontal" android:clipChildren="false" android:clipToPadding="false" android:layout_width="fill_parent" android:layout_height="wrap_content"
+  xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
+    <LinearLayout android:orientation="horizontal" android:id="@id/profileAccountView" android:background="@drawable/list_container" android:layout_width="fill_parent" android:layout_height="@dimen/list_item_row_height" android:layout_marginTop="12.0dip" app:animateOnPress="SCALE" app:audioEffect="BUTTON_01" app:dropShadow="true">
+        <ImageView android:layout_gravity="center_vertical" android:id="@id/avatarImageView" android:layout_width="@dimen/friend_icon_size" android:layout_height="@dimen/friend_icon_size" android:layout_marginLeft="@dimen/list_item_image_horizontal_margin" android:layout_marginRight="@dimen/list_item_image_horizontal_margin" />
+        <LinearLayout android:layout_gravity="start|center" android:orientation="vertical" android:layout_width="0.0dip" android:layout_height="wrap_content" android:layout_weight="1.0">
+            <TextView android:textSize="@dimen/M" android:textColor="@color/black" android:gravity="start" android:id="@id/profileName" android:layout_width="wrap_content" android:layout_height="wrap_content" android:lines="1" android:singleLine="true" android:textAlignment="viewStart" style="@style/SupercellEllipsizeTextView" />
+            <LinearLayout android:orientation="horizontal" android:id="@id/systemNicknameContainer" android:layout_width="wrap_content" android:layout_height="wrap_content">
+                <ImageView android:layout_gravity="center_vertical" android:id="@id/gameIconView" android:layout_width="@dimen/ingame_friend_list_game_icon_size" android:layout_height="@dimen/ingame_friend_list_game_icon_size" />
+                <TextView android:textSize="@dimen/XXS" android:textColor="@color/gray67" android:gravity="start|center" android:layout_gravity="start" android:id="@id/systemNicknameLabel" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginLeft="4.0dip" android:minHeight="@dimen/friend_list_game_icon_size" android:lines="1" android:singleLine="true" android:textAlignment="viewStart" android:layout_marginStart="4.0dip" />
+            </LinearLayout>
+            <TextView android:textSize="@dimen/XXS" android:textColor="@color/gray67" android:layout_gravity="start" android:id="@id/systemLevelLabel" android:layout_width="wrap_content" android:layout_height="wrap_content" android:lines="1" android:singleLine="true" android:textAlignment="viewStart" style="@style/SupercellEllipsizeTextView" />
+        </LinearLayout>
+        <View android:background="@color/gray95" android:layout_width="1.0dip" android:layout_height="fill_parent" android:layout_marginTop="12.0dip" android:layout_marginBottom="12.0dip" />
+        <ImageView android:id="@id/deleteAccountButton" android:layout_width="58.0dip" android:layout_height="fill_parent" android:scaleType="center" app:audioEffect="BUTTON_01" app:srcCompat="@drawable/cross_profile_selector" />
+    </LinearLayout>
+</FrameLayout>

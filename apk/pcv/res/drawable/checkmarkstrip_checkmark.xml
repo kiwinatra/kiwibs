@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector android:name="vector" android:height="38.0dip" android:width="50.0dip" android:viewportWidth="50.0" android:viewportHeight="38.0"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <group android:name="checkmarkGroup" android:pivotX="25.0" android:pivotY="19.0">
+        <path android:name="checkmark" android:pathData="M16,19.1223053 L22.5172572,25.6395625 35.3502543,13" android:strokeColor="@color/white" android:strokeWidth="3.0" />
+    </group>
+</vector>

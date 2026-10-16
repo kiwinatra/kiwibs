@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout android:layout_width="fill_parent" android:layout_height="fill_parent"
+  xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
+    <ScrollView android:id="@id/scrollView" android:background="@color/gray95" android:clipToPadding="false" android:layout_width="fill_parent" android:layout_height="fill_parent" style="@style/SupercellIdTheme.ScrollView">
+        <LinearLayout android:orientation="vertical" android:paddingLeft="@dimen/list_padding_horizontal" android:paddingTop="@dimen/list_padding_vertical" android:paddingRight="@dimen/list_padding_horizontal" android:paddingBottom="@dimen/list_padding_vertical" android:clipChildren="false" android:clipToPadding="false" android:layout_width="fill_parent" android:layout_height="wrap_content" app:insetSystemWindow="bottom" app:insetSystemWindowUsingParent="@id/body">
+            <include android:layout_width="fill_parent" android:layout_height="265.0dip" layout="@layout/fragment_invite_friends_my_code" />
+            <include android:layout_width="fill_parent" android:layout_height="@dimen/add_friends_list_item_button_row_height" android:layout_marginTop="10.0dip" layout="@layout/fragment_invite_friends_scan_code" />
+            <Space android:layout_width="0.0dip" android:layout_height="10.0dip" />
+            <include android:layout_width="fill_parent" android:layout_height="@dimen/add_friends_list_item_button_row_height" layout="@layout/fragment_invite_friends_share" />
+            <Space android:layout_width="0.0dip" android:layout_height="10.0dip" />
+            <include android:layout_width="fill_parent" android:layout_height="@dimen/add_friends_list_item_button_row_height" layout="@layout/fragment_invite_friends_friend_requests" />
+        </LinearLayout>
+    </ScrollView>
+    <View android:background="@drawable/drop_shadow" android:layout_width="fill_parent" android:layout_height="10.0dip" />
+</FrameLayout>

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item type="integer" name="id_icon_scale">0.8</item>
+    <item type="integer" name="public_profile_status_button_vertical_bias">0.25</item>
+    <item type="integer" name="tab_icon_scale">0.72</item>
+</resources>

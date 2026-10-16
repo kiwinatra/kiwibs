@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout android:clipChildren="false" android:layout_width="fill_parent" android:layout_height="wrap_content"
+  xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
+    <LinearLayout android:orientation="horizontal" android:id="@id/systemRowView" android:background="@color/white" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_marginLeft="@dimen/list_padding_horizontal" android:layout_marginRight="@dimen/list_padding_horizontal" android:minHeight="@dimen/list_item_row_height" app:audioEffect="BUTTON_01">
+        <ImageView android:layout_gravity="center_vertical" android:id="@id/systemImageView" android:layout_width="@dimen/connected_game_icon_size" android:layout_height="@dimen/connected_game_icon_size" android:layout_marginLeft="@dimen/list_item_image_horizontal_margin" android:layout_marginRight="@dimen/list_item_image_horizontal_margin" />
+        <LinearLayout android:layout_gravity="center_vertical" android:orientation="vertical" android:layout_width="0.0dip" android:layout_height="wrap_content" android:layout_weight="1.0">
+            <TextView android:textSize="@dimen/M" android:textColor="@color/black" android:layout_gravity="start" android:id="@id/systemNameLabel" android:layout_width="wrap_content" android:layout_height="wrap_content" />
+            <TextView android:textSize="@dimen/XXS" android:textColor="@color/gray67" android:gravity="start|center" android:layout_gravity="start" android:id="@id/systemNicknameLabel" android:layout_width="wrap_content" android:layout_height="wrap_content" android:lines="1" android:singleLine="true" android:textAlignment="viewStart" />
+            <TextView android:textSize="@dimen/XXS" android:textColor="@color/gray67" android:layout_gravity="start" android:id="@id/systemLevelLabel" android:layout_width="wrap_content" android:layout_height="wrap_content" android:lines="1" android:singleLine="true" android:textAlignment="viewStart" />
+        </LinearLayout>
+        <Space android:layout_width="@dimen/row_button_horizontal_padding" android:layout_height="0.0dip" />
+        <ImageView android:layout_gravity="center_vertical" android:id="@id/checkmark" android:visibility="gone" android:layout_width="@dimen/connected_game_checkmark_size" android:layout_height="@dimen/connected_game_checkmark_size" android:scaleType="fitCenter" app:srcCompat="@drawable/checkmarkcircle" />
+        <com.supercell.id.view.WidthAdjustingMultilineButton android:layout_gravity="center_vertical" android:id="@id/installButton" style="@style/SupercellIdButtonPrimary.Row" textKey="account_games_info_play" />
+        <Space android:layout_width="@dimen/list_padding_horizontal" android:layout_height="0.0dip" />
+    </LinearLayout>
+</FrameLayout>

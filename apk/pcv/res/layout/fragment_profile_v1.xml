@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout android:background="@color/gray95" android:clipChildren="false" android:layout_width="fill_parent" android:layout_height="fill_parent"
+  xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
+    <android.support.v4.view.RtlViewPager android:id="@id/tab_pager" android:background="@color/gray95" android:layout_width="fill_parent" android:layout_height="0.0dip" android:layout_marginTop="-12.0dip" android:layout_below="@id/tabs" android:layout_alignParentBottom="true" app:transitionDuration="200" style="@style/SupercellIdTheme.ViewPager" />
+    <LinearLayout android:orientation="horizontal" android:id="@id/tabs" android:background="@drawable/tab_bar_background" android:paddingTop="1.0dip" android:paddingBottom="@dimen/floating_element_thickness" android:clipChildren="false" android:clipToPadding="false" android:layout_width="fill_parent" android:layout_height="wrap_content" android:baselineAligned="false" app:dropShadow="true">
+        <include android:id="@id/tabMyGames" android:layout_width="0.0dip" android:layout_height="fill_parent" android:layout_weight="1.0" layout="@layout/tab_button" />
+        <include android:id="@id/tabSettings" android:layout_width="0.0dip" android:layout_height="fill_parent" android:layout_weight="1.0" layout="@layout/tab_button" />
+    </LinearLayout>
+</RelativeLayout>

@@ -1,0 +1,28 @@
+.class public Lcom/helpshift/l/g;
+.super Lcom/helpshift/common/c/l;
+.source "UIThreadDelegateDecorator.java"
+
+
+# instance fields
+.field final synthetic a:Lcom/helpshift/l/c;
+
+
+# direct methods
+.method public constructor <init>(Lcom/helpshift/l/c;)V
+    .locals 0
+
+    .line 57
+    iput-object p1, p0, Lcom/helpshift/l/g;->a:Lcom/helpshift/l/c;
+
+    invoke-direct {p0}, Lcom/helpshift/common/c/l;-><init>()V
+
+    return-void
+.end method
+
+
+# virtual methods
+.method public final a()V
+    .locals 0
+
+    return-void
+.end method

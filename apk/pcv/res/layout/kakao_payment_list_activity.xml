@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:orientation="vertical" android:id="@id/title_layout" android:layout_width="fill_parent" android:layout_height="fill_parent"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <RelativeLayout android:id="@id/payment_top_bar" android:background="@color/payment_header" android:layout_width="fill_parent" android:layout_height="@dimen/action_bar_height">
+        <Button android:textSize="19.0sp" android:textColor="#b2ffffff" android:id="@id/payment_list_right_close_button" android:background="@color/transparent" android:visibility="visible" android:layout_width="@dimen/action_bar_item_width" android:layout_height="@dimen/action_bar_height" android:layout_marginBottom="5.0dip" android:text="@string/close" android:layout_alignParentRight="true" android:layout_alignParentBottom="true" android:contentDescription="@string/close_button" />
+        <TextView android:textSize="19.0sp" android:textStyle="bold" android:textColor="@color/white" android:id="@id/payment_list_title_text" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginBottom="17.0dip" android:text="@string/payment_list" android:layout_alignParentBottom="true" android:layout_centerHorizontal="true" />
+    </RelativeLayout>
+    <FrameLayout android:layout_width="fill_parent" android:layout_height="fill_parent">
+        <ProgressBar android:id="@id/payment_list_progress" android:visibility="gone" android:layout_width="fill_parent" android:layout_height="2.0dip" android:max="100" style="?android:progressBarStyleHorizontal" />
+        <WebView android:id="@id/payment_list_webview" android:layout_width="fill_parent" android:layout_height="fill_parent" />
+    </FrameLayout>
+</LinearLayout>

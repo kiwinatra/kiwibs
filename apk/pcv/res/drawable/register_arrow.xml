@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector android:name="vector" android:height="@dimen/authentication_register_now_arrow_size" android:width="@dimen/authentication_register_now_arrow_size" android:viewportWidth="14.0" android:viewportHeight="14.0"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <path android:name="pathData" android:pathData="M5,1 L9,5.5 5,10" android:strokeColor="@color/text_blue" android:strokeWidth="1.5" />
+</vector>

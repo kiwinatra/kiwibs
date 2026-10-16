@@ -1,0 +1,368 @@
+from Utils.Writer import Writer
+from database.DataBase import DataBase
+from Logic.Shop import Shop
+import json
+from datetime import datetime
+from Server.Club.AllianceDataMessage import AllianceDataMessage
+from Server.Home.LogicNotificationMessage import LogicNotificationMessage
+
+
+class OwnHomeDataMessage(Writer):
+
+    def __init__(self, client, player):
+        super().__init__(client)
+        self.id = 24101
+        self.player = player
+        self.timestamp = int(datetime.timestamp(datetime.now()))
+
+    def encode(self):
+        DataBase.loadAccount(self)
+
+        self.writeVint(self.timestamp)
+        self.writeVint(self.timestamp)
+
+        self.writeVint(self.player.trophies)
+        self.writeVint(self.player.highest_trophies)
+        self.writeVint(self.player.highest_trophies)
+        self.writeVint(self.player.Troproad)
+        self.writeVint(220 + self.player.player_experience)
+        self.writeScId(28, self.player.profile_icon)
+        self.writeScId(43, self.player.name_color)
+
+        self.writeVint(0)  # array
+
+        # Selected Skins array
+        self.writeVint(1)
+        self.writeVint(29)
+        self.writeVint(self.player.skin_id)
+
+        # === Unlocked Skins array ===
+        unlocked_skins_list = self.player.UnlockedSkins
+        if isinstance(unlocked_skins_list, dict):
+            unlocked_skins_list = [int(k) for k, v in unlocked_skins_list.items() if v]
+        self.writeVint(len(unlocked_skins_list))
+        for skin_id in unlocked_skins_list:
+            self.writeScId(29, int(skin_id))
+
+        self.writeVint(0)  # array
+        self.writeVint(0)
+        self.writeVint(0)
+        self.writeVint(0)
+
+        self.writeBoolean(False)
+        self.writeVint(1)
+        self.writeBoolean(True)
+
+        self.writeVint(0)
+        self.writeVint(172800)
+        self.writeVint(172800)
+        self.writeVint(172800)
+
+        self.writeVint(0)
+        self.writeVint(0)
+        self.writeVint(0)  # array
+
+        self.writeByte(8)
+
+        self.writeBoolean(True)
+        self.writeBoolean(True)
+        self.writeBoolean(True)
+
+        self.writeVint(0)
+        self.writeVint(0)
+
+        # === Shop Array ===
+        try:
+            Shop.EncodeShopOffers(self)
+        except Exception as e:
+            print(f"[HOME] Shop error: {e}")
+            self.writeVint(0)  # Shop Array End
+
+        self.writeVint(0)  # array
+        self.writeVint(0)
+        self.writeVint(0)
+        self.writeVint(0)  # array
+
+        self.writeVint(self.player.tickets)
+        self.writeVint(0)
+        self.writeScId(16, self.player.brawler_id)
+
+        self.writeString("BY")
+        self.writeString(f"{self.player.ccc}")
+
+        # Animation ID
+        if self.player.bet != 0:
+            self.writeVint(1)
+            self.writeInt(4)
+            if self.player.bet < 0:
+                self.writeInt(0)
+            else:
+                self.writeInt(self.player.bet)
+        else:
+            self.writeVint(0)
+
+        self.writeVint(0)
+        self.writeVint(0)
+        self.writeVint(0)
+
+        self.writeBoolean(False)
+
+        self.writeVint(2019049)
+
+        self.writeVint(100)
+        self.writeVint(10)
+
+        self.writeVint(30)
+        self.writeVint(3)
+        self.writeVint(80)
+        self.writeVint(10)
+
+        self.writeVint(50)
+        self.writeVint(1000)
+
+        self.writeVint(500)
+        self.writeVint(50)
+        self.writeVint(999900)
+
+        self.writeVint(0)  # array
+        self.writeVint(8)  # array
+
+        self.writeVint(1)
+        self.writeVint(2)
+        self.writeVint(3)
+        self.writeVint(4)
+        self.writeVint(5)
+        self.writeVint(6)
+        self.writeVint(7)
+        self.writeVint(8)
+
+        # === Logic Events ===
+        self.writeVint(2)
+
+        self.writeVint(1)
+        self.writeVint(1)
+        self.writeVint(0)
+        self.writeVint(86400)
+        self.writeVint(0)
+        self.writeScId(15, 24)
+
+        self.writeVint(3)
+        self.writeString()
+        self.writeVint(0)
+        self.writeVint(0)
+        self.writeVint(0)
+        self.writeBoolean(False)
+        self.writeVint(0)
+        self.writeVint(0)
+
+        self.writeVint(2)
+        self.writeVint(2)
+        self.writeVint(0)
+        self.writeVint(86400)
+
+        self.writeVint(0)
+        self.writeScId(15, 32)
+
+        self.writeVint(3)
+        self.writeString()
+        self.writeVint(0)
+        self.writeVint(0)
+        self.writeVint(0)
+
+        self.writeBoolean(False)
+        self.writeVint(0)
+        self.writeVint(0)
+
+        self.writeVint(0)  # array
+
+        # === Logic Shop (цены) ===
+        self.writeVint(8)
+        self.writeVint(20)
+        self.writeVint(35)
+        self.writeVint(75)
+        self.writeVint(140)
+        self.writeVint(290)
+        self.writeVint(480)
+        self.writeVint(800)
+        self.writeVint(1250)
+
+        self.writeVint(8)
+        self.writeVint(1)
+        self.writeVint(2)
+        self.writeVint(3)
+        self.writeVint(4)
+        self.writeVint(5)
+        self.writeVint(10)
+        self.writeVint(15)
+        self.writeVint(20)
+
+        self.writeVint(3)
+        self.writeVint(10)
+        self.writeVint(30)
+        self.writeVint(80)
+
+        self.writeVint(3)
+        self.writeVint(6)
+        self.writeVint(20)
+        self.writeVint(60)
+
+        self.writeVint(1)
+        self.writeVint(10)
+
+        self.writeVint(1)
+        self.writeVint(1337)
+
+        self.writeVint(2)
+        self.writeVint(200)
+        self.writeVint(20)
+
+        self.writeVint(8640)
+        self.writeVint(10)
+        self.writeVint(5)
+        self.writeVint(6)
+        self.writeVint(50)
+        self.writeVint(604800)
+        self.writeBoolean(True)
+
+        self.writeVint(0)  # array
+
+        self.writeVint(1)  # Menu Theme
+        self.writeInt(1)
+        self.writeInt(41000000 + self.player.theme)
+
+        self.writeVint(0)  # array
+
+        self.writeInt(0)
+        self.writeInt(1)
+        self.writeVint(1)  # array
+
+        # === Custom Support Message Notification ===
+        self.writeVint(81)
+        self.writeInt(1)
+        self.writeBoolean(False)
+        self.writeInt(0)
+        self.writeString(f"Добро пожlаловать в <c8bfd28>k<c68b51>i<c45f97a>wi<c22f7a3> <c09f5cc>b<c00f5cc>r<c19f7a3>a<c33f97a>w<c4cfb51>l</c>!\nbeta test id: <c57fa66>{self.player.low_id}</c>\nРазраб: санек\nверсия:  <c82fc33>b<c57fa66>e<c2bf799>t<c00f5cc>a<c20f799>t<c40fa66>e<c60fc33>s<c80ff00>t</c>-5.73\n")
+        self.writeVint(0)
+        # === Custom Support Message Notification End ===
+
+        self.writeVint(1)
+        self.writeBoolean(True)
+
+        self.writeVint(0)
+        self.writeVint(0)
+
+        self.writeVint(0)
+        self.writeVint(self.player.low_id)
+        self.writeVint(0)
+        self.writeVint(self.player.low_id)
+
+        self.writeVint(0)
+        self.writeVint(self.player.low_id)
+
+        if self.player.name == "VBC26":
+            self.writeString("VBC26")
+            self.writeVint(0)
+        else:
+            self.writeString(f"{self.player.name}")
+            self.writeVint(1)
+
+        self.writeInt(0)
+        self.writeVint(8)
+
+        # === Unlocked Brawlers & Resources array ===
+        self.writeVint(len(self.player.brawlers_card_id) + 4)
+
+        index = 0
+        for unlock_id in self.player.brawlers_card_id:
+            self.writeScId(23, unlock_id)
+            self.writeVint(1)
+            index += 1
+
+        self.writeVint(5)
+        self.writeVint(1)
+        self.writeVint(self.player.box)
+
+        self.writeVint(5)
+        self.writeVint(8)
+        self.writeVint(self.player.gold)
+
+        self.writeVint(5)
+        self.writeVint(9)
+        self.writeVint(self.player.bigbox)
+
+        self.writeVint(5)
+        self.writeVint(10)
+        self.writeVint(self.player.starpoints)
+
+        # === Brawlers Trophies array ===
+        self.writeVint(len(self.player.brawlers_trophies))
+        for brawler_id in self.player.brawlers_trophies:
+            self.writeScId(16, int(brawler_id))
+            self.writeVint(self.player.brawlers_trophies[brawler_id])
+
+        # === Brawlers Trophies for Rank array ===
+        self.writeVint(len(self.player.brawlers_trophies))
+        for brawler_id in self.player.brawlers_trophies:
+            self.writeScId(16, int(brawler_id))
+            self.writeVint(self.player.brawlers_trophies[brawler_id])
+
+        self.writeVint(0)  # array
+
+        # === Brawlers Upgrade Points array ===
+        self.writeVint(len(self.player.brawlerPoints))
+        for brawler_id in self.player.brawlerPoints:
+            self.writeScId(16, int(brawler_id))
+            self.writeVint(self.player.brawlerPoints[brawler_id])
+
+        # === Brawlers Power Level array ===
+        self.writeVint(len(self.player.brawlerPowerLevel))
+        for brawler_id in self.player.brawlerPowerLevel:
+            self.writeScId(16, int(brawler_id))
+            self.writeVint(self.player.brawlerPowerLevel[brawler_id])
+
+        # === Gadgets and Star Powers array ===
+        self.writeVint(len(self.player.brawlers_spg))
+        for spg_id in self.player.brawlers_spg:
+            self.writeScId(23, spg_id)
+            self.writeVint(1)
+
+        # === "new" Brawler Tag array ===
+        self.writeVint(0)
+
+        self.writeVint(self.player.gems)
+        self.writeVint(self.player.gems)
+        self.writeVint(0)
+        self.writeVint(0)
+        self.writeVint(0)
+        self.writeVint(0)
+        self.writeVint(0)
+        self.writeVint(0)
+        self.writeVint(0)
+        self.writeVint(0)
+        self.writeVint(0)
+        self.writeVint(2)
+        self.writeVint(1585502369)
+
+        DataBase.replaceValue(self, 'online', 2)
+
+        if self.player.gold < 0:
+            self.player.gold = 0
+            DataBase.replaceValue(self, 'gold', self.player.gold)
+        if self.player.gems < 0:
+            self.player.gems = 0
+            DataBase.replaceValue(self, 'gems', self.player.gems)
+
+        if self.player.vip == 0:
+            config = open('config.json', 'r')
+            content = config.read()
+            settings = json.loads(content)
+            if self.player.low_id in settings['vips']:
+                DataBase.replaceValue(self, 'vip', 1)
+
+        if self.player.club_low_id > 0:
+            AllianceDataMessage(self.client, self.player, 0, self.player.club_low_id).send()
+
+        # в OwnHomeDataMessage.encode(), перед вызовом LogicNotificationMessage:
+        print("[FLOATER] sending...")
+	LogicNotificationMessage(self.client, self.player, "Привет!", 0).send()
+	print("[FLOATER] sent")

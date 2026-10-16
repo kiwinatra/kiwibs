@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<animated-vector android:drawable="@drawable/checkmarkstrip_circle"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <target android:name="circleTop" android:animation="@animator/checkmarkstrip_circle_animate" />
+    <target android:name="circleBottom" android:animation="@animator/checkmarkstrip_circle_animate" />
+</animated-vector>

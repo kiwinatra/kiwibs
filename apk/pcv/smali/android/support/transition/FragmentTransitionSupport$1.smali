@@ -1,0 +1,35 @@
+.class Landroid/support/transition/FragmentTransitionSupport$1;
+.super Landroid/support/transition/Transition$EpicenterCallback;
+.source "FragmentTransitionSupport.java"
+
+
+# instance fields
+.field final synthetic this$0:Landroid/support/transition/FragmentTransitionSupport;
+
+.field final synthetic val$epicenter:Landroid/graphics/Rect;
+
+
+# direct methods
+.method constructor <init>(Landroid/support/transition/FragmentTransitionSupport;Landroid/graphics/Rect;)V
+    .locals 0
+
+    .line 88
+    iput-object p1, p0, Landroid/support/transition/FragmentTransitionSupport$1;->this$0:Landroid/support/transition/FragmentTransitionSupport;
+
+    iput-object p2, p0, Landroid/support/transition/FragmentTransitionSupport$1;->val$epicenter:Landroid/graphics/Rect;
+
+    invoke-direct {p0}, Landroid/support/transition/Transition$EpicenterCallback;-><init>()V
+
+    return-void
+.end method
+
+
+# virtual methods
+.method public onGetEpicenter(Landroid/support/transition/Transition;)Landroid/graphics/Rect;
+    .locals 0
+
+    .line 91
+    iget-object p1, p0, Landroid/support/transition/FragmentTransitionSupport$1;->val$epicenter:Landroid/graphics/Rect;
+
+    return-object p1
+.end method

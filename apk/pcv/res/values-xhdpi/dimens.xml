@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="sdk_login_button_bottom_margin_lgview">30.0dip</dimen>
+</resources>

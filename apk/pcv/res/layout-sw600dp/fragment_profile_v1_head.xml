@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout android:layout_width="fill_parent" android:layout_height="fill_parent"
+  xmlns:android="http://schemas.android.com/apk/res/android">
+    <ImageView android:id="@id/imageView" android:layout_width="fill_parent" android:layout_height="36.0dip" android:layout_marginTop="34.0dip" android:scaleType="centerInside" srcKey="supercell_id_logo_white.png" />
+    <include android:layout_gravity="center" android:id="@id/checkmarkstrip" android:layout_width="fill_parent" android:layout_height="wrap_content" layout="@layout/layout_checkmarkstrip" />
+    <TextView android:textSize="@dimen/XS" android:textColor="@color/white" android:gravity="center" android:layout_gravity="bottom" android:id="@id/loggedInLabel" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_marginLeft="60.0dip" android:layout_marginRight="60.0dip" android:layout_marginBottom="51.0dip" android:lineSpacingMultiplier="1.2" android:alpha="0.5" android:textAllCaps="true" textKey="account_heading" />
+    <TextView android:textSize="@dimen/L" android:textColor="@color/white" android:ellipsize="end" android:gravity="center" android:layout_gravity="bottom" android:id="@id/emailTextView" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_marginLeft="60.0dip" android:layout_marginRight="60.0dip" android:layout_marginBottom="27.0dip" android:lines="1" android:lineSpacingMultiplier="1.2" />
+</FrameLayout>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout android:id="@id/root" android:clipChildren="false" android:clipToPadding="false" android:layout_width="fill_parent" android:layout_height="fill_parent"
+  xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
+    <View android:layout_gravity="end" android:background="@drawable/profile_shadow" android:layout_width="@dimen/head_shadow_width" android:layout_height="fill_parent" android:layout_marginLeft="0.0dip" android:layout_marginRight="@dimen/head_shadow_margin_end" android:layout_marginStart="0.0dip" android:layout_marginEnd="@dimen/head_shadow_margin_end" />
+    <LinearLayout android:orientation="vertical" android:id="@id/content" android:clipChildren="false" android:clipToPadding="false" android:layout_width="fill_parent" android:layout_height="fill_parent">
+        <FrameLayout android:id="@id/blueArea" android:clipChildren="false" android:layout_width="fill_parent" android:layout_height="0.0dip" android:layout_weight="1.0" app:insetSystemWindow="top">
+            <RelativeLayout android:layout_gravity="center_vertical" android:paddingTop="16.0dip" android:clipToPadding="false" android:layout_width="fill_parent" android:layout_height="wrap_content" app:insetSystemWindow="start">
+                <ImageView android:id="@id/imageView" android:layout_width="fill_parent" android:layout_height="24.0dip" android:layout_marginLeft="32.0dip" android:layout_marginRight="32.0dip" android:scaleType="centerInside" srcKey="supercell_id_logo_white.png" />
+                <TextView android:textSize="@dimen/XXS" android:textColor="@color/white" android:gravity="center" android:id="@id/loggedInLabel" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_marginLeft="16.0dip" android:layout_marginTop="20.0dip" android:layout_marginRight="16.0dip" android:layout_below="@id/imageView" android:lineSpacingMultiplier="1.2" android:alpha="0.5" android:textAllCaps="true" textKey="account_heading" />
+                <TextView android:textSize="@dimen/XS" android:textColor="@color/white" android:ellipsize="end" android:gravity="center" android:id="@id/emailTextView" android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_marginLeft="16.0dip" android:layout_marginTop="3.0dip" android:layout_marginRight="16.0dip" android:lines="1" android:layout_below="@id/loggedInLabel" android:lineSpacingMultiplier="1.2" />
+            </RelativeLayout>
+        </FrameLayout>
+        <FrameLayout android:id="@id/head_tab_bar" android:layout_width="fill_parent" android:layout_height="140.0dip">
+            <View android:id="@id/head_tab_bar_background" android:background="@color/gray95" android:layout_width="fill_parent" android:layout_height="fill_parent" />
+            <include android:id="@id/head_tab_my_games" android:layout_width="fill_parent" android:layout_height="70.0dip" layout="@layout/tab_button" />
+            <include android:id="@id/head_tab_settings" android:layout_width="fill_parent" android:layout_height="70.0dip" android:layout_marginTop="70.0dip" layout="@layout/tab_button" />
+        </FrameLayout>
+        <FrameLayout android:id="@id/navigation_bar_background" android:background="@color/gray95" android:layout_width="fill_parent" android:layout_height="wrap_content" app:insetSystemWindow="bottom" app:insetSystemWindowUsingParent="@id/head" />
+    </LinearLayout>
+</FrameLayout>
