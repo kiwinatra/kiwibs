@@ -14,6 +14,14 @@ CSV files shipped with the client.
 
       pip install tinydb schedule
 
+## IMPORTANT: BUILDING THE CLIENT
+
+Client is living inside **apk/pcv** folder
+
+You need to install `apktool, zipalign, jar signer etc` and run *./i.sh*
+
+> Make sure you connected your android device to pc, or its not installing. 
+
 ## Running
 
 Create `config.json` in the project root:
