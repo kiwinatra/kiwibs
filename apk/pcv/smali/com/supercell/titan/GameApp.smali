@@ -4573,8 +4573,8 @@
     invoke-super {p0}, Landroid/app/Activity;->onResume()V
 
     const/4 v0, 0x1
-
-    const-string v1, "kiwibrawl-1.0 release, developed by kiwinatra"
+        
+    const-string v1, "kiwibrawl-1.1 - dsc.gg/kiwibrawl"
 
     invoke-static {p0, v1, v0}, Landroid/widget/Toast;->makeText(Landroid/content/Context;Ljava/lang/CharSequence;I)Landroid/widget/Toast;
 
