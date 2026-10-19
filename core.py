@@ -20,6 +20,8 @@ from prompt_toolkit.history import InMemoryHistory
 from prompt_toolkit.formatted_text import ANSI
 from prompt_toolkit import print_formatted_text
 
+UDP_SERVER = None
+
 
 # ═══════════════════════════════════════════════════════════════
 #                     ЦВЕТА
@@ -836,8 +838,18 @@ def main():
     print(f"{C.DIM}Python {sys.version.split()[0]} on {sys.platform} | Lang: {LANG}{C.RESET}")
     print()
 
+    global UDP_SERVER
+
     server = Server('0.0.0.0', 2556)
     server.start()
+
+    # ─── UDP-сервер для боёв ───
+    from Utils.UDPServer import UDPServer
+    UDP_SERVER = UDPServer(port=9339)
+    UDP_SERVER.start()
+    ok(f"UDP battle server: 0.0.0.0:9339")
+
+    Server.Clients["UDP_SERVER"] = UDP_SERVER
 
     ok(f"Lobby:  0.0.0.0:2556")
     ok(f"Battle: 0.0.0.0:6969")

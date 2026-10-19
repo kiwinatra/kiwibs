@@ -99,6 +99,14 @@ class Players:
     skin_id = 0
     trioWINS = 0
     sdWINS = 0
+    # === Служебные флаги для боя ===
+    inmm = False
+    battleID = 0
+    dudu = 0
+    bet = 0
+    state = 0
+    pin = 0
+    mode = 0
 
     # ====== БОЙЦЫ (все открыты) ======
     UnlockedBrawlers = {str(i): 1 for i in BRAWLERS_ID}

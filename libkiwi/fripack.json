@@ -1,0 +1,9 @@
+{
+  "myhook": {
+    "type": "shared",
+    "platform": "android-arm32",
+    "fridaVersion": "17.5.1",
+    "entry": "agent.js",
+    "outputDir": "./output"
+  }
+}
