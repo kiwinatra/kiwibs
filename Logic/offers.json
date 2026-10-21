@@ -1,12 +1,28 @@
 {
     "0": {
-        "ID": [8, 0, 0],
-        "OfferTitle": "POWER POINTS",
-        "Cost": 50,
-        "OldCost": 0,
-        "Multiplier": [25, 0, 0],
-        "BrawlerID": [0, 0, 0],
-        "SkinID": [0, 0, 0],
+        "ID": [
+            7,
+            0,
+            0
+        ],
+        "OfferTitle": "DAILY DEAL",
+        "Cost": 1,
+        "OldCost": 999,
+        "Multiplier": [
+            100,
+            0,
+            0
+        ],
+        "BrawlerID": [
+            0,
+            0,
+            0
+        ],
+        "SkinID": [
+            0,
+            0,
+            0
+        ],
         "WhoBuyed": [],
         "Timer": 86400,
         "OfferBGR": "offer_generic",
@@ -14,13 +30,29 @@
         "ShopDisplay": 1
     },
     "1": {
-        "ID": [8, 0, 0],
-        "OfferTitle": "POWER POINTS",
-        "Cost": 90,
+        "ID": [
+            8,
+            0,
+            0
+        ],
+        "OfferTitle": "POWER 500",
+        "Cost": 150,
         "OldCost": 0,
-        "Multiplier": [50, 0, 0],
-        "BrawlerID": [1, 0, 0],
-        "SkinID": [0, 0, 0],
+        "Multiplier": [
+            500,
+            0,
+            0
+        ],
+        "BrawlerID": [
+            0,
+            0,
+            0
+        ],
+        "SkinID": [
+            0,
+            0,
+            0
+        ],
         "WhoBuyed": [],
         "Timer": 86400,
         "OfferBGR": "offer_generic",
@@ -28,13 +60,29 @@
         "ShopDisplay": 1
     },
     "2": {
-        "ID": [8, 0, 0],
-        "OfferTitle": "POWER POINTS",
-        "Cost": 170,
+        "ID": [
+            8,
+            0,
+            0
+        ],
+        "OfferTitle": "POWER 1000",
+        "Cost": 250,
         "OldCost": 0,
-        "Multiplier": [100, 0, 0],
-        "BrawlerID": [7, 0, 0],
-        "SkinID": [0, 0, 0],
+        "Multiplier": [
+            1000,
+            0,
+            0
+        ],
+        "BrawlerID": [
+            0,
+            0,
+            0
+        ],
+        "SkinID": [
+            0,
+            0,
+            0
+        ],
         "WhoBuyed": [],
         "Timer": 86400,
         "OfferBGR": "offer_generic",
@@ -42,97 +90,209 @@
         "ShopDisplay": 1
     },
     "3": {
-        "ID": [8, 0, 0],
-        "OfferTitle": "POWER POINTS",
-        "Cost": 320,
+        "ID": [
+            1,
+            0,
+            0
+        ],
+        "OfferTitle": "2500 GOLD",
+        "Cost": 70,
         "OldCost": 0,
-        "Multiplier": [200, 0, 0],
-        "BrawlerID": [14, 0, 0],
-        "SkinID": [0, 0, 0],
+        "Multiplier": [
+            2500,
+            0,
+            0
+        ],
+        "BrawlerID": [
+            0,
+            0,
+            0
+        ],
+        "SkinID": [
+            0,
+            0,
+            0
+        ],
         "WhoBuyed": [],
         "Timer": 86400,
-        "OfferBGR": "offer_generic",
+        "OfferBGR": "offer_coins",
         "ShopType": 1,
         "ShopDisplay": 1
     },
     "4": {
-        "ID": [8, 0, 0],
-        "OfferTitle": "POWER POINTS",
-        "Cost": 450,
+        "ID": [
+            1,
+            0,
+            0
+        ],
+        "OfferTitle": "5000 GOLD",
+        "Cost": 130,
         "OldCost": 0,
-        "Multiplier": [300, 0, 0],
-        "BrawlerID": [22, 0, 0],
-        "SkinID": [0, 0, 0],
+        "Multiplier": [
+            5000,
+            0,
+            0
+        ],
+        "BrawlerID": [
+            0,
+            0,
+            0
+        ],
+        "SkinID": [
+            0,
+            0,
+            0
+        ],
         "WhoBuyed": [],
         "Timer": 86400,
-        "OfferBGR": "offer_generic",
+        "OfferBGR": "offer_coins",
         "ShopType": 1,
         "ShopDisplay": 1
     },
     "5": {
-        "ID": [1, 0, 0],
-        "OfferTitle": "GOLD",
-        "Cost": 25,
+        "ID": [
+            16,
+            0,
+            0
+        ],
+        "OfferTitle": "150 GEMS",
+        "Cost": 299,
         "OldCost": 0,
-        "Multiplier": [200, 0, 0],
-        "BrawlerID": [0, 0, 0],
-        "SkinID": [0, 0, 0],
+        "Multiplier": [
+            150,
+            0,
+            0
+        ],
+        "BrawlerID": [
+            0,
+            0,
+            0
+        ],
+        "SkinID": [
+            0,
+            0,
+            0
+        ],
         "WhoBuyed": [],
         "Timer": 86400,
-        "OfferBGR": "offer_coins",
-        "ShopType": 0,
+        "OfferBGR": "offer_gems",
+        "ShopType": 1,
         "ShopDisplay": 1
     },
     "6": {
-        "ID": [1, 0, 0],
-        "OfferTitle": "GOLD",
-        "Cost": 55,
+        "ID": [
+            16,
+            0,
+            0
+        ],
+        "OfferTitle": "300 GEMS",
+        "Cost": 499,
         "OldCost": 0,
-        "Multiplier": [500, 0, 0],
-        "BrawlerID": [0, 0, 0],
-        "SkinID": [0, 0, 0],
+        "Multiplier": [
+            300,
+            0,
+            0
+        ],
+        "BrawlerID": [
+            0,
+            0,
+            0
+        ],
+        "SkinID": [
+            0,
+            0,
+            0
+        ],
         "WhoBuyed": [],
         "Timer": 86400,
-        "OfferBGR": "offer_coins",
-        "ShopType": 0,
+        "OfferBGR": "offer_gems",
+        "ShopType": 1,
         "ShopDisplay": 1
     },
     "7": {
-        "ID": [1, 0, 0],
-        "OfferTitle": "GOLD",
-        "Cost": 120,
+        "ID": [
+            16,
+            0,
+            0
+        ],
+        "OfferTitle": "500 GEMS",
+        "Cost": 799,
         "OldCost": 0,
-        "Multiplier": [1200, 0, 0],
-        "BrawlerID": [0, 0, 0],
-        "SkinID": [0, 0, 0],
+        "Multiplier": [
+            500,
+            0,
+            0
+        ],
+        "BrawlerID": [
+            0,
+            0,
+            0
+        ],
+        "SkinID": [
+            0,
+            0,
+            0
+        ],
         "WhoBuyed": [],
         "Timer": 86400,
-        "OfferBGR": "offer_coins",
-        "ShopType": 0,
+        "OfferBGR": "offer_gems",
+        "ShopType": 1,
         "ShopDisplay": 1
     },
     "8": {
-        "ID": [1, 0, 0],
-        "OfferTitle": "GOLD",
-        "Cost": 250,
+        "ID": [
+            4,
+            0,
+            0
+        ],
+        "OfferTitle": "SAKURA SPIKE",
+        "Cost": 299,
         "OldCost": 0,
-        "Multiplier": [3000, 0, 0],
-        "BrawlerID": [0, 0, 0],
-        "SkinID": [0, 0, 0],
+        "Multiplier": [
+            0,
+            0,
+            0
+        ],
+        "BrawlerID": [
+            0,
+            0,
+            0
+        ],
+        "SkinID": [
+            11,
+            0,
+            0
+        ],
         "WhoBuyed": [],
         "Timer": 86400,
-        "OfferBGR": "offer_coins",
+        "OfferBGR": "offer_special",
         "ShopType": 0,
-        "ShopDisplay": 1
+        "ShopDisplay": 0
     },
     "9": {
-        "ID": [4, 0, 0],
-        "OfferTitle": "DAILY SKIN",
-        "Cost": 29,
+        "ID": [
+            4,
+            0,
+            0
+        ],
+        "OfferTitle": "MECHA CROW",
+        "Cost": 299,
         "OldCost": 0,
-        "Multiplier": [0, 0, 0],
-        "BrawlerID": [0, 0, 0],
-        "SkinID": [29, 0, 0],
+        "Multiplier": [
+            0,
+            0,
+            0
+        ],
+        "BrawlerID": [
+            0,
+            0,
+            0
+        ],
+        "SkinID": [
+            95,
+            0,
+            0
+        ],
         "WhoBuyed": [],
         "Timer": 86400,
         "OfferBGR": "offer_special",
@@ -140,13 +300,29 @@
         "ShopDisplay": 0
     },
     "10": {
-        "ID": [4, 0, 0],
-        "OfferTitle": "DAILY SKIN",
-        "Cost": 79,
+        "ID": [
+            4,
+            0,
+            0
+        ],
+        "OfferTitle": "PHOENIX CROW",
+        "Cost": 299,
         "OldCost": 0,
-        "Multiplier": [0, 0, 0],
-        "BrawlerID": [0, 0, 0],
-        "SkinID": [2, 0, 0],
+        "Multiplier": [
+            0,
+            0,
+            0
+        ],
+        "BrawlerID": [
+            0,
+            0,
+            0
+        ],
+        "SkinID": [
+            49,
+            0,
+            0
+        ],
         "WhoBuyed": [],
         "Timer": 86400,
         "OfferBGR": "offer_special",
@@ -154,13 +330,29 @@
         "ShopDisplay": 0
     },
     "11": {
-        "ID": [4, 0, 0],
-        "OfferTitle": "DAILY SKIN",
-        "Cost": 79,
+        "ID": [
+            4,
+            0,
+            0
+        ],
+        "OfferTitle": "WEREWOLF LEON",
+        "Cost": 149,
         "OldCost": 0,
-        "Multiplier": [0, 0, 0],
-        "BrawlerID": [0, 0, 0],
-        "SkinID": [58, 0, 0],
+        "Multiplier": [
+            0,
+            0,
+            0
+        ],
+        "BrawlerID": [
+            0,
+            0,
+            0
+        ],
+        "SkinID": [
+            110,
+            0,
+            0
+        ],
         "WhoBuyed": [],
         "Timer": 86400,
         "OfferBGR": "offer_special",
@@ -168,13 +360,29 @@
         "ShopDisplay": 0
     },
     "12": {
-        "ID": [4, 0, 0],
-        "OfferTitle": "DAILY SKIN",
-        "Cost": 149,
+        "ID": [
+            4,
+            0,
+            0
+        ],
+        "OfferTitle": "SHARK LEON",
+        "Cost": 79,
         "OldCost": 0,
-        "Multiplier": [0, 0, 0],
-        "BrawlerID": [0, 0, 0],
-        "SkinID": [69, 0, 0],
+        "Multiplier": [
+            0,
+            0,
+            0
+        ],
+        "BrawlerID": [
+            0,
+            0,
+            0
+        ],
+        "SkinID": [
+            126,
+            0,
+            0
+        ],
         "WhoBuyed": [],
         "Timer": 86400,
         "OfferBGR": "offer_special",
@@ -182,13 +390,29 @@
         "ShopDisplay": 0
     },
     "13": {
-        "ID": [4, 0, 0],
-        "OfferTitle": "DAILY SKIN",
-        "Cost": 149,
+        "ID": [
+            4,
+            0,
+            0
+        ],
+        "OfferTitle": "STARR FORCE SHELLY",
+        "Cost": 29,
         "OldCost": 0,
-        "Multiplier": [0, 0, 0],
-        "BrawlerID": [0, 0, 0],
-        "SkinID": [44, 0, 0],
+        "Multiplier": [
+            0,
+            0,
+            0
+        ],
+        "BrawlerID": [
+            0,
+            0,
+            0
+        ],
+        "SkinID": [
+            52,
+            0,
+            0
+        ],
         "WhoBuyed": [],
         "Timer": 86400,
         "OfferBGR": "offer_special",
@@ -196,13 +420,481 @@
         "ShopDisplay": 0
     },
     "14": {
-        "ID": [4, 0, 0],
-        "OfferTitle": "DAILY SKIN",
+        "ID": [
+            4,
+            0,
+            0
+        ],
+        "OfferTitle": "ROCKSTAR COLT",
+        "Cost": 29,
+        "OldCost": 0,
+        "Multiplier": [
+            0,
+            0,
+            0
+        ],
+        "BrawlerID": [
+            0,
+            0,
+            0
+        ],
+        "SkinID": [
+            2,
+            0,
+            0
+        ],
+        "WhoBuyed": [],
+        "Timer": 86400,
+        "OfferBGR": "offer_special",
+        "ShopType": 0,
+        "ShopDisplay": 0
+    },
+    "15": {
+        "ID": [
+            4,
+            0,
+            0
+        ],
+        "OfferTitle": "TOUCHDOWN BULL",
+        "Cost": 149,
+        "OldCost": 0,
+        "Multiplier": [
+            0,
+            0,
+            0
+        ],
+        "BrawlerID": [
+            0,
+            0,
+            0
+        ],
+        "SkinID": [
+            64,
+            0,
+            0
+        ],
+        "WhoBuyed": [],
+        "Timer": 86400,
+        "OfferBGR": "offer_special",
+        "ShopType": 0,
+        "ShopDisplay": 0
+    },
+    "16": {
+        "ID": [
+            4,
+            0,
+            0
+        ],
+        "OfferTitle": "DRAGON JESSIE",
+        "Cost": 149,
+        "OldCost": 0,
+        "Multiplier": [
+            0,
+            0,
+            0
+        ],
+        "BrawlerID": [
+            0,
+            0,
+            0
+        ],
+        "SkinID": [
+            44,
+            0,
+            0
+        ],
+        "WhoBuyed": [],
+        "Timer": 86400,
+        "OfferBGR": "offer_special",
+        "ShopType": 0,
+        "ShopDisplay": 0
+    },
+    "17": {
+        "ID": [
+            4,
+            0,
+            0
+        ],
+        "OfferTitle": "ROBO MIKE",
         "Cost": 299,
         "OldCost": 0,
-        "Multiplier": [0, 0, 0],
-        "BrawlerID": [0, 0, 0],
-        "SkinID": [97, 0, 0],
+        "Multiplier": [
+            0,
+            0,
+            0
+        ],
+        "BrawlerID": [
+            0,
+            0,
+            0
+        ],
+        "SkinID": [
+            97,
+            0,
+            0
+        ],
+        "WhoBuyed": [],
+        "Timer": 86400,
+        "OfferBGR": "offer_special",
+        "ShopType": 0,
+        "ShopDisplay": 0
+    },
+    "18": {
+        "ID": [
+            4,
+            0,
+            0
+        ],
+        "OfferTitle": "EL REY PRIMO",
+        "Cost": 149,
+        "OldCost": 0,
+        "Multiplier": [
+            0,
+            0,
+            0
+        ],
+        "BrawlerID": [
+            0,
+            0,
+            0
+        ],
+        "SkinID": [
+            30,
+            0,
+            0
+        ],
+        "WhoBuyed": [],
+        "Timer": 86400,
+        "OfferBGR": "offer_special",
+        "ShopType": 0,
+        "ShopDisplay": 0
+    },
+    "19": {
+        "ID": [
+            4,
+            0,
+            0
+        ],
+        "OfferTitle": "CAVALERA PIPER",
+        "Cost": 79,
+        "OldCost": 0,
+        "Multiplier": [
+            0,
+            0,
+            0
+        ],
+        "BrawlerID": [
+            0,
+            0,
+            0
+        ],
+        "SkinID": [
+            108,
+            0,
+            0
+        ],
+        "WhoBuyed": [],
+        "Timer": 86400,
+        "OfferBGR": "offer_special",
+        "ShopType": 0,
+        "ShopDisplay": 0
+    },
+    "20": {
+        "ID": [
+            6,
+            0,
+            0
+        ],
+        "OfferTitle": "MEGA BOX",
+        "Cost": 80,
+        "OldCost": 0,
+        "Multiplier": [
+            30,
+            0,
+            0
+        ],
+        "BrawlerID": [
+            0,
+            0,
+            0
+        ],
+        "SkinID": [
+            0,
+            0,
+            0
+        ],
+        "WhoBuyed": [],
+        "Timer": 86400,
+        "OfferBGR": "offer_boxes",
+        "ShopType": 0,
+        "ShopDisplay": 0
+    },
+    "21": {
+        "ID": [
+            6,
+            0,
+            0
+        ],
+        "OfferTitle": "MEGA BOX",
+        "Cost": 80,
+        "OldCost": 0,
+        "Multiplier": [
+            30,
+            0,
+            0
+        ],
+        "BrawlerID": [
+            0,
+            0,
+            0
+        ],
+        "SkinID": [
+            0,
+            0,
+            0
+        ],
+        "WhoBuyed": [],
+        "Timer": 86400,
+        "OfferBGR": "offer_boxes",
+        "ShopType": 0,
+        "ShopDisplay": 0
+    },
+    "22": {
+        "ID": [
+            7,
+            0,
+            0
+        ],
+        "OfferTitle": "SUPER DEAL",
+        "Cost": 10,
+        "OldCost": 500,
+        "Multiplier": [
+            500,
+            0,
+            0
+        ],
+        "BrawlerID": [
+            0,
+            0,
+            0
+        ],
+        "SkinID": [
+            0,
+            0,
+            0
+        ],
+        "WhoBuyed": [],
+        "Timer": 86400,
+        "OfferBGR": "offer_generic",
+        "ShopType": 1,
+        "ShopDisplay": 1
+    },
+    "23": {
+        "ID": [
+            7,
+            0,
+            0
+        ],
+        "OfferTitle": "STAR DEAL",
+        "Cost": 50,
+        "OldCost": 2500,
+        "Multiplier": [
+            2500,
+            0,
+            0
+        ],
+        "BrawlerID": [
+            0,
+            0,
+            0
+        ],
+        "SkinID": [
+            0,
+            0,
+            0
+        ],
+        "WhoBuyed": [
+            42
+        ],
+        "Timer": 86400,
+        "OfferBGR": "offer_generic",
+        "ShopType": 1,
+        "ShopDisplay": 1
+    },
+    "24": {
+        "ID": [
+            16,
+            0,
+            0
+        ],
+        "OfferTitle": "STARTER GEMS",
+        "Cost": 50,
+        "OldCost": 0,
+        "Multiplier": [
+            50,
+            0,
+            0
+        ],
+        "BrawlerID": [
+            0,
+            0,
+            0
+        ],
+        "SkinID": [
+            0,
+            0,
+            0
+        ],
+        "WhoBuyed": [],
+        "Timer": 86400,
+        "OfferBGR": "offer_gems",
+        "ShopType": 1,
+        "ShopDisplay": 1
+    },
+    "25": {
+        "ID": [
+            8,
+            0,
+            0
+        ],
+        "OfferTitle": "BIG POWER",
+        "Cost": 500,
+        "OldCost": 0,
+        "Multiplier": [
+            2000,
+            0,
+            0
+        ],
+        "BrawlerID": [
+            0,
+            0,
+            0
+        ],
+        "SkinID": [
+            0,
+            0,
+            0
+        ],
+        "WhoBuyed": [],
+        "Timer": 86400,
+        "OfferBGR": "offer_generic",
+        "ShopType": 1,
+        "ShopDisplay": 1
+    },
+    "26": {
+        "ID": [
+            1,
+            0,
+            0
+        ],
+        "OfferTitle": "BIG GOLD",
+        "Cost": 250,
+        "OldCost": 0,
+        "Multiplier": [
+            10000,
+            0,
+            0
+        ],
+        "BrawlerID": [
+            0,
+            0,
+            0
+        ],
+        "SkinID": [
+            0,
+            0,
+            0
+        ],
+        "WhoBuyed": [],
+        "Timer": 86400,
+        "OfferBGR": "offer_coins",
+        "ShopType": 1,
+        "ShopDisplay": 1
+    },
+    "27": {
+        "ID": [
+            7,
+            0,
+            0
+        ],
+        "OfferTitle": "MEGA POWER DEAL",
+        "Cost": 100,
+        "OldCost": 1000,
+        "Multiplier": [
+            5000,
+            0,
+            0
+        ],
+        "BrawlerID": [
+            0,
+            0,
+            0
+        ],
+        "SkinID": [
+            0,
+            0,
+            0
+        ],
+        "WhoBuyed": [],
+        "Timer": 86400,
+        "OfferBGR": "offer_generic",
+        "ShopType": 1,
+        "ShopDisplay": 1
+    },
+    "28": {
+        "ID": [
+            16,
+            0,
+            0
+        ],
+        "OfferTitle": "MEGA GEMS",
+        "Cost": 999,
+        "OldCost": 0,
+        "Multiplier": [
+            1000,
+            0,
+            0
+        ],
+        "BrawlerID": [
+            0,
+            0,
+            0
+        ],
+        "SkinID": [
+            0,
+            0,
+            0
+        ],
+        "WhoBuyed": [],
+        "Timer": 86400,
+        "OfferBGR": "offer_gems",
+        "ShopType": 1,
+        "ShopDisplay": 1
+    },
+    "29": {
+        "ID": [
+            4,
+            0,
+            0
+        ],
+        "OfferTitle": "GOLDEN BARLEY",
+        "Cost": 299,
+        "OldCost": 0,
+        "Multiplier": [
+            0,
+            0,
+            0
+        ],
+        "BrawlerID": [
+            0,
+            0,
+            0
+        ],
+        "SkinID": [
+            27,
+            0,
+            0
+        ],
         "WhoBuyed": [],
         "Timer": 86400,
         "OfferBGR": "offer_special",
