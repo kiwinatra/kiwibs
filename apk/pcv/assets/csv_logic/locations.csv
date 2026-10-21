@@ -134,7 +134,7 @@
 "Ball9",,"TID_BALL_15",,"Grassfield","sc3d/bgr_grassfield_ground.scw","sc3d/bgr_grassfield_ground_wf19.scw","sc3d/bgr_grassfield.scw","sc/events.sc","event_brawlball","LaserBall","Laserball_9","BattleMusic","Mordeus"
 "Biggame1",,"TID_BOSS_4","survival_","Default","sc3d/bgr_canyon_showdown_ground.scw",,"sc3d/bgr_canyon_showdown.scw","sc/events.sc","event_boss","BossFight","Biggame_1","BattleMusic","OwenReds"
 "Biggame2",,"TID_BOSS_3","survival_","Default","sc3d/bgr_canyon_showdown_ground.scw",,"sc3d/bgr_canyon_showdown.scw","sc/events.sc","event_boss","BossFight","Biggame_2","BattleMusic","OwenReds"
-"Training",,,,"Mine","sc3d/bgr_mine_tutorial_ground.scw",,"sc3d/bgr_mine_tutorial.scw","sc/events.sc","event_welcome","Training","Training","BattleMusic",
+"Training",,,,"DarrylsShip","sc3d/bgr_darryls_ship_ground.scw",,"sc3d/bgr_darryls_ship.scw","sc/events.sc","event_pirates","Training","Training","Pirate_Brawl_Ingame",
 "Gemgrab19",,"TID_GOLDRUSH_31",,"Mine","sc3d/bgr_mine_ground_tracks_1.scw","sc3d/bgr_mine_ground_tracks_1_wf19.scw","sc3d/bgr_mine_tracks_1.scw","sc/events.sc","event_gemmine","CoinRush","Gemgrab_19","BattleMusic",
 ,,,,,,,"sc3d/bgr_mine_tracks_1_lights.scw",,,,,,
 ,,,,,,,"sc3d/bgr_mine_tracks_1_boom_l_top.scw",,,,,,

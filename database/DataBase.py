@@ -23,7 +23,7 @@ class DataBase:
             self.player.gems = user_data[5]
             self.player.starpoints = user_data[6]
             self.player.tickets = user_data[7]
-            self.player.Troproad = user_data[8]
+            self.player.Troproad = 95
             self.player.profile_icon = user_data[9]
             self.player.name_color = user_data[10]
             self.player.club_low_id = user_data[11]
@@ -65,10 +65,9 @@ class DataBase:
             self.player.brawlerPowerLevel = brawlerData.get("brawlerPowerLevel", {})
             self.player.brawlerPoints = brawlerData.get("brawlerPoints", {})
 
-            # === Troproad фикс ===
-            if not self.player.Troproad or self.player.Troproad < 1:
-                self.player.Troproad = 1
-                DataBase.replaceValue(self, 'Troproad', 1)
+            # === Troproad фикс (Всегда 94) ===
+            self.player.Troproad = 95
+            DataBase.replaceValue(self, 'Troproad', 95)
 
             # === Если бойцов нет — анлок всех ===
             if not self.player.UnlockedBrawlers or len(self.player.UnlockedBrawlers) < 30:
@@ -118,7 +117,7 @@ class DataBase:
         }
 
         # === Дефолты (уже прочитаны из config.json в Player.py) ===
-        self.player.Troproad = 1
+        self.player.Troproad = 95 # <--- ПРИНУДИТЕЛЬНО 94 ДЛЯ НОВЫХ АККАУНТОВ
         if not self.player.box: self.player.box = 99999
         if not self.player.bigbox: self.player.bigbox = 99999
         if not self.player.gold: self.player.gold = 999999
