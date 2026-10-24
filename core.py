@@ -1,3 +1,8 @@
+"""
+Main file for all the server.
+Главный файл сервера.
+"""
+
 import socket
 import time
 import os
@@ -20,13 +25,16 @@ from prompt_toolkit.history import InMemoryHistory
 from prompt_toolkit.formatted_text import ANSI
 from prompt_toolkit import print_formatted_text
 
+"""
+Will be implemented later, for battles (cause client accepts only UDPs)
+Будет реализовано позже для сражений (клиент принимает только UDP).
+"""
 UDP_SERVER = None
 
-
-# ═══════════════════════════════════════════════════════════════
-#                     ЦВЕТА
-# ═══════════════════════════════════════════════════════════════
-
+"""
+Colors for better output.
+Цвета для лучшего вывода в консоль.
+"""
 class C:
     RESET   = "\033[0m"
     BOLD    = "\033[1m"
@@ -43,15 +51,133 @@ class C:
     GRAY    = "\033[90m"
 
 
-# ═══════════════════════════════════════════════════════════════
-#                     ПОДМЕНА print
-# ═══════════════════════════════════════════════════════════════
-
+"""
+As we want to make a good CLI, we need to replace print with builtins print.
+Так как мы хотим сделать хороший CLI, нам нужно заменить стандартный print на кастомный.
+"""
 import builtins
 _orig_print = builtins.print
 
+"""
+Server packets we need to parse empty (?)
+Серверные пакеты, которые мы можем парсить или отправлять вручную.
+"""
+_SERVER_PACKETS = {
+    23457: ("Server.Home.LobbyInfoMessage", "LobbyInfoMessage", "count"),
+    24101: ("Server.Home.OwnHomeDataMessage", "OwnHomeDataMessage", None),
+    24111: ("Utils.Writer", "Writer", None),  # wont work BUTT 
+    24113: ("Server.Home.PlayerProfileMessage", "PlayerProfileMessage", ("high_id", "low_id", "players")),
+    20104: ("Server.Login.LoginOkMessage", "LoginOkMessage", None),
+    20105: ("Server.Friend.FriendListMessage", "FriendListMessage", None),
+    24399: ("Server.Club.MyAllianceMessage", "MyAllianceMessage", ("clubLowID",)),
+    24301: ("Server.Club.AllianceDataMessage", "AllianceDataMessage", ("clubHighID", "clubLowID")),
+    # etc..
+}
+
+
+def _resolve_server_packet(packet_id):
+    """
+    RU:
+    Возвращает класс серверного пакета по ID или None.
+    EN:
+    Returns the server packet class by ID or None.
+    """
+    spec = _SERVER_PACKETS.get(packet_id)
+    if not spec:
+        return None
+    module_path, cls_name, _ = spec
+    try:
+        mod = importlib.import_module(module_path)
+        return getattr(mod, cls_name)
+    except Exception as e:
+        error(f"cannot import {module_path}.{cls_name}: {type(e).__name__}: {e}")
+        return None
+
+
+def _instantiate_server_packet(cls, client, player, extra):
+    """
+    RU:
+    Создаёт объект серверного пакета. Аргументы из extra маппятся в позиционные 
+    параметры __init__ кроме (client, player). Если extra не хватает — подставляем 
+    дефолт из _DEFAULT_ARGS.
+    EN:
+    Creates a server packet object. Args from extra are mapped to positional 
+    parameters of __init__ except (client, player). If extra is missing, 
+    substitutes defaults from _DEFAULT_ARGS.
+    """
+    import inspect
+
+    sig = inspect.signature(cls.__init__)
+    params = [
+        p for p in sig.parameters.values()
+        if p.name not in ("self", "client", "player")
+    ]
+
+    # Дефолты для известных пакетов, если пользователь не передал args
+    # Defaults for known packets if user didn't pass args
+    _DEFAULT_ARGS = {
+        "count": 1,
+        "clubLowID": player.club_low_id or 0,
+        "clubHighID": 0,
+        "clubid": player.club_low_id or 0,
+        "high_id": 0,
+        "low_id": player.low_id or 0,
+        "players": None,
+        "type": 0,
+        "result": 0,
+        "msg": "debug",
+        "message": "debug",
+    }
+
+    coerced = []
+    for idx, p in enumerate(params):
+        # 1) Явно переданный аргумент
+        # Explicitly passed argument
+        if idx < len(extra):
+            raw = extra[idx]
+            ann = p.annotation
+            try:
+                if ann is int:
+                    coerced.append(int(raw))
+                elif ann is float:
+                    coerced.append(float(raw))
+                elif ann is str:
+                    coerced.append(str(raw))
+                else:
+                    coerced.append(raw)
+            except (ValueError, TypeError):
+                coerced.append(raw)
+            continue
+
+        # 2) Дефолт из сигнатуры
+        # Default from signature
+        if p.default is not inspect.Parameter.empty:
+            coerced.append(p.default)
+            continue
+
+        # 3) Наш fallback по имени
+        # Our fallback by name
+        if p.name in _DEFAULT_ARGS:
+            coerced.append(_DEFAULT_ARGS[p.name])
+            continue
+
+        # 4) Всё равно не хватает — падаем с понятной ошибкой
+        # Still missing — raise with clear error
+        raise ValueError(
+            f"missing arg '{p.name}' for {cls.__name__}. "
+            f"Pass it as extra arg: dumppacket <low_id> {cls.__name__} <{p.name}>"
+        )
+
+    return cls(client, player, *coerced)
+
 
 def print(*args, **kwargs):
+    """
+    RU:
+    Кастомный print для интеграции с prompt_toolkit (чтобы CLI не ломался при выводе логов).
+    EN:
+    Custom print for integration with prompt_toolkit (so the CLI doesn't break on log output).
+    """
     sep = kwargs.pop("sep", " ")
     end = kwargs.pop("end", "\n")
     file = kwargs.pop("file", None)
@@ -69,7 +195,7 @@ def print(*args, **kwargs):
 
 
 # ═══════════════════════════════════════════════════════════════
-#                     ЛОКАЛИЗАЦИЯ
+#                     ЛОКАЛИЗАЦИЯ / LOCALIZATION
 # ═══════════════════════════════════════════════════════════════
 
 CONFIG = {}
@@ -78,6 +204,12 @@ STRINGS = {}
 
 
 def load_config():
+    """
+    RU:
+    Загружает настройки из config.json и строки локализации из corestr.yml.
+    EN:
+    Loads settings from config.json and localization strings from corestr.yml.
+    """
     global CONFIG, LANG, STRINGS
 
     try:
@@ -114,6 +246,12 @@ def load_config():
 
 
 def save_config():
+    """
+    RU:
+    Сохраняет текущие настройки в config.json.
+    EN:
+    Saves current settings to config.json.
+    """
     try:
         with open("config.json", "w", encoding="utf-8") as f:
             json.dump(CONFIG, f, indent=4, ensure_ascii=False)
@@ -124,13 +262,19 @@ def save_config():
 
 
 def t(key, default=None):
+    """
+    RU:
+    Возвращает переведенную строку по ключу.
+    EN:
+    Returns translated string by key.
+    """
     if key in STRINGS:
         return STRINGS[key]
     return default if default is not None else key
 
 
 # ═══════════════════════════════════════════════════════════════
-#                     СОСТОЯНИЕ
+#                     СОСТОЯНИЕ / STATE
 # ═══════════════════════════════════════════════════════════════
 
 DEBUG_ENABLED = True
@@ -144,12 +288,15 @@ START_TIME = time.time()
 
 
 def _ts():
+    """
+    RU:
+    Возвращает текущее время в формате ЧЧ:ММ:СС для логов.
+    EN:
+    Returns current time in HH:MM:SS format for logs.
+    """
     return datetime.now().strftime("%H:%M:%S")
 
 
-# ═══════════════════════════════════════════════════════════════
-#                     ЛОГГЕР
-# ═══════════════════════════════════════════════════════════════
 
 def _log(level, color, tag, *args):
     if level == "DEBUG" and not DEBUG_ENABLED:
@@ -157,7 +304,13 @@ def _log(level, color, tag, *args):
     prefix = f"{C.GRAY}[{_ts()}]{C.RESET} {color}[{tag}]{C.RESET}"
     msg = " ".join(str(a) for a in args)
     print(f"{prefix} {color}{msg}{C.RESET}", flush=True)
-
+    
+    # Отправка в Web UI
+    try:
+        from webui.any import add_log
+        add_log(f"[{_ts()}] [{tag.strip()}] {msg}")
+    except Exception:
+        pass
 
 def info(*args):    _log("INFO",  C.CYAN,    "INFO ", *args)
 def ok(*args):      _log("INFO",  C.GREEN,   " OK  ", *args)
@@ -168,18 +321,30 @@ def dbg_db(*args):  _log("DEBUG", C.BLUE,    "  DB ", *args)
 
 
 # ═══════════════════════════════════════════════════════════════
-#                         СЕРВЕР
+#                         СЕРВЕР / SERVER
 # ═══════════════════════════════════════════════════════════════
 
 addr = {}
 block = []
 
+"""
+RU: Пакеты, которые могут приходить с пустым телом (payload).
+EN: Packets that can arrive with an empty payload.
+"""
 EMPTY_PAYLOAD_OK = {
-    10108, 14353, 10502, 10107, 14106,
+    10108, 14353, 10502, 10107, 14106, 14308, 15793, 14308
 }
 
 
 class Server:
+    """
+    RU:
+    Основной класс TCP-сервера. Обрабатывает подключения, ведет список клиентов
+    и управляет их отключением.
+    EN:
+    Main TCP server class. Handles connections, maintains client list,
+    and manages their disconnection.
+    """
     Clients = {"ClientCounts": 0, "Clients": {}}
     ThreadCount = 0
     Instance = None
@@ -192,6 +357,12 @@ class Server:
         Server.Instance = self
 
     def start(self):
+        """
+        RU:
+        Запускает сервер, инициализирует БД и запускает поток принятия подключений.
+        EN:
+        Starts the server, initializes the DB, and launches the connection accept thread.
+        """
         self.server.bind((self.ip, self.port))
         self.server.listen()
 
@@ -225,6 +396,12 @@ class Server:
         accept_thread.start()
 
     def _accept_loop(self):
+        """
+        RU:
+        Бесконечный цикл принятия новых подключений. Работает в отдельном потоке.
+        EN:
+        Infinite loop for accepting new connections. Runs in a separate thread.
+        """
         while not SHUTDOWN.is_set():
             try:
                 self.server.settimeout(1.0)
@@ -264,7 +441,12 @@ class Server:
                     debug(traceback.format_exc())
 
     def kick_all(self, reason="maintenance"):
-        """Закрывает все клиентские сокеты."""
+        """
+        RU:
+        Принудительно закрывает сокеты всех подключенных клиентов.
+        EN:
+        Forcefully closes sockets of all connected clients.
+        """
         clients = list(Server.Clients["Clients"].items())
         if not clients:
             return
@@ -277,6 +459,12 @@ class Server:
                 warn(f"Failed to close {low_id}: {e}")
 
     def shutdown(self):
+        """
+        RU:
+        Корректно останавливает сервер и закрывает все соединения.
+        EN:
+        Gracefully shuts down the server and closes all connections.
+        """
         info("Shutting down...")
         SHUTDOWN.set()
         try:
@@ -293,10 +481,18 @@ class Server:
 
 
 # ═══════════════════════════════════════════════════════════════
-#                     КЛИЕНТСКИЙ ПОТОК
+#                     КЛИЕНТСКИЙ ПОТОК / CLIENT THREAD
 # ═══════════════════════════════════════════════════════════════
 
 class ClientThread(Thread):
+    """
+    RU:
+    Поток, обрабатывающий жизненный цикл одного клиента (чтение пакетов, 
+    диспетчеризация обработчиков, очистка при отключении).
+    EN:
+    Thread handling the lifecycle of a single client (packet reading, 
+    handler dispatching, cleanup on disconnect).
+    """
     def __init__(self, client, address):
         super().__init__(daemon=True)
         self.client = client
@@ -305,6 +501,12 @@ class ClientThread(Thread):
         self.player = Players(self.device)
 
     def recvall(self, length: int):
+        """
+        RU:
+        Читает ровно length байт из сокета (для заголовков и пейлоадов).
+        EN:
+        Reads exactly length bytes from the socket (for headers and payloads).
+        """
         data = b''
         while len(data) < length:
             try:
@@ -317,6 +519,14 @@ class ClientThread(Thread):
         return data
 
     def _cleanup(self, reason: str):
+        """
+        RU:
+        Очищает ресурсы клиента при отключении: удаляет из комнат, обновляет БД, 
+        закрывает сокет.
+        EN:
+        Cleans up client resources on disconnect: removes from rooms, updates DB, 
+        closes socket.
+        """
         warn(f"Cleanup ({reason}) for {self.address[0]}")
 
         try:
@@ -362,6 +572,14 @@ class ClientThread(Thread):
             pass
 
     def run(self):
+        """
+        RU:
+        Основной цикл чтения пакетов. Разбирает заголовок, читает пейлоад 
+        и передает управление нужному обработчику из LogicMessageFactory.
+        EN:
+        Main packet reading loop. Parses the header, reads the payload, 
+        and passes control to the appropriate handler from LogicMessageFactory.
+        """
         last_packet = time.time()
         try:
             while not SHUTDOWN.is_set():
@@ -428,29 +646,31 @@ class ClientThread(Thread):
             self._cleanup(f"Exception: {type(e).__name__}")
 
 
-# ═══════════════════════════════════════════════════════════════
-#                     MAINTENANCE
-# ═══════════════════════════════════════════════════════════════
 
 def _maintenance_worker(minutes):
+    """
+    RU:
+    Фоновый поток для режима тех. работ. Кикает всех, устанавливает таймер 
+    и снимает блокировку по истечении времени.
+    EN:
+    Background thread for maintenance mode. Kicks everyone, sets the timer, 
+    and lifts the block upon expiration.
+    """
     global MAINTENANCE_ACTIVE, MAINTENANCE_END_TIME
 
     seconds = minutes * 60
     MAINTENANCE_END_TIME = time.time() + seconds
     MAINTENANCE_ACTIVE = True
 
-    # 1. Ставим флаг в config.json
     CONFIG["Maintenance"] = True
     save_config()
     ok("config: Maintenance = true")
 
-    # 2. Кикаем всех
     if Server.Instance:
         Server.Instance.kick_all("maintenance start")
 
     ok(f"Maintenance ACTIVE for {minutes} min")
 
-    # 3. Отсчёт
     try:
         while not SHUTDOWN.is_set():
             remaining = MAINTENANCE_END_TIME - time.time()
@@ -458,14 +678,12 @@ def _maintenance_worker(minutes):
                 break
             m = int(remaining) // 60
             s = int(remaining) % 60
-            # раз в 30 секунд — лог
             if s % 30 == 0 and int(remaining) % 30 == 0:
                 info(f"Maintenance: {m:02d}:{s:02d} remaining")
             time.sleep(1)
     except Exception as e:
         error(f"maintenance countdown failed: {e}")
 
-    # 4. Снимаем
     if SHUTDOWN.is_set():
         return
     CONFIG["Maintenance"] = False
@@ -476,6 +694,12 @@ def _maintenance_worker(minutes):
 
 
 def cmd_maintenance(*args):
+    """
+    RU:
+    Команда CLI для запуска тех. работ на N минут.
+    EN:
+    CLI command to start maintenance for N minutes.
+    """
     global MAINTENANCE_ACTIVE
 
     if MAINTENANCE_ACTIVE:
@@ -500,10 +724,16 @@ def cmd_maintenance(*args):
 
 
 # ═══════════════════════════════════════════════════════════════
-#                     CLI КОМАНДЫ
+#                     CLI КОМАНДЫ / CLI COMMANDS
 # ═══════════════════════════════════════════════════════════════
 
 def cmd_help(*_):
+    """
+    RU:
+    Выводит список доступных консольных команд.
+    EN:
+    Prints the list of available console commands.
+    """
     print()
     print(f"{C.BOLD}{C.CYAN}─── {t('help_header','SERVER COMMANDS')} ───{C.RESET}")
     print(f"  {C.CYAN}help{C.RESET}                      — this list")
@@ -532,6 +762,12 @@ def cmd_help(*_):
 
 
 def cmd_exit(*_):
+    """
+    RU:
+    Корректно завершает работу сервера и выходит из процесса.
+    EN:
+    Gracefully shuts down the server and exits the process.
+    """
     print()
     print(f"{C.GREEN}{t('bye','Bye!')}{C.RESET}")
     if Server.Instance:
@@ -541,10 +777,22 @@ def cmd_exit(*_):
 
 
 def cmd_clear(*_):
+    """
+    RU:
+    Очищает консоль.
+    EN:
+    Clears the console.
+    """
     os.system('cls' if os.name == 'nt' else 'clear')
 
 
 def cmd_reload(*_):
+    """
+    RU:
+    Горячая перезагрузка конфигурации и обработчиков пакетов без выключения сервера.
+    EN:
+    Hot reload of configuration and packet handlers without shutting down the server.
+    """
     info("Reloading...")
     try:
         import Logic.LogicMessageFactory
@@ -567,6 +815,12 @@ def cmd_reload(*_):
 
 
 def cmd_debug(*args):
+    """
+    RU:
+    Включает или выключает подробные DEBUG-логи.
+    EN:
+    Enables or disables detailed DEBUG logs.
+    """
     global DEBUG_ENABLED
     if not args:
         info(f"debug is {'ON' if DEBUG_ENABLED else 'OFF'}")
@@ -583,6 +837,12 @@ def cmd_debug(*args):
 
 
 def cmd_verbose(*args):
+    """
+    RU:
+    Включает или выключает логирование вызовов обработчиков.
+    EN:
+    Enables or disables handler invocation logging.
+    """
     global VERBOSE_HANDLERS
     if not args:
         info(f"verbose is {'ON' if VERBOSE_HANDLERS else 'OFF'}")
@@ -599,6 +859,12 @@ def cmd_verbose(*args):
 
 
 def cmd_clients(*_):
+    """
+    RU:
+    Выводит таблицу всех игроков, находящихся сейчас на сервере.
+    EN:
+    Prints a table of all players currently on the server.
+    """
     clients = Server.Clients["Clients"]
     if not clients:
         info(t('no_clients','no clients online'))
@@ -615,6 +881,12 @@ def cmd_clients(*_):
 
 
 def cmd_info(*args):
+    """
+    RU:
+    Показывает подробную информацию о конкретном игроке.
+    EN:
+    Shows detailed information about a specific player.
+    """
     if not args:
         warn("usage: info <low_id>")
         return
@@ -632,6 +904,12 @@ def cmd_info(*args):
 
 
 def cmd_kick(*args):
+    """
+    RU:
+    Отключает конкретного игрока от сервера.
+    EN:
+    Disconnects a specific player from the server.
+    """
     if not args:
         warn("usage: kick <low_id>")
         return
@@ -648,12 +926,24 @@ def cmd_kick(*args):
 
 
 def cmd_kickall(*_):
+    """
+    RU:
+    Отключает всех игроков от сервера.
+    EN:
+    Disconnects all players from the server.
+    """
     if Server.Instance:
         Server.Instance.kick_all("manual kickall")
         ok("all clients kicked")
 
 
 def cmd_rooms(*_):
+    """
+    RU:
+    Выводит список активных комнат (лобби).
+    EN:
+    Prints the list of active rooms (lobbies).
+    """
     if not Helpers.rooms:
         info(t('no_rooms','no rooms'))
         return
@@ -667,6 +957,12 @@ def cmd_rooms(*_):
 
 
 def cmd_send(*args):
+    """
+    RU:
+    Отправляет конкретный серверный пакет игроку по его ID.
+    EN:
+    Sends a specific server packet to a player by their ID.
+    """
     if len(args) < 2:
         warn("usage: send <low_id> <packet_id>")
         return
@@ -694,6 +990,12 @@ def cmd_send(*args):
 
 
 def cmd_sendall(*args):
+    """
+    RU:
+    Отправляет пакет всем игрокам на сервере.
+    EN:
+    Sends a packet to all players on the server.
+    """
     if not args:
         warn("usage: sendall <packet_id>")
         return
@@ -702,43 +1004,87 @@ def cmd_sendall(*args):
 
 
 def cmd_dumppacket(*args):
+    """
+    RU:
+    Собирает пакет (или из packets, или из серверных), выводит его HEX-дамп
+    и отправляет клиенту.
+    EN:
+    Assembles a packet (either from packets or server packets), prints its HEX dump,
+    and sends it to the client.
+    """
     if len(args) < 2:
-        warn("usage: dumppacket <low_id> <packet_id>")
+        warn("usage: dumppacket <low_id> <packet_id> [arg1] [arg2] ...")
         return
     low_id, packet_id = args[0], int(args[1])
     entry = Server.Clients["Clients"].get(str(low_id))
     if not entry:
         warn(f"client {low_id} not online")
         return
-    if packet_id not in packets:
-        warn(f"unknown packet id {packet_id}")
-        return
-    try:
-        from Utils.Writer import Writer
+
+    player = entry["Player"]
+    client = entry["SocketInfo"]
+
+    # 1) Клиентский пакет (есть в packets) — у него decode/process, а не encode
+    if packet_id in packets:
         cls = packets[packet_id]
+        if not hasattr(cls, 'encode'):
+            error(f"packet {packet_id} ({cls.__name__}) is a CLIENT packet "
+                  f"(has decode/process, not encode) — cannot be sent from server")
+            return
+        from Utils.Writer import Writer
         obj = cls.__new__(cls)
-        Writer.__init__(obj, entry["SocketInfo"])
-        obj.player = entry["Player"]
+        Writer.__init__(obj, client)
+        obj.player = player
         obj.id = packet_id
         obj.encode()
         packet = obj.buffer
+    else:
+        # 2) Серверный пакет — пробуем импортировать по известным путям
+        cls = _resolve_server_packet(packet_id)
+        if cls is None:
+            warn(f"unknown packet id {packet_id} (not in packets, not a known server packet)")
+            return
 
-        full = packet_id.to_bytes(2, 'big', signed=True)
-        full += len(packet).to_bytes(3, 'big')
-        full += (0).to_bytes(2, 'big')
-        full += packet + b'\xff\xff\x00\x00\x00\x00\x00'
+        extra = args[2:]
+        try:
+            obj = _instantiate_server_packet(cls, client, player, extra)
+        except Exception as e:
+            error(f"cannot instantiate {cls.__name__}: {type(e).__name__}: {e}")
+            debug(traceback.format_exc())
+            return
 
-        print(f"{C.BOLD}PACKET {packet_id} (len={len(packet)}):{C.RESET}")
-        print(f"  hex: {C.YELLOW}{packet.hex()}{C.RESET}")
+        try:
+            obj.encode()
+        except Exception as e:
+            error(f"encode failed for {cls.__name__}: {type(e).__name__}: {e}")
+            debug(traceback.format_exc())
+            return
 
-        entry["SocketInfo"].send(full)
+        packet = obj.buffer
+
+    # ── Общая отправка ──
+    full = packet_id.to_bytes(2, 'big', signed=True)
+    full += len(packet).to_bytes(3, 'big')
+    full += (0).to_bytes(2, 'big')
+    full += packet + b'\xff\xff\x00\x00\x00\x00\x00'
+
+    print(f"{C.BOLD}PACKET {packet_id} (len={len(packet)}):{C.RESET}")
+    print(f"  hex: {C.YELLOW}{packet.hex()}{C.RESET}")
+
+    try:
+        client.send(full)
         ok(f"dumped {packet_id} → {low_id}")
     except Exception as e:
-        error(f"dumppacket failed: {type(e).__name__}: {e}")
-        debug(traceback.format_exc())
+        error(f"send failed: {type(e).__name__}: {e}")
 
 
 def cmd_set(*args):
+    """
+    RU:
+    Изменяет значение конкретного поля игрока напрямую в базе данных.
+    EN:
+    Modifies a specific player field value directly in the database.
+    """
     if len(args) < 3:
         warn("usage: set <low_id> <field> <value>")
         return
@@ -767,6 +1113,10 @@ def cmd_set(*args):
         error(f"{t('set_fail','update failed')}: {e}")
 
 
+"""
+RU: Словарь, связывающий команды CLI с их обработчиками.
+EN: Dictionary linking CLI commands to their handlers.
+"""
 COMMANDS = {
     'help': cmd_help, '?': cmd_help,
     'exit': cmd_exit, 'quit': cmd_exit, 'stop': cmd_exit,
@@ -788,10 +1138,16 @@ COMMANDS = {
 
 
 # ═══════════════════════════════════════════════════════════════
-#                     CLI LOOP
+#                     CLI LOOP / ЦИКЛ КОНСОЛИ
 # ═══════════════════════════════════════════════════════════════
 
 def cli_loop():
+    """
+    RU:
+    Основной цикл чтения команд из консоли с поддержкой истории.
+    EN:
+    Main console command reading loop with history support.
+    """
     history = InMemoryHistory()
     session = PromptSession(history=history, enable_history_search=True)
 
@@ -826,16 +1182,33 @@ def cli_loop():
 
 
 # ═══════════════════════════════════════════════════════════════
-#                           MAIN
+#                           MAIN / ТОЧКА ВХОДА
 # ═══════════════════════════════════════════════════════════════
 
 def main():
+    """
+    RU:
+    Точка входа в приложение. Загружает конфиг, запускает TCP и UDP сервера,
+    а затем передает управление CLI.
+    EN:
+    Application entry point. Loads config, starts TCP and UDP servers, 
+    and then transfers control to the CLI.
+    """
     load_config()
 
-    print(f"{C.BOLD}{C.CYAN}╔══════════════════════════════════════════════════════════╗{C.RESET}")
-    print(f"{C.BOLD}{C.CYAN}║          KIWI BRAWL — PRIVATE SERVER (v26)              ║{C.RESET}")
-    print(f"{C.BOLD}{C.CYAN}╚══════════════════════════════════════════════════════════╝{C.RESET}")
-    print(f"{C.DIM}Python {sys.version.split()[0]} on {sys.platform} | Lang: {LANG}{C.RESET}")
+    print()
+    print(f"{C.MAGENTA}██╗  ██╗██╗██╗    ██╗    ██████╗ ██████╗  █████╗ ██╗    ██╗██╗{C.RESET}")
+    print(f"{C.MAGENTA}██║ ██╔╝██║██║    ██║    ██╔══██╗██╔══██╗██╔══██╗██║    ██║██║{C.RESET}")
+    print(f"{C.CYAN}█████╔╝ ██║██║ █╗ ██║    ██████╔╝██████╔╝███████║██║ █╗ ██║██║{C.RESET}")
+    print(f"{C.CYAN}██╔═██╗ ██║██║███╗██║    ██╔══██╗██╔══██╗██╔══██║██║███╗██║██║{C.RESET}")
+    print(f"{C.GREEN}██║  ██╗██║╚███╔███╔╝    ██████╔╝██║  ██║██║  ██║╚███╔███╔╝██║{C.RESET}")
+    print(f"{C.GREEN}╚═╝  ╚═╝╚═╝ ╚══╝╚══╝     ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝ ╚══╝╚══╝ ╚═╝{C.RESET}")
+    print()
+    print(f"  {C.BOLD}{C.YELLOW}PRIVATE SERVER{C.RESET} {C.DIM}• v26 • Python {sys.version.split()[0]}{C.RESET}")
+    print(f"  {C.CYAN}┌────────────────────────────────────────────────────────┐{C.RESET}")
+    print(f"  {C.CYAN}│{C.RESET} {C.DIM}OS:{C.RESET} {sys.platform:<20} {C.DIM}Lang:{C.RESET} {LANG.upper():<15} {C.CYAN}        │{C.RESET}")
+    print(f"  {C.CYAN}└────────────────────────────────────────────────────────┘{C.RESET}")
+    print()
     print()
 
     global UDP_SERVER
@@ -843,13 +1216,16 @@ def main():
     server = Server('0.0.0.0', 2556)
     server.start()
 
-    # ─── UDP-сервер для боёв ───
+    # ─── UDP-сервер для боёв / UDP battle server ───
     from Utils.UDPServer import UDPServer
     UDP_SERVER = UDPServer(port=9339)
     UDP_SERVER.start()
     ok(f"UDP battle server: 0.0.0.0:9339")
 
     Server.Clients["UDP_SERVER"] = UDP_SERVER
+
+    from webui.api import start_web_server
+    start_web_server(port=6767)
 
     ok(f"Lobby:  0.0.0.0:2556")
     ok(f"Battle: 0.0.0.0:6969")

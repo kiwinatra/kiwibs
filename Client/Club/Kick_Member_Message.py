@@ -10,24 +10,35 @@ class Kick_Member_Message(BSMessageReader):
         super().__init__(initial_bytes)
         self.player = player
         self.client = client
+
     def decode(self):
         self.read_int()
         self.lowID = self.read_int()
         self.reason = self.read_string()
+
     def process(self):
+        if self.player.club_role not in (2, 3, 4):
+            print(f"[KICK] no rights")
+            return
+
         account = DataBase.loadbyID(self, self.lowID)
-        
-        DataBase.AddMember(self, account[3], self.lowID, account[1], 2)
-        AllianceKickMemberOK(self.client, self.player).send()
-        self.clubLowID = account[3]
-        i = DataBase.loadbyID(self, self.player.low_id)
-        
+        if not account:
+            return
+
+        club_id = account[11]
+
+        DataBase.AddMember(self, club_id, self.lowID, account[2], 2)
+        DataBase.Addmsg(self, club_id, 4, 1, account[2], self.player.name,
+                        self.player.club_role, 1)
         DataBase.replaceOtherValue(self, self.lowID, "clubID", 0)
         DataBase.replaceOtherValue(self, self.lowID, "clubRole", 0)
-        DataBase.Addmsg(self, self.player.club_low_id, 4, 1, account[2], self.player.name, self.player.club_role, 1)
-        
-        	
-        MyAllianceMessage(self.client, self.player, self.clubLowID).send()
-        DataBase.loadClub(self, self.player.club_low_id)
-        for i in self.plrids:
-        	AllianceChatServer(self.client, self.player, "dev", self.player.club_low_id).send()
+
+        AllianceKickMemberOK(self.client, self.player).send()
+        MyAllianceMessage(self.client, self.player, club_id).send()
+
+        DataBase.loadClub(self, club_id)
+        for pid in self.plrids:
+            try:
+                AllianceChatServer(self.client, self.player, 1, club_id).sendWithLowID(pid)
+            except Exception:
+                pass

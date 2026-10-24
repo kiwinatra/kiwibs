@@ -97,6 +97,8 @@ class Players:
     room_id = 0
     brawler_id = 0
     skin_id = 0
+    gadget_id = 0
+    sp_id = 0
     trioWINS = 0
     sdWINS = 0
     # === Служебные флаги для боя ===
@@ -107,6 +109,17 @@ class Players:
     state = 0
     pin = 0
     mode = 0
+    use_gadget = True   # или False, если хочешь по умолчанию выключить
+    isPlayingFromMenu = False
+
+    # ====== Сохранённый выбор ивента/карты (живёт до дисконнекта) ======
+    # ВАЖНО: определены как атрибуты класса, иначе __getattr__ вернёт 0
+    # и getattr(player, 'map_id', 14) вернёт 0, а не 14.
+    event_type = 1
+    map_id = 14
+
+    play_thread_active = False
+    client_joined_team_signal = 0
 
     # ====== БОЙЦЫ (все открыты) ======
     UnlockedBrawlers = {str(i): 1 for i in BRAWLERS_ID}
@@ -120,7 +133,6 @@ class Players:
     # ====== Card Unlock IDs (для OwnHomeDataMessage) ======
     brawlers_card_id = BRAWLERS_CARD_ID
     card_unlock_id = BRAWLERS_CARD_ID
-    state = 0
 
     # ====== Star Powers & Gadgets ======
     brawlers_spg = BRAWLERS_SPG
@@ -128,14 +140,9 @@ class Players:
     # ====== ПИНЫ (все открыты) ======
     UnlockedPins = {str(i): 1 for i in ALL_PINS}
 
-    # ====== Для OwnHomeDataMessage ======
-    bet = 0
-
     # ====== Служебные ======
     ClientDict = {}
     device = None
-
-	
 
     def __init__(self, device):
         self.device = device

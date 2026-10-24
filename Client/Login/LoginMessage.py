@@ -9,6 +9,16 @@ from Server.Club.AllianceStreamMessage import AllianceStreamMessage
 from Server.Club.MyAllianceMessage import MyAllianceMessage
 from Server.Friend.FriendListMessage import FriendListMessage
 import os
+import traceback
+
+
+def _get_online_count():
+    """Реальное число онлайн из Server.Clients. Lazy import — без цикла."""
+    try:
+        from core import Server
+        return max(1, Server.Clients.get("ClientCounts", 1))
+    except Exception:
+        return 1
 
 
 class LoginMessage(BSMessageReader):
@@ -43,21 +53,25 @@ class LoginMessage(BSMessageReader):
         if self.player.low_id >= 2:
             print(f"[LOGIN] Account exists, logging in...")
 
+            # 1. LoginOk
             LoginOkMessage(self.client, self.player).send()
             print("[LOGIN] → LoginOkMessage sent")
 
-            try:
-                LobbyInfoMessage(self.client, self.player, 1).send()
-                print("[LOGIN] → LobbyInfoMessage sent (between LoginOk and HomeData)")
-            except Exception as e:
-                print(f"[LOGIN] ⚠ LobbyInfo FAILED: {type(e).__name__}: {e}")
-                import traceback
-                traceback.print_exc()
-
+            # 2. OwnHomeData (клиент строит лобби)
             print("[LOGIN] → OwnHomeDataMessage sending...")
             OwnHomeDataMessage(self.client, self.player).send()
             print("[LOGIN] → OwnHomeDataMessage sent OK")
 
+            # 3. LobbyInfo — ПОСЛЕ OwnHomeData, count = реальный онлайн
+            online = _get_online_count()
+            try:
+                LobbyInfoMessage(self.client, self.player, online).send()
+                print(f"[LOGIN] → LobbyInfoMessage sent (count={online})")
+            except Exception as e:
+                print(f"[LOGIN] ⚠ LobbyInfo FAILED: {type(e).__name__}: {e}")
+                traceback.print_exc()
+
+            # 4. Club messages
             try:
                 MyAllianceMessage(self.client, self.player, self.player.club_low_id).send()
                 AllianceStreamMessage(self.client, self.player, self.player.club_low_id, 0).send()
@@ -70,14 +84,15 @@ class LoginMessage(BSMessageReader):
                 except Exception as e2:
                     print(f"[LOGIN] Club fallback error: {e2}")
 
+            # 5. Friend list
             try:
                 FriendListMessage(self.client, self.player).send()
                 print("[LOGIN] → FriendListMessage sent")
             except Exception as e:
                 print(f"[LOGIN] Friend error: {e}")
-                import traceback
                 traceback.print_exc()
 
+            # 6. Reset room
             try:
                 DataBase.replaceValue(self, 'roomID', 0)
                 print("[LOGIN] → roomID reset to 0")
@@ -102,25 +117,30 @@ class LoginMessage(BSMessageReader):
             print(f"[LOGIN] createAccount SUCCESS")
         except Exception as e:
             print(f"[LOGIN] createAccount FAILED: {e}")
-            import traceback
             traceback.print_exc()
             self.player.err_code = 8
             LoginFailedMessage(self.client, self.player, "Ошибка создания аккаунта!").send()
             return
 
+        # 1. LoginOk
         LoginOkMessage(self.client, self.player).send()
         print("[LOGIN] → LoginOkMessage sent (new acc)")
 
-        try:
-            LobbyInfoMessage(self.client, self.player, 1).send()
-            print("[LOGIN] → LobbyInfoMessage sent (new acc)")
-        except Exception as e:
-            print(f"[LOGIN] ⚠ LobbyInfo FAILED: {e}")
-
+        # 2. OwnHomeData
         print("[LOGIN] → OwnHomeDataMessage sending (new acc)...")
         OwnHomeDataMessage(self.client, self.player).send()
         print("[LOGIN] → OwnHomeDataMessage sent OK (new acc)")
 
+        # 3. LobbyInfo — после OwnHomeData
+        online = _get_online_count()
+        try:
+            LobbyInfoMessage(self.client, self.player, online).send()
+            print(f"[LOGIN] → LobbyInfoMessage sent (new acc, count={online})")
+        except Exception as e:
+            print(f"[LOGIN] ⚠ LobbyInfo FAILED (new acc): {type(e).__name__}: {e}")
+            traceback.print_exc()
+
+        # 4. Reset room
         try:
             DataBase.replaceValue(self, 'roomID', 0)
         except Exception as e:

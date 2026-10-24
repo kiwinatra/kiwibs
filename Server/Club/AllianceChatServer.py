@@ -1,8 +1,8 @@
 from Utils.Writer import Writer
-from database.DataBase import DataBase
 import sqlite3 as sql
-class AllianceChatServer(Writer):
 
+
+class AllianceChatServer(Writer):
     def __init__(self, client, player, msg_content, clubID, isbot=False):
         super().__init__(client)
         self.msg_content = msg_content
@@ -10,46 +10,42 @@ class AllianceChatServer(Writer):
         self.player = player
         self.clubID = clubID
         self.isbot = isbot
-        self.client = client
 
     def encode(self):
-        DataBase.GetmsgCount(self, self.clubID)
-        clubid = self.player.club_low_id
-        self.conn = sql.connect("database/Club/clubs.db")
-        self.con = sql.connect("database/Club/chats.db")
-        self.cur= self.conn.cursor()
-        self.chat = self.con.cursor()
-        
-        self.chat.execute(f"SELECT * FROM chats WHERE clubID={clubid}")
-        fetch = self.chat.fetchall()
-        	#AllianceStreamMessage(self.client, self.player, self.player.club_low_id, 0).send()
-        i = fetch[len(fetch)-1]
-        if self.isbot == False:
-            self.writeVint(i[1])
+        try:
+            self.con = sql.connect("database/Club/chats.db")
+            self.chat = self.con.cursor()
+            self.chat.execute(
+                "SELECT * FROM chats WHERE clubID=? ORDER BY Tick DESC LIMIT 1",
+                (self.clubID,),
+            )
+            row = self.chat.fetchone()
+            self.con.close()
+        except Exception as e:
+            print(f"[CHAT] load failed: {e}")
+            row = None
+
+        if not row:
             self.writeVint(0)
-            self.writeVint(len(fetch))
-            self.writeVint(0)
-            self.writeVint(i[3])#plrid
-            self.writeString(i[4])
-            self.writeVint(i[5])
-            self.writeVint(0)
-            self.writeVint(0)
-            if i[1] == 4:
-               self.writeVint(int(i[6]))#1 = Kicked, 2 = Join request accepted, 3 = Join the club, 4 = Leave the club
-               self.writeVint(1)
-               self.writeVint(0)
-               self.writeVint(i[3])
-               self.writeString(i[4])
-            else:
-               self.writeString(i[6])
-        else:
-            self.writeVint(i[1])
-            self.writeVint(0)
+            return
+
+        event, tick, plrid, plrname, plrrole, msg = row[1], row[2], row[3], row[4], row[5], row[6]
+
+        self.writeVint(event)
+        self.writeVint(0)
+        self.writeVint(tick)
+        self.writeVint(0)
+        self.writeVint(plrid)
+        self.writeString(plrname or "")
+        self.writeVint(plrrole or 0)
+        self.writeVint(0)
+        self.writeVint(0)
+
+        if event == 4:
+            self.writeVint(int(msg) if msg and str(msg).isdigit() else 0)
             self.writeVint(1)
             self.writeVint(0)
-            self.writeVint(i[3])#plrid
-            self.writeString(i[4])
-            self.writeVint(i[5])
-            self.writeVint(0)
-            self.writeVint(0)
-            self.writeString(i[6])
+            self.writeVint(plrid)
+            self.writeString(plrname or "")
+        else:
+            self.writeString(str(msg) if msg is not None else "")

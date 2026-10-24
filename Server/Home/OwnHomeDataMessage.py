@@ -4,6 +4,7 @@ from Logic.Shop import Shop
 import json
 from datetime import datetime
 from Server.Club.AllianceDataMessage import AllianceDataMessage
+from Utils.Helpers import Helpers
 
 
 class OwnHomeDataMessage(Writer):
@@ -15,7 +16,10 @@ class OwnHomeDataMessage(Writer):
         self.timestamp = int(datetime.timestamp(datetime.now()))
 
     def encode(self):
-        DataBase.loadAccount(self)
+        try:
+            DataBase.loadAccount(self)
+        except Exception as e:
+            print(f"[HOME] DB load error: {e}")
 
         self.writeVint(self.timestamp)
         self.writeVint(self.timestamp)
@@ -29,7 +33,6 @@ class OwnHomeDataMessage(Writer):
         self.writeScId(43, self.player.name_color)
 
         self.writeVint(0)
-
         self.writeVint(1)
         self.writeVint(29)
         self.writeVint(self.player.skin_id)
@@ -45,7 +48,6 @@ class OwnHomeDataMessage(Writer):
         self.writeVint(0)
         self.writeVint(0)
         self.writeVint(0)
-
         self.writeBoolean(False)
         self.writeVint(1)
         self.writeBoolean(True)
@@ -58,13 +60,10 @@ class OwnHomeDataMessage(Writer):
         self.writeVint(0)
         self.writeVint(0)
         self.writeVint(0)
-
         self.writeByte(8)
-
         self.writeBoolean(True)
         self.writeBoolean(True)
         self.writeBoolean(True)
-
         self.writeVint(0)
         self.writeVint(0)
 
@@ -72,9 +71,7 @@ class OwnHomeDataMessage(Writer):
         try:
             Shop.EncodeShopOffers(self)
         except Exception as e:
-            import traceback
-            print(f"[HOME] Shop error: {type(e).__name__}: {e}")
-            traceback.print_exc()
+            print(f"[HOME] Shop error: {e}")
             self.writeVint(0)
 
         self.writeVint(0)
@@ -102,26 +99,20 @@ class OwnHomeDataMessage(Writer):
         self.writeVint(0)
         self.writeVint(0)
         self.writeVint(0)
-
         self.writeBoolean(False)
-
         self.writeVint(2019049)
 
         self.writeVint(100)
         self.writeVint(10)
-
         self.writeVint(30)
         self.writeVint(3)
         self.writeVint(80)
         self.writeVint(10)
-
         self.writeVint(50)
         self.writeVint(1000)
-
         self.writeVint(500)
         self.writeVint(50)
         self.writeVint(999900)
-
         self.writeVint(0)
         self.writeVint(8)
 
@@ -134,24 +125,12 @@ class OwnHomeDataMessage(Writer):
         self.writeVint(7)
         self.writeVint(8)
 
-        # ═══════════════════════════════════════════
-        #             ЛОГИЧЕСКИЕ СОБЫТИЯ (РЕЖИМЫ)
-        # ═══════════════════════════════════════════
         events = [
-            (1, 1, 7),      # Gem Grab
-            (2, 2, 24),     # Showdown Solo
-            (3, 3, 32),     # Showdown Duo
-            (4, 4, 15),     # Brawl Ball
-            (5, 5, 4),      # Bounty
-            (6, 6, 1),      # Heist
-            (7, 7, 27),     # Hot Zone
-            (8, 8, 45),     # Knockout
-            (9, 9, 55),     # Volley Brawl
-            (10, 10, 60),   # Basket Brawl
-            (11, 11, 70),   # Duels
-            (12, 12, 2),    # Siege (RoboWars)
-            (13, 13, 3),    # Boss Fight
+            (1, 1, 7), (2, 2, 24), (3, 3, 32), (4, 4, 15),
+            (5, 5, 4), (6, 6, 1), (7, 7, 27), (8, 8, 45),
+            (9, 9, 55), (10, 10, 60), (11, 11, 70), (12, 12, 2), (13, 13, 3),
         ]
+        Helpers.events = events
 
         self.writeVint(len(events))
         for idx, (slot, mode_id, map_id) in enumerate(events, start=1):
@@ -161,7 +140,6 @@ class OwnHomeDataMessage(Writer):
             self.writeVint(86400)
             self.writeVint(0)
             self.writeScId(15, map_id)
-
             self.writeVint(3)
             self.writeString()
             self.writeVint(0)
@@ -173,7 +151,6 @@ class OwnHomeDataMessage(Writer):
 
         self.writeVint(0)
 
-        # ═════ Цены (Logic Shop) ═════
         self.writeVint(8)
         self.writeVint(20)
         self.writeVint(35)
@@ -206,7 +183,6 @@ class OwnHomeDataMessage(Writer):
 
         self.writeVint(1)
         self.writeVint(10)
-
         self.writeVint(1)
         self.writeVint(1337)
 
@@ -223,24 +199,18 @@ class OwnHomeDataMessage(Writer):
         self.writeBoolean(True)
 
         self.writeVint(0)
-
         self.writeVint(1)
         self.writeInt(1)
         self.writeInt(41000000 + self.player.theme)
-
         self.writeVint(0)
 
         self.writeInt(0)
         self.writeInt(1)
         self.writeVint(1)
 
-        # ═══════ INBOX MESSAGE — градиент + ID игрока ═══════
-        # Градиент: каждая буква своего цвета от голубого к фиолетовому.
         title = "KIWI BRAWL"
-        gradient = [
-            "00E5FF", "00D4FF", "00C0FF", "00A8FF", "0090FF",
-            "3A7BFF", "7A66FF", "A855FF", "C44DFF", "E040FF"
-        ]
+        gradient = ["00E5FF", "00D4FF", "00C0FF", "00A8FF", "0090FF",
+                    "3A7BFF", "7A66FF", "A855FF", "C44DFF", "E040FF"]
         title_colored = ""
         for i, ch in enumerate(title):
             color = gradient[i] if i < len(gradient) else gradient[-1]
@@ -249,7 +219,7 @@ class OwnHomeDataMessage(Writer):
             else:
                 title_colored += f"<c{color}>{ch}</c>"
 
-        self.writeVint(81)          # тип нотификации
+        self.writeVint(81)
         self.writeInt(1)
         self.writeBoolean(False)
         self.writeInt(0)
@@ -264,15 +234,12 @@ class OwnHomeDataMessage(Writer):
 
         self.writeVint(1)
         self.writeBoolean(True)
-
         self.writeVint(0)
         self.writeVint(0)
-
         self.writeVint(0)
         self.writeVint(self.player.low_id)
         self.writeVint(0)
         self.writeVint(self.player.low_id)
-
         self.writeVint(0)
         self.writeVint(self.player.low_id)
 
@@ -287,7 +254,6 @@ class OwnHomeDataMessage(Writer):
         self.writeVint(8)
 
         self.writeVint(len(self.player.brawlers_card_id) + 4)
-
         for unlock_id in self.player.brawlers_card_id:
             self.writeScId(23, unlock_id)
             self.writeVint(1)
@@ -336,7 +302,6 @@ class OwnHomeDataMessage(Writer):
             self.writeVint(1)
 
         self.writeVint(0)
-
         self.writeVint(self.player.gems)
         self.writeVint(self.player.gems)
         self.writeVint(0)
@@ -361,11 +326,18 @@ class OwnHomeDataMessage(Writer):
             DataBase.replaceValue(self, 'gems', self.player.gems)
 
         if self.player.vip == 0:
-            config = open('config.json', 'r')
-            content = config.read()
-            settings = json.loads(content)
-            if self.player.low_id in settings['vips']:
-                DataBase.replaceValue(self, 'vip', 1)
+            try:
+                config = open('config.json', 'r')
+                content = config.read()
+                settings = json.loads(content)
+                if self.player.low_id in settings['vips']:
+                    DataBase.replaceValue(self, 'vip', 1)
+            except Exception:
+                pass
 
+        # ═══ ЗАЩИТА КЛУБА ОТ КРАША ═══
         if self.player.club_low_id > 0:
-            AllianceDataMessage(self.client, self.player, 0, self.player.club_low_id).send()
+            try:
+                AllianceDataMessage(self.client, self.player, 0, self.player.club_low_id).send()
+            except Exception as e:
+                print(f"[HOME] Club load failed (ignored to prevent freeze): {e}")

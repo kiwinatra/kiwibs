@@ -8,7 +8,6 @@ class TeamLeaveOkMessage(Writer):
         super().__init__(client)
         self.id = 24125
         self.player = player
-        # Если low_id не передан — считаем, что выходит сам игрок
         self.low_id = low_id if low_id is not None else player.low_id
 
     def encode(self):
@@ -18,7 +17,6 @@ class TeamLeaveOkMessage(Writer):
 
         room = Helpers.find_room(self.player.room_id)
         if not room:
-            # Комната не найдена — если это свой выход, чистим room_id
             if is_self_leave:
                 self.player.room_id = 0
                 DataBase.replaceValue(self, 'roomID', 0)
@@ -27,15 +25,18 @@ class TeamLeaveOkMessage(Writer):
         print(f"[LEAVE-OK] low_id={self.low_id} (self_leave={is_self_leave}), "
               f"roomID={room['roomID']}, plrs BEFORE={[p['id'] for p in room['plrs']]}")
 
-        # Удаляем из комнаты ИМЕННО того, кто уходит
         room['plrs'] = [p for p in room['plrs'] if p.get('id') != self.low_id]
 
-        print(f"[LEAVE-OK] plrs AFTER={[p['id'] for p in room['plrs']]}")
-
+        # ── Если комната опустела — удаляем её из списка ──
         if not room['plrs']:
-            print(f"[ROOM] room {room['roomID']} is now empty (kept in list)")
+            try:
+                Helpers.rooms.remove(room)
+                print(f"[ROOM] room {room['roomID']} removed (empty)")
+            except ValueError:
+                pass
 
-        # Сбрасываем room_id ТОЛЬКО у того, кто уходит сам
+        print(f"[LEAVE-OK] plrs AFTER={[p['id'] for p in room['plrs']] if room in Helpers.rooms else 'room removed'}")
+
         if is_self_leave:
             self.player.room_id = 0
             DataBase.replaceValue(self, 'roomID', 0)

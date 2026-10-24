@@ -15,39 +15,34 @@ class Upgrade_Brawler(BSMessageReader):
         self.read_Vint()                  # csvID
         self.BrawlerID = self.read_Vint() # BrawlerID
 
-
     def process(self):
-        self.player.brawlerPowerLevel[str(self.BrawlerID)] += 1
-        if self.player.brawlerPowerLevel[str(self.BrawlerID)] == 1:
-            newGold = self.player.gold - 20
-            self.player.gold = newGold
-            DataBase.replaceValue(self, 'gold', newGold)
-        if self.player.brawlerPowerLevel[str(self.BrawlerID)] == 2:
-            newGold = self.player.gold - 35
-            self.player.gold = newGold
-            DataBase.replaceValue(self, 'gold', newGold)
-        if self.player.brawlerPowerLevel[str(self.BrawlerID)] == 3:
-            newGold = self.player.gold - 75
-            self.player.gold = newGold
-            DataBase.replaceValue(self, 'gold', newGold)
-        if self.player.brawlerPowerLevel[str(self.BrawlerID)] == 4:
-            newGold = self.player.gold - 140
-            self.player.gold = newGold
-            DataBase.replaceValue(self, 'gold', newGold)
-        if self.player.brawlerPowerLevel[str(self.BrawlerID)] == 5:
-            newGold = self.player.gold - 290
-            self.player.gold = newGold
-            DataBase.replaceValue(self, 'gold', newGold)
-        if self.player.brawlerPowerLevel[str(self.BrawlerID)] == 6:
-            newGold = self.player.gold - 480
-            self.player.gold = newGold
-            DataBase.replaceValue(self, 'gold', newGold)
-        if self.player.brawlerPowerLevel[str(self.BrawlerID)] == 7:
-            newGold = self.player.gold - 800
-            self.player.gold = newGold
-            DataBase.replaceValue(self, 'gold', newGold)
-        if self.player.brawlerPowerLevel[str(self.BrawlerID)] == 8:
-            newGold = self.player.gold - 1250
-            self.player.gold = newGold
-            DataBase.replaceValue(self, 'gold', newGold)
+        b_id = str(self.BrawlerID)
+        current_level = self.player.brawlerPowerLevel.get(b_id, 1)
+        
+        # 1. Проверка на максимальный уровень
+        if current_level >= 10:
+            print(f"[UPGRADE] Бравлер {b_id} уже 10 уровня!")
+            return
+            
+        # 2. Стоимость апгрейда для каждого уровня (от 1 до 9)
+        upgrade_costs = {
+            1: 20, 2: 35, 3: 75, 4: 140, 
+            5: 290, 6: 480, 7: 800, 8: 1250, 
+            9: 2000 # 9 -> 10
+        }
+        cost = upgrade_costs.get(current_level, 0)
+        
+        # 3. Проверка на наличие золота
+        if self.player.gold < cost:
+            print(f"[UPGRADE] Не хватает золота! Есть {self.player.gold}, нужно {cost}")
+            return
+            
+        # 4. Прокачиваем
+        self.player.gold -= cost
+        self.player.brawlerPowerLevel[b_id] = current_level + 1
+        
+        # Сохраняем в БД
+        DataBase.replaceValue(self, 'gold', self.player.gold)
         DataBase.replaceValue(self, 'brawlerPowerLevel', self.player.brawlerPowerLevel)
+        
+        print(f"[UPGRADE] Бравлер {b_id} прокачан до {current_level + 1} ур. Списано {cost} золота.")

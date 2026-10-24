@@ -66,3 +66,37 @@ class Cards:
             return int(row[10]) if row[10] else 0
         except (IndexError, ValueError, TypeError):
             return 0
+
+    @staticmethod
+    def get_first_spg(brawler_id):
+        try:
+            reader = CsvReader()
+            charsData = reader.readCsv('GameAssets/csv_logic/characters.csv')
+            cardsData = reader.readCsv('GameAssets/csv_logic/cards.csv')
+            
+            brawler_name = charsData[brawler_id][0]
+            sp_id = 0
+            gadget_id = 0
+            
+            for idx, row in enumerate(cardsData):
+                if len(row) > 5 and row[3] == brawler_name:
+                    if row[5].lower() == '5' and sp_id == 0:
+                        sp_id = idx
+                    elif row[5].lower() == '4' and gadget_id == 0:
+                        gadget_id = idx
+            return sp_id, gadget_id
+        except Exception as e:
+            print(f"[CARDS] get_first_spg error: {e}")
+            return 0, 0
+
+
+    @staticmethod
+    def get_card_type(card_id):
+        try:
+            reader = CsvReader()
+            cardsData = reader.readCsv('GameAssets/csv_logic/cards.csv')
+            if 0 <= card_id < len(cardsData):
+                return cardsData[card_id][5].lower() # '4' = гаджет, '5' = СП
+            return '0'
+        except Exception:
+            return '0'

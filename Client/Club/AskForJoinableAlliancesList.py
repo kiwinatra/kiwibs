@@ -1,6 +1,6 @@
 from Server.Club.JoinableAllianceListMessage import JoinableAllianceListMessage
-
 from Utils.Reader import BSMessageReader
+import traceback
 
 class AskForJoinableAlliancesList(BSMessageReader):
     def __init__(self, client, player, initial_bytes):
@@ -12,4 +12,11 @@ class AskForJoinableAlliancesList(BSMessageReader):
         pass
 
     def process(self):
-        JoinableAllianceListMessage(self.client, self.player).send()
+        try:
+            JoinableAllianceListMessage(self.client, self.player).send()
+        except Exception as e:
+            print(f"[CLUBS] КРИТИЧЕСКАЯ ОШИБКА при отправке списка клубов: {e}")
+            traceback.print_exc()
+            # Отправляем пустой список, чтобы клиент не крашился
+            self.writeVint(0)
+            self.send()

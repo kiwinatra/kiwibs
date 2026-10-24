@@ -16,6 +16,7 @@ from Client.Battle.OnPlay import OnPlay
 from Client.Battle.ClientInputMessage import ClientInputMessage
 from Client.Battle.ClientInfoMessage import ClientInfoMessage
 from Client.Home.GoHomeMessage import GoHomeMessage
+from Client.AnalyticsEventMessage import AnalyticsEventMessage
 
 
 #room
@@ -53,16 +54,30 @@ from Client.Club.Kick_Member_Message import Kick_Member_Message
 from Client.Club.Leave_Message import Leave_Message
 from Client.Friend.SendAllianceInvitationFriend import SendAllianceInvitationFriend
 from Client.Team.TeamSetEventMessage import TeamSetEventMessage
+
+
+
+class _IgnoredMessage:
+    def __init__(self, client, player, initial_bytes):
+        pass
+    def decode(self):
+        pass
+    def process(self):
+        pass
+
 packets = {
+    10099: AnalyticsEventMessage,
     10100: ClientHelloMessage,
     10101: LoginMessage,
     10107: ClientCapabilities,
     10108: KeepAliveMessage,
     10110: AnalyticsEventMessage,
     10212: SetNameMessage,
+    10113: AnalyticsEventMessage,
     14102: EndClientTurn,
     14103: OnPlay,
     14101: GoHomeMessage,
+    14105: GoHomeMessage,
     14106: CancelMatchMaking,
     14109: GoHomeFromOfflinePractiseMessage,
     14110: AskForBattleEndMessage,
@@ -72,6 +87,8 @@ packets = {
 
 
     # Friendly battle lobby
+
+    14330: _IgnoredMessage,
     
     14366: PlayerStatusMessage,
     14403: GetLeaderboardMessage,
@@ -109,4 +126,5 @@ packets = {
 	
     18686: SetSupportedCreatorMessage,
     14114: HomeBattleReplayMessage,
+    15793: AnalyticsEventMessage,
 }

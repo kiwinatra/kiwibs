@@ -1,5 +1,7 @@
 from Utils.Writer import Writer
 from database.DataBase import DataBase
+
+
 class AllianceBotChatServerMessage(Writer):
     def __init__(self, client, player, bot_msg_content):
         super().__init__(client)
@@ -14,8 +16,8 @@ class AllianceBotChatServerMessage(Writer):
         self.writeVint(self.MessageCount)
         self.writeVint(1)
         self.writeVint(1)
-        self.writeString("ПОМОЩЬ В КЛУБЕ")
+        self.writeString("помощник по клубу эйй")
         self.writeVint(3)
         self.writeVint(0)
         self.writeVint(0)
-        self.writeString(self.bot_msg_content)
+        self.writeString(self.bot_msg_content or "")

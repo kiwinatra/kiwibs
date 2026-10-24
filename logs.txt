@@ -1,0 +1,2801 @@
+╔══════════════════════════════════════════════════════════╗
+[PLAYER] Pins loaded: 22
+[PLAYER] CSV loaded: 35 brawlers, 171 skins, 125 SPG
+║          KIWI BRAWL — PRIVATE SERVER (v26)              ║
+╚══════════════════════════════════════════════════════════╝
+Python 3.12.3 on linux | Lang: en
+
+[22:04:28] [ OK  ] DB reset complete
+[22:04:28] [ OK  ] UDP battle server: 0.0.0.0:9339
+[UDP] listening on 0.0.0.0:9339
+[22:04:28] [ OK  ] Lobby:  0.0.0.0:2556
+[22:04:28] [ OK  ] Battle: 0.0.0.0:6969
+[22:04:28] [INFO ] Waiting for connections...
+[22:04:28] [INFO ] Type 'help' for command list
+
+kiwi>
+
+
+
+
+
+
+       [22:04:33] [DEBUG] New connection: 192.168.0.100:46740
+kiwi>
+
+
+
+
+
+
+       [PLAYER] Players created. Brawlers: 35, Skins: 171, SPG: 125, Pins: 22
+kiwi>
+
+
+
+
+
+
+       [22:04:33] [ OK  ] Client thread started. Total: 1
+kiwi>
+
+
+
+
+
+
+       [22:04:33] [DEBUG] Packet → id=10101, len=252
+kiwi>
+
+
+
+
+
+
+       [22:04:33] [DEBUG] Handling 10101 (LoginMessage)
+kiwi>
+
+
+
+
+
+
+       [LOGIN-DECODE] high_id=0, low_id=1, token='mY8akZSireFLxXfUm4m0sk0cPr0YHRyCB3B2c2WX'
+[LOGIN] Start: low_id=1, token='mY8akZSireFLxXfUm4m0sk0cPr0YHRyCB3B2c2WX'
+kiwi>
+
+
+
+
+
+
+       [22:04:33] [ OK  ] Client registered: low_id=42
+kiwi>
+
+
+
+
+
+
+       [22:04:33] [DEBUG] Packet → id=10110, len=190
+kiwi>
+
+
+
+
+
+
+       [22:04:33] [DEBUG] Handling 10110 (AnalyticsEventMessage)
+kiwi>
+
+
+
+
+
+
+       [LOGIN] After loadAccount: low_id=42, name='fear my bibi'
+[LOGIN] Account exists, logging in...
+[LOGIN] → LoginOkMessage sent
+[LOGIN] → OwnHomeDataMessage sending...
+[SHOP] EncodeShopOffers: 30 offers
+[LOGIN] → OwnHomeDataMessage sent OK
+[LOGIN] → LobbyInfoMessage sent (count=1)
+[LOGIN] → Club messages sent
+[LOGIN] → FriendListMessage sent
+[LOGIN] → roomID reset to 0
+[LOGIN] Done (existing account)
+kiwi>
+
+
+
+
+
+
+       [22:04:33] [DEBUG] Packet → id=14366, len=1
+kiwi>
+
+
+
+
+
+
+       [22:04:33] [DEBUG] Handling 14366 (PlayerStatusMessage)
+kiwi>
+
+
+
+
+
+
+       [22:04:33] [DEBUG] Packet → id=10110, len=190
+kiwi>
+
+
+
+
+
+
+       [22:04:33] [DEBUG] Handling 10110 (AnalyticsEventMessage)
+kiwi>
+
+
+
+
+
+
+       [22:04:33] [DEBUG] Packet → id=10110, len=190
+kiwi>
+
+
+
+
+
+
+       [22:04:33] [DEBUG] Handling 10110 (AnalyticsEventMessage)
+kiwi>
+
+
+
+
+
+
+       [22:04:33] [DEBUG] Packet → id=10110, len=190
+kiwi>
+
+
+
+
+
+
+       [22:04:33] [DEBUG] Handling 10110 (AnalyticsEventMessage)
+kiwi>
+
+
+
+
+
+
+       [22:04:33] [DEBUG] Packet → id=10110, len=190
+kiwi>
+
+
+
+
+
+
+       [22:04:33] [DEBUG] Handling 10110 (AnalyticsEventMessage)
+kiwi>
+
+
+
+
+
+
+       [STATUS-DEBUG] player=42 | raw_status=3
+kiwi>
+
+
+
+
+
+
+       [22:04:38] [DEBUG] Packet → id=10108, len=0
+kiwi>
+
+
+
+
+
+
+       [22:04:38] [DEBUG] Handling 10108 (KeepAliveMessage)
+kiwi>
+
+
+
+
+
+
+       [22:04:38] [DEBUG] Packet → id=10107, len=1
+kiwi>
+
+
+
+
+
+
+       [22:04:38] [DEBUG] Handling 10107 (ClientCapabilities)
+kiwi>
+
+
+
+
+
+
+       [22:04:40] [DEBUG] Packet → id=14350, len=4
+kiwi>
+
+
+
+
+
+
+       [22:04:40] [DEBUG] Handling 14350 (TeamCreateMessage)
+kiwi>
+
+
+
+
+
+
+       [TEAM-2] TeamCreate.decode: mapSlot=2 map_id=2 roomType=1
+[TEAM-2] TeamCreate: player=42 → new room_id=1
+[ROOM] created id=1, roomType=1, map=2
+kiwi>
+
+
+
+
+
+
+       [TEAM-2] TeamCreate: sending TeamMessage to SELF
+kiwi>
+
+
+
+
+
+
+       [22:04:40] [DEBUG] Packet → id=14366, len=1
+kiwi>
+
+
+
+
+
+
+       [22:04:40] [DEBUG] Handling 14366 (PlayerStatusMessage)
+kiwi>
+
+
+
+
+
+
+       [22:04:40] [DEBUG] Packet → id=14361, len=1
+kiwi>
+
+
+
+
+
+
+       [22:04:40] [DEBUG] Handling 14361 (TeamMemberStatusMessage)
+kiwi>
+
+
+
+
+
+
+       [STATUS-DEBUG] player=42 | raw_status=3
+[MEMBER-STATUS] player=42 | client sent (fake)=3 | server real=2
+kiwi>
+
+
+
+
+
+
+       [22:04:41] [DEBUG] Packet → id=14102, len=9
+kiwi>
+
+
+
+
+
+
+       [22:04:41] [DEBUG] Handling 14102 (EndClientTurn)
+kiwi>
+
+
+
+
+
+
+       [22:04:41] [DEBUG] Packet → id=10110, len=41
+kiwi>
+
+
+
+
+
+
+       [22:04:41] [DEBUG] Handling 10110 (AnalyticsEventMessage)
+kiwi>
+
+
+
+
+
+
+       [22:04:41] [DEBUG] Packet → id=14366, len=1
+kiwi>
+
+
+
+
+
+
+       [END-TURN] commandID = -134217728
+[END-TURN] dispatch commandID = -134217728
+[END-TURN] unknown commandID = -134217728
+kiwi>
+
+
+
+
+
+
+       [22:04:41] [DEBUG] Handling 14366 (PlayerStatusMessage)
+kiwi>
+
+
+
+
+
+
+       [22:04:41] [DEBUG] Packet → id=14361, len=1
+kiwi>
+
+
+
+
+
+
+       [22:04:41] [DEBUG] Handling 14361 (TeamMemberStatusMessage)
+kiwi>
+
+
+
+
+
+
+       [STATUS-DEBUG] player=42 | raw_status=-64
+[MEMBER-STATUS] player=42 | client sent (fake)=-64 | server real=2
+kiwi>
+
+
+
+
+
+
+       [22:04:42] [DEBUG] Packet → id=14366, len=1
+kiwi>
+
+
+
+
+
+
+       [22:04:42] [DEBUG] Handling 14366 (PlayerStatusMessage)
+kiwi>
+
+
+
+
+
+
+       [22:04:42] [DEBUG] Packet → id=14361, len=1
+kiwi>
+
+
+
+
+
+
+       [22:04:42] [DEBUG] Handling 14361 (TeamMemberStatusMessage)
+kiwi>
+
+
+
+
+
+
+       [STATUS-DEBUG] player=42 | raw_status=8
+kiwi>
+
+
+
+
+
+
+       [MEMBER-STATUS] player=42 | client sent (fake)=8 | server real=2
+kiwi>
+
+
+
+
+
+
+       [22:04:43] [DEBUG] Packet → id=10108, len=0
+kiwi>
+
+
+
+
+
+
+       [22:04:43] [DEBUG] Handling 10108 (KeepAliveMessage)
+kiwi>
+
+
+
+
+
+
+       [22:04:46] [DEBUG] Packet → id=14109, len=1
+kiwi>
+
+
+
+
+
+
+       [22:04:46] [DEBUG] Handling 14109 (GoHomeFromOfflinePractiseMessage)
+kiwi>
+
+
+
+
+
+
+       [EXIT BATTLE] player 42 is returning from battle
+[EXIT BATTLE] removed from room 1
+kiwi>
+
+
+
+
+
+
+       [22:04:46] [DEBUG] Packet → id=14366, len=1
+kiwi>
+
+
+
+
+
+
+       [22:04:46] [DEBUG] Handling 14366 (PlayerStatusMessage)
+kiwi>
+
+
+
+
+
+
+       [22:04:46] [DEBUG] Packet → id=14361, len=1
+kiwi>
+
+
+
+
+
+
+       [22:04:46] [DEBUG] Handling 14361 (TeamMemberStatusMessage)
+kiwi>
+
+
+
+
+
+
+       [EXIT BATTLE] Sending OwnHomeDataMessage...
+[SHOP] EncodeShopOffers: 30 offers
+[EXIT BATTLE] Done.
+[STATUS-DEBUG] player=42 | raw_status=-64
+[MEMBER-STATUS] player=42 | client sent (fake)=-64 | server real=0
+kiwi>
+
+
+
+
+
+
+       [22:04:47] [DEBUG] Packet → id=14366, len=1
+kiwi>
+
+
+
+
+
+
+       [22:04:47] [DEBUG] Handling 14366 (PlayerStatusMessage)
+kiwi>
+
+
+
+
+
+
+       [STATUS-DEBUG] player=42 | raw_status=3
+kiwi>
+
+
+
+
+
+
+       [22:04:52] [DEBUG] Packet → id=10108, len=0
+kiwi>
+
+
+
+
+
+
+       [22:04:52] [DEBUG] Handling 10108 (KeepAliveMessage)
+kiwi>
+
+
+
+
+
+
+       [22:04:52] [DEBUG] Packet → id=10107, len=1
+kiwi>
+
+
+
+
+
+
+       [22:04:52] [DEBUG] Handling 10107 (ClientCapabilities)
+kiwi>
+
+
+
+
+
+
+       [22:04:57] [DEBUG] Packet → id=10108, len=0
+kiwi>
+
+
+
+
+
+
+       [22:04:57] [DEBUG] Handling 10108 (KeepAliveMessage)
+kiwi>
+
+
+
+
+
+
+       [22:04:57] [DEBUG] Packet → id=10107, len=1
+kiwi>
+
+
+
+
+
+
+       [22:04:57] [DEBUG] Handling 10107 (ClientCapabilities)
+kiwi>
+
+
+
+
+
+
+       [22:04:57] [DEBUG] Packet → id=14102, len=9
+kiwi>
+
+
+
+
+
+
+       [22:04:57] [DEBUG] Handling 14102 (EndClientTurn)
+kiwi>
+
+
+
+
+
+
+       [END-TURN] commandID = -134217728
+[END-TURN] dispatch commandID = -134217728
+[END-TURN] unknown commandID = -134217728
+kiwi>
+
+
+
+
+
+
+       [22:05:02] [DEBUG] Packet → id=10108, len=0
+kiwi>
+
+
+
+
+
+
+       [22:05:02] [DEBUG] Handling 10108 (KeepAliveMessage)
+kiwi>
+
+
+
+
+
+
+       [22:05:02] [DEBUG] Packet → id=10107, len=1
+kiwi>
+
+
+
+
+
+
+       [22:05:02] [DEBUG] Handling 10107 (ClientCapabilities)
+kiwi>
+
+
+
+
+
+
+       [22:05:07] [DEBUG] Packet → id=10108, len=0
+kiwi>
+
+
+
+
+
+
+       [22:05:07] [DEBUG] Handling 10108 (KeepAliveMessage)
+kiwi>
+
+
+
+
+
+
+       [22:05:07] [DEBUG] Packet → id=14102, len=9
+kiwi>
+
+
+
+
+
+
+       [22:05:07] [DEBUG] Handling 14102 (EndClientTurn)
+kiwi>
+
+
+
+
+
+
+       [END-TURN] commandID = -134217728
+[END-TURN] dispatch commandID = -134217728
+[END-TURN] unknown commandID = -134217728
+kiwi>
+
+
+
+
+
+
+       [22:05:07] [DEBUG] Packet → id=10107, len=1
+kiwi>
+
+
+
+
+
+
+       [22:05:07] [DEBUG] Handling 10107 (ClientCapabilities)
+kiwi>
+
+
+
+
+
+
+       [22:05:10] [DEBUG] Packet → id=14366, len=1
+kiwi>
+
+
+
+
+
+
+       [22:05:10] [DEBUG] Handling 14366 (PlayerStatusMessage)
+kiwi>
+
+
+
+
+
+
+       [STATUS-DEBUG] player=42 | raw_status=11
+kiwi>
+
+
+
+
+
+
+       [22:05:11] [DEBUG] Packet → id=14366, len=1
+kiwi>
+
+
+
+
+
+
+       [22:05:11] [DEBUG] Handling 14366 (PlayerStatusMessage)
+kiwi>
+
+
+
+
+
+
+       [STATUS-DEBUG] player=42 | raw_status=3
+kiwi>
+
+
+
+
+
+
+       [22:05:12] [DEBUG] Packet → id=10108, len=0
+kiwi>
+
+
+
+
+
+
+       [22:05:12] [DEBUG] Handling 10108 (KeepAliveMessage)
+kiwi>
+
+
+
+
+
+
+       [22:05:12] [DEBUG] Packet → id=10107, len=1
+kiwi>
+
+
+
+
+
+
+       [22:05:12] [DEBUG] Handling 10107 (ClientCapabilities)
+kiwi>
+
+
+
+
+
+
+       [22:05:17] [DEBUG] Packet → id=14102, len=9
+kiwi>
+
+
+
+
+
+
+       [22:05:17] [DEBUG] Handling 14102 (EndClientTurn)
+kiwi>
+
+
+
+
+
+
+       [END-TURN] commandID = -134217728
+[END-TURN] dispatch commandID = -134217728
+[END-TURN] unknown commandID = -134217728
+kiwi>
+
+
+
+
+
+
+       [22:05:17] [DEBUG] Packet → id=10108, len=0
+kiwi>
+
+
+
+
+
+
+       [22:05:17] [DEBUG] Handling 10108 (KeepAliveMessage)
+kiwi>
+
+
+
+
+
+
+       [22:05:17] [DEBUG] Packet → id=10107, len=1
+kiwi>
+
+
+
+
+
+
+       [22:05:17] [DEBUG] Handling 10107 (ClientCapabilities)
+kiwi>
+
+
+
+
+
+
+       [22:05:18] [DEBUG] Packet → id=14366, len=1
+kiwi>
+
+
+
+
+
+
+       [22:05:18] [DEBUG] Handling 14366 (PlayerStatusMessage)
+kiwi>
+
+
+
+
+
+
+       [STATUS-DEBUG] player=42 | raw_status=11
+kiwi>
+
+
+
+
+
+
+       [22:05:22] [DEBUG] Packet → id=10108, len=0
+kiwi>
+
+
+
+
+
+
+       [22:05:22] [DEBUG] Handling 10108 (KeepAliveMessage)
+kiwi>
+
+
+
+
+
+
+       [22:05:22] [DEBUG] Packet → id=10107, len=1
+kiwi>
+
+
+
+
+
+
+       [22:05:22] [DEBUG] Handling 10107 (ClientCapabilities)
+kiwi>
+
+
+
+
+
+
+       [22:05:25] [DEBUG] Packet → id=14366, len=1
+kiwi>
+
+
+
+
+
+
+       [22:05:25] [DEBUG] Handling 14366 (PlayerStatusMessage)
+kiwi>
+
+
+
+
+
+
+       [STATUS-DEBUG] player=42 | raw_status=3
+kiwi>
+
+
+
+
+
+
+       [22:05:27] [DEBUG] Packet → id=14102, len=9
+kiwi>
+
+
+
+
+
+
+       [22:05:27] [DEBUG] Handling 14102 (EndClientTurn)
+kiwi>
+
+
+
+
+
+
+       [END-TURN] commandID = -134217728
+[END-TURN] dispatch commandID = -134217728
+[END-TURN] unknown commandID = -134217728
+kiwi>
+
+
+
+
+
+
+       [22:05:27] [DEBUG] Packet → id=10108, len=0
+kiwi>
+
+
+
+
+
+
+       [22:05:27] [DEBUG] Handling 10108 (KeepAliveMessage)
+kiwi>
+
+
+
+
+
+
+       [22:05:27] [DEBUG] Packet → id=10107, len=1
+kiwi>
+
+
+
+
+
+
+       [22:05:27] [DEBUG] Handling 10107 (ClientCapabilities)
+kiwi>
+
+
+
+
+
+
+       [22:05:32] [DEBUG] Packet → id=10108, len=0
+kiwi>
+
+
+
+
+
+
+       [22:05:32] [DEBUG] Handling 10108 (KeepAliveMessage)
+kiwi>
+
+
+
+
+
+
+       [22:05:32] [DEBUG] Packet → id=10107, len=1
+kiwi>
+
+
+
+
+
+
+       [22:05:32] [DEBUG] Handling 10107 (ClientCapabilities)
+kiwi>
+
+
+
+
+
+
+       [22:05:37] [DEBUG] Packet → id=14102, len=9
+kiwi>
+
+
+
+
+
+
+       [22:05:37] [DEBUG] Handling 14102 (EndClientTurn)
+kiwi>
+
+
+
+
+
+
+       [END-TURN] commandID = -134217728
+[END-TURN] dispatch commandID = -134217728
+[END-TURN] unknown commandID = -134217728
+kiwi>
+
+
+
+
+
+
+       [22:05:37] [DEBUG] Packet → id=10108, len=0
+kiwi>
+
+
+
+
+
+
+       [22:05:37] [DEBUG] Handling 10108 (KeepAliveMessage)
+kiwi>
+
+
+
+
+
+
+       [22:05:37] [DEBUG] Packet → id=10107, len=2
+kiwi>
+
+
+
+
+
+
+       [22:05:37] [DEBUG] Handling 10107 (ClientCapabilities)
+kiwi>
+
+
+
+
+
+
+       [22:05:42] [DEBUG] Packet → id=10108, len=0
+kiwi>
+
+
+
+
+
+
+       [22:05:42] [DEBUG] Handling 10108 (KeepAliveMessage)
+kiwi>
+
+
+
+
+
+
+       [22:05:42] [DEBUG] Packet → id=10107, len=1
+kiwi>
+
+
+
+
+
+
+       [22:05:42] [DEBUG] Handling 10107 (ClientCapabilities)
+kiwi>
+
+
+
+
+
+
+       [22:05:47] [DEBUG] Packet → id=14102, len=9
+kiwi>
+
+
+
+
+
+
+       [22:05:47] [DEBUG] Handling 14102 (EndClientTurn)
+kiwi>
+
+
+
+
+
+
+       [END-TURN] commandID = -134217728
+[END-TURN] dispatch commandID = -134217728
+[END-TURN] unknown commandID = -134217728
+kiwi>
+
+
+
+
+
+
+       [22:05:47] [DEBUG] Packet → id=14350, len=4
+kiwi>
+
+
+
+
+
+
+       [22:05:47] [DEBUG] Handling 14350 (TeamCreateMessage)
+kiwi>
+
+
+
+
+
+
+       [22:05:47] [DEBUG] Packet → id=10108, len=0
+kiwi>
+
+
+
+
+
+
+       [22:05:47] [DEBUG] Handling 10108 (KeepAliveMessage)
+kiwi>
+
+
+
+
+
+
+       [22:05:47] [DEBUG] Packet → id=14366, len=1
+kiwi>
+
+
+
+
+
+
+       [22:05:47] [DEBUG] Handling 14366 (PlayerStatusMessage)
+kiwi>
+
+
+
+
+
+
+       [22:05:47] [DEBUG] Packet → id=14361, len=1
+kiwi>
+
+
+
+
+
+
+       [22:05:47] [DEBUG] Handling 14361 (TeamMemberStatusMessage)
+kiwi>
+
+
+
+
+
+
+       [22:05:47] [DEBUG] Packet → id=10107, len=1
+kiwi>
+
+
+
+
+
+
+       [22:05:47] [DEBUG] Handling 10107 (ClientCapabilities)
+kiwi>
+
+
+
+
+
+
+       [TEAM-2] TeamCreate.decode: mapSlot=5 map_id=5 roomType=1
+[TEAM-2] TeamCreate: player=42 → new room_id=2
+[ROOM] created id=2, roomType=1, map=5
+[TEAM-2] TeamCreate: sending TeamMessage to SELF
+[STATUS-DEBUG] player=42 | raw_status=3
+[MEMBER-STATUS] player=42 | client sent (fake)=3 | server real=2
+kiwi>
+
+
+
+
+
+
+       [22:05:48] [DEBUG] Packet → id=14366, len=1
+kiwi>
+
+
+
+
+
+
+       [22:05:48] [DEBUG] Handling 14366 (PlayerStatusMessage)
+kiwi>
+
+
+
+
+
+
+       [STATUS-DEBUG] player=42 | raw_status=11
+kiwi>
+
+
+
+
+
+
+       [22:05:48] [DEBUG] Packet → id=14361, len=1
+kiwi>
+
+
+
+
+
+
+       [22:05:48] [DEBUG] Handling 14361 (TeamMemberStatusMessage)
+kiwi>
+
+
+
+
+
+
+       [MEMBER-STATUS] player=42 | client sent (fake)=11 | server real=2
+kiwi>
+
+
+
+
+
+
+       [22:05:52] [DEBUG] Packet → id=10108, len=0
+kiwi>
+
+
+
+
+
+
+       [22:05:52] [DEBUG] Handling 10108 (KeepAliveMessage)
+kiwi>
+
+
+
+
+
+
+       [22:05:52] [DEBUG] Packet → id=10107, len=1
+kiwi>
+
+
+
+
+
+
+       [22:05:52] [DEBUG] Handling 10107 (ClientCapabilities)
+kiwi>
+
+
+
+
+
+
+       [22:05:54] [DEBUG] Packet → id=14363, len=3
+kiwi>
+
+
+
+
+
+
+       [22:05:54] [DEBUG] Handling 14363 (TeamSetLocationMessage)
+kiwi>
+
+
+
+
+
+
+       [SET-LOC] room 2 → map_id=4
+kiwi>
+
+
+
+
+
+
+       [22:05:54] [DEBUG] Packet → id=14366, len=1
+kiwi>
+
+
+
+
+
+
+       [22:05:54] [DEBUG] Handling 14366 (PlayerStatusMessage)
+kiwi>
+
+
+
+
+
+
+       [22:05:54] [DEBUG] Packet → id=14361, len=1
+kiwi>
+
+
+
+
+
+
+       [22:05:54] [DEBUG] Handling 14361 (TeamMemberStatusMessage)
+kiwi>
+
+
+
+
+
+
+       [STATUS-DEBUG] player=42 | raw_status=3
+[MEMBER-STATUS] player=42 | client sent (fake)=3 | server real=2
+kiwi>
+
+
+
+
+
+
+       [22:05:55] [DEBUG] Packet → id=14366, len=1
+kiwi>
+
+
+
+
+
+
+       [22:05:55] [DEBUG] Handling 14366 (PlayerStatusMessage)
+kiwi>
+
+
+
+
+
+
+       [22:05:55] [DEBUG] Packet → id=14361, len=1
+kiwi>
+
+
+
+
+
+
+       [STATUS-DEBUG] player=42 | raw_status=10
+kiwi>
+
+
+
+
+
+
+       [22:05:55] [DEBUG] Handling 14361 (TeamMemberStatusMessage)
+kiwi>
+
+
+
+
+
+
+       [MEMBER-STATUS] player=42 | client sent (fake)=10 | server real=2
+kiwi>
+
+
+
+
+
+
+       [22:05:57] [DEBUG] Packet → id=10108, len=0
+kiwi>
+
+
+
+
+
+
+       [22:05:57] [DEBUG] Handling 10108 (KeepAliveMessage)
+kiwi>
+
+
+
+
+
+
+       [22:05:57] [DEBUG] Packet → id=10107, len=1
+kiwi>
+
+
+
+
+
+
+       [22:05:57] [DEBUG] Handling 10107 (ClientCapabilities)
+kiwi>
+
+
+
+
+
+
+       [22:05:57] [DEBUG] Packet → id=14102, len=9
+kiwi>
+
+
+
+
+
+
+       [22:05:57] [DEBUG] Handling 14102 (EndClientTurn)
+kiwi>
+
+
+
+
+
+
+       [END-TURN] commandID = -134217728
+[END-TURN] dispatch commandID = -134217728
+[END-TURN] unknown commandID = -134217728
+kiwi>
+
+
+
+
+
+
+       [22:06:01] [DEBUG] Packet → id=14102, len=23
+kiwi>
+
+
+
+
+
+
+       [22:06:01] [DEBUG] Handling 14102 (EndClientTurn)
+kiwi>
+
+
+
+
+
+
+       [END-TURN] commandID = 522
+[END-TURN] dispatch commandID = 522
+[END-TURN] unknown commandID = 522
+kiwi>
+
+
+
+
+
+
+       [22:06:02] [DEBUG] Packet → id=14102, len=9
+kiwi>
+
+
+
+
+
+
+       [22:06:02] [DEBUG] Handling 14102 (EndClientTurn)
+kiwi>
+
+
+
+
+
+
+       [22:06:02] [DEBUG] Packet → id=14354, len=4
+kiwi>
+
+
+
+
+
+
+       [22:06:02] [DEBUG] Handling 14354 (TeamChangeBrawlerMessage)
+kiwi>
+
+
+
+
+
+
+       [22:06:02] [DEBUG] Packet → id=14102, len=30
+kiwi>
+
+
+
+
+
+
+       [22:06:02] [DEBUG] Handling 14102 (EndClientTurn)
+kiwi>
+
+
+
+
+
+
+       [END-TURN] commandID = -134217728
+[END-TURN] dispatch commandID = -134217728
+[END-TURN] unknown commandID = -134217728
+[CHANGE-BRAWLER] type=0 value=29 slot=119
+[END-TURN] commandID = 506
+[END-TURN] dispatch commandID = 506
+kiwi>
+
+
+
+
+
+
+       [22:06:02] [DEBUG] Packet → id=14366, len=1
+kiwi>
+
+
+
+
+
+
+       [22:06:02] [DEBUG] Handling 14366 (PlayerStatusMessage)
+kiwi>
+
+
+
+
+
+
+       [22:06:02] [DEBUG] Packet → id=14361, len=1
+kiwi>
+
+
+
+
+
+
+       [22:06:02] [DEBUG] Handling 14361 (TeamMemberStatusMessage)
+kiwi>
+
+
+
+
+
+
+       [22:06:02] [DEBUG] Packet → id=10108, len=0
+kiwi>
+
+
+
+
+
+
+       [22:06:02] [DEBUG] Handling 10108 (KeepAliveMessage)
+kiwi>
+
+
+
+
+
+
+       [22:06:02] [DEBUG] Packet → id=10107, len=1
+kiwi>
+
+
+
+
+
+
+       [22:06:02] [DEBUG] Handling 10107 (ClientCapabilities)
+kiwi>
+
+
+
+
+
+
+       [STATUS-DEBUG] player=42 | raw_status=3
+[MEMBER-STATUS] player=42 | client sent (fake)=3 | server real=2
+kiwi>
+
+
+
+
+
+
+       [22:06:04] [DEBUG] Packet → id=14102, len=9
+kiwi>
+
+
+
+
+
+
+       [22:06:04] [DEBUG] Handling 14102 (EndClientTurn)
+kiwi>
+
+
+
+
+
+
+       [22:06:04] [DEBUG] Packet → id=14354, len=4
+kiwi>
+
+
+
+
+
+
+       [22:06:04] [DEBUG] Handling 14354 (TeamChangeBrawlerMessage)
+kiwi>
+
+
+
+
+
+
+       [END-TURN] commandID = -134217728
+[END-TURN] dispatch commandID = -134217728
+[END-TURN] unknown commandID = -134217728
+[CHANGE-BRAWLER] type=23 value=199 slot=0
+kiwi>
+
+
+
+
+
+
+       [22:06:04] [DEBUG] Packet → id=14102, len=20
+kiwi>
+
+
+
+
+
+
+       [22:06:04] [DEBUG] Handling 14102 (EndClientTurn)
+kiwi>
+
+
+
+
+
+
+       [CHANGE-BRAWLER] Выбран ГАДЖЕТ: 199
+[END-TURN] commandID = 529
+[END-TURN] dispatch commandID = 529
+[END-TURN] unknown commandID = 529
+kiwi>
+
+
+
+
+
+
+       [22:06:07] [DEBUG] Packet → id=10108, len=0
+kiwi>
+
+
+
+
+
+
+       [22:06:07] [DEBUG] Handling 10108 (KeepAliveMessage)
+kiwi>
+
+
+
+
+
+
+       [22:06:07] [DEBUG] Packet → id=10107, len=1
+kiwi>
+
+
+
+
+
+
+       [22:06:07] [DEBUG] Handling 10107 (ClientCapabilities)
+kiwi>
+
+
+
+
+
+
+       [22:06:07] [DEBUG] Packet → id=14102, len=9
+kiwi>
+
+
+
+
+
+
+       [22:06:07] [DEBUG] Handling 14102 (EndClientTurn)
+kiwi>
+
+
+
+
+
+
+       [END-TURN] commandID = -134217728
+[END-TURN] dispatch commandID = -134217728
+[END-TURN] unknown commandID = -134217728
+kiwi>
+
+
+
+
+
+
+       [22:06:12] [DEBUG] Packet → id=10108, len=0
+kiwi>
+
+
+
+
+
+
+       [22:06:12] [DEBUG] Handling 10108 (KeepAliveMessage)
+kiwi>
+
+
+
+
+
+
+       [22:06:12] [DEBUG] Packet → id=10107, len=1
+kiwi>
+
+
+
+
+
+
+       [22:06:12] [DEBUG] Handling 10107 (ClientCapabilities)
+kiwi>
+
+
+
+
+
+
+       [22:06:15] [DEBUG] Packet → id=14102, len=9
+kiwi>
+
+
+
+
+
+
+       [22:06:15] [DEBUG] Handling 14102 (EndClientTurn)
+kiwi>
+
+
+
+
+
+
+       [END-TURN] commandID = -134217728
+[END-TURN] dispatch commandID = -134217728
+[END-TURN] unknown commandID = -134217728
+kiwi>
+
+
+
+
+
+
+       [22:06:15] [DEBUG] Packet → id=10110, len=41
+kiwi>
+
+
+
+
+
+
+       [22:06:15] [DEBUG] Handling 10110 (AnalyticsEventMessage)
+kiwi>
+
+
+
+
+
+
+       [22:06:15] [DEBUG] Packet → id=14366, len=1
+kiwi>
+
+
+
+
+
+
+       [22:06:15] [DEBUG] Handling 14366 (PlayerStatusMessage)
+kiwi>
+
+
+
+
+
+
+       [22:06:15] [DEBUG] Packet → id=14361, len=1
+kiwi>
+
+
+
+
+
+
+       [22:06:15] [DEBUG] Handling 14361 (TeamMemberStatusMessage)
+kiwi>
+
+
+
+
+
+
+       [STATUS-DEBUG] player=42 | raw_status=-64
+[MEMBER-STATUS] player=42 | client sent (fake)=-64 | server real=2
+kiwi>
+
+
+
+
+
+
+       [22:06:16] [DEBUG] Packet → id=14366, len=1
+kiwi>
+
+
+
+
+
+
+       [22:06:16] [DEBUG] Handling 14366 (PlayerStatusMessage)
+kiwi>
+
+
+
+
+
+
+       [22:06:16] [DEBUG] Packet → id=14361, len=1
+kiwi>
+
+
+
+
+
+
+       [STATUS-DEBUG] player=42 | raw_status=8
+kiwi>
+
+
+
+
+
+
+       [22:06:16] [DEBUG] Handling 14361 (TeamMemberStatusMessage)
+kiwi>
+
+
+
+
+
+
+       [MEMBER-STATUS] player=42 | client sent (fake)=8 | server real=2
+kiwi>
+
+
+
+
+
+
+       [22:06:17] [DEBUG] Packet → id=10108, len=0
+kiwi>
+
+
+
+
+
+
+       [22:06:17] [DEBUG] Handling 10108 (KeepAliveMessage)
+kiwi>
+
+
+
+
+
+
+       [22:06:22] [DEBUG] Packet → id=10108, len=0
+kiwi>
+
+
+
+
+
+
+       [22:06:22] [DEBUG] Handling 10108 (KeepAliveMessage)
+kiwi>
+
+
+
+
+
+
+       [22:06:27] [DEBUG] Packet → id=10108, len=0
+kiwi>
+
+
+
+
+
+
+       [22:06:27] [DEBUG] Handling 10108 (KeepAliveMessage)
+kiwi>
+
+
+
+
+
+
+       [22:06:32] [DEBUG] Packet → id=10108, len=0
+kiwi>
+
+
+
+
+
+
+       [22:06:32] [DEBUG] Handling 10108 (KeepAliveMessage)
+kiwi>
+
+
+
+
+
+
+       [22:06:37] [DEBUG] Packet → id=10108, len=0
+kiwi>
+
+
+
+
+
+
+       [22:06:37] [DEBUG] Handling 10108 (KeepAliveMessage)
+kiwi>
+
+
+
+
+
+
+       [22:06:42] [DEBUG] Packet → id=10108, len=0
+kiwi>
+
+
+
+
+
+
+       [22:06:42] [DEBUG] Handling 10108 (KeepAliveMessage)
+kiwi>
+
+
+
+
+
+
+       [22:06:47] [DEBUG] Packet → id=10108, len=0
+kiwi>
+
+
+
+
+
+
+       [22:06:47] [DEBUG] Handling 10108 (KeepAliveMessage)
+kiwi>
+
+
+
+
+
+
+       [22:06:52] [DEBUG] Packet → id=10108, len=0
+kiwi>
+
+
+
+
+
+
+       [22:06:52] [DEBUG] Handling 10108 (KeepAliveMessage)
+kiwi>
+
+
+
+
+
+
+       [22:06:57] [DEBUG] Packet → id=10108, len=0
+kiwi>
+
+
+
+
+
+
+       [22:06:57] [DEBUG] Handling 10108 (KeepAliveMessage)
+kiwi>
+
+
+
+
+
+
+       [22:07:02] [DEBUG] Packet → id=10108, len=0
+kiwi>
+
+
+
+
+
+
+       [22:07:02] [DEBUG] Handling 10108 (KeepAliveMessage)
+kiwi>
+
+
+
+
+
+
+       [22:07:07] [DEBUG] Packet → id=10108, len=0
+kiwi>
+
+
+
+
+
+
+       [22:07:07] [DEBUG] Handling 10108 (KeepAliveMessage)
+kiwi>
+
+
+
+
+
+
+       [22:07:12] [DEBUG] Packet → id=10108, len=0
+kiwi>
+
+
+
+
+
+
+       [22:07:12] [DEBUG] Handling 10108 (KeepAliveMessage)
+kiwi>
+
+
+
+
+
+
+       [22:07:17] [DEBUG] Packet → id=10108, len=0
+kiwi>
+
+
+
+
+
+
+       [22:07:17] [DEBUG] Handling 10108 (KeepAliveMessage)
+kiwi>
+
+
+
+
+
+
+       [22:07:22] [DEBUG] Packet → id=10108, len=0
+kiwi>
+
+
+
+
+
+
+       [22:07:22] [DEBUG] Handling 10108 (KeepAliveMessage)
+kiwi>
+
+
+
+
+
+
+       [22:07:27] [DEBUG] Packet → id=10108, len=0
+kiwi>
+
+
+
+
+
+
+       [22:07:27] [DEBUG] Handling 10108 (KeepAliveMessage)
+kiwi>
+
+
+
+
+
+
+       [22:07:32] [DEBUG] Packet → id=10108, len=0
+kiwi>
+
+
+
+
+
+
+       [22:07:32] [DEBUG] Handling 10108 (KeepAliveMessage)
+kiwi>
+
+
+
+
+
+
+       [22:07:37] [DEBUG] Packet → id=10108, len=0
+kiwi>
+
+
+
+
+
+
+       [22:07:37] [DEBUG] Handling 10108 (KeepAliveMessage)
+kiwi>
+
+
+
+
+
+
+       [22:07:42] [DEBUG] Packet → id=10108, len=0
+kiwi>
+
+
+
+
+
+
+       [22:07:42] [DEBUG] Handling 10108 (KeepAliveMessage)
+kiwi>
+
+
+
+
+
+
+       [22:07:47] [DEBUG] Packet → id=10108, len=0
+kiwi>
+
+
+
+
+
+
+       [22:07:47] [DEBUG] Handling 10108 (KeepAliveMessage)
+kiwi>
+
+
+
+
+
+
+       [22:07:52] [DEBUG] Packet → id=10108, len=0
+kiwi>
+
+
+
+
+
+
+       [22:07:52] [DEBUG] Handling 10108 (KeepAliveMessage)
+kiwi>
+
+
+
+
+
+
+       [22:07:57] [DEBUG] Packet → id=10108, len=0
+kiwi>
+
+
+
+
+
+
+       [22:07:57] [DEBUG] Handling 10108 (KeepAliveMessage)
+kiwi>
+
+
+
+
+
+
+       [22:08:02] [DEBUG] Packet → id=10108, len=0
+kiwi>
+
+
+
+
+
+
+       [22:08:02] [DEBUG] Handling 10108 (KeepAliveMessage)
+kiwi>
+
+
+
+
+
+
+       [22:08:07] [DEBUG] Packet → id=10108, len=0
+kiwi>
+
+
+
+
+
+
+       [22:08:07] [DEBUG] Handling 10108 (KeepAliveMessage)
+kiwi>
+
+
+
+
+
+
+       [22:08:12] [DEBUG] Packet → id=10108, len=0
+kiwi>
+
+
+
+
+
+
+       [22:08:12] [DEBUG] Handling 10108 (KeepAliveMessage)
+kiwi>
+
+
+
+
+
+
+       [22:08:17] [DEBUG] Packet → id=10108, len=0
+kiwi>
+
+
+
+
+
+
+       [22:08:17] [DEBUG] Handling 10108 (KeepAliveMessage)
+kiwi>
+
+
+
+
+
+
+       [22:08:22] [DEBUG] Packet → id=10108, len=0
+kiwi>
+
+
+
+
+
+
+       [22:08:22] [DEBUG] Handling 10108 (KeepAliveMessage)
+kiwi>
+
+
+
+
+
+
+       [22:08:22] [DEBUG] Packet → id=14110, len=79
+kiwi>
+
+
+
+
+
+
+       [22:08:22] [DEBUG] Handling 14110 (AskForBattleEndMessage)
+kiwi>
+
+
+
+
+
+
+       [22:08:25] [DEBUG] Packet → id=10110, len=63
+kiwi>
+
+
+
+
+
+
+       [22:08:25] [DEBUG] Handling 10110 (AnalyticsEventMessage)
+kiwi>
+
+
+
+
+
+
+       [22:08:25] [DEBUG] Packet → id=14366, len=1
+kiwi>
+
+
+
+
+
+
+       [22:08:25] [DEBUG] Handling 14366 (PlayerStatusMessage)
+kiwi>
+
+
+
+
+
+
+       [22:08:25] [DEBUG] Packet → id=14361, len=1
+kiwi>
+
+
+
+
+
+
+       [22:08:25] [DEBUG] Handling 14361 (TeamMemberStatusMessage)
+kiwi>
+
+
+
+
+
+
+       [STATUS-DEBUG] player=42 | raw_status=5
+[MEMBER-STATUS] player=42 | client sent (fake)=5 | server real=2
+kiwi>
+
+
+
+
+
+
+       [22:08:27] [DEBUG] Packet → id=10108, len=0
+kiwi>
+
+
+
+
+
+
+       [22:08:27] [DEBUG] Handling 10108 (KeepAliveMessage)
+kiwi>
+
+
+
+
+
+
+       [22:08:32] [DEBUG] Packet → id=10108, len=0
+kiwi>
+
+
+
+
+
+
+       [22:08:32] [DEBUG] Handling 10108 (KeepAliveMessage)
+kiwi>
+
+
+
+
+
+
+       [22:08:36] [DEBUG] Packet → id=14109, len=1
+kiwi>
+
+
+
+
+
+
+       [22:08:36] [DEBUG] Handling 14109 (GoHomeFromOfflinePractiseMessage)
+kiwi>
+
+
+
+
+
+
+       [EXIT BATTLE] player 42 is returning from battle
+[EXIT BATTLE] removed from room 2
+kiwi>
+
+
+
+
+
+
+       [22:08:36] [DEBUG] Packet → id=14366, len=1
+kiwi>
+
+
+
+
+
+
+       [22:08:36] [DEBUG] Handling 14366 (PlayerStatusMessage)
+kiwi>
+
+
+
+
+
+
+       [22:08:36] [DEBUG] Packet → id=14361, len=1
+kiwi>
+
+
+
+
+
+
+       [22:08:36] [DEBUG] Handling 14361 (TeamMemberStatusMessage)
+kiwi>
+
+
+
+
+
+
+       [EXIT BATTLE] Sending OwnHomeDataMessage...
+[SHOP] EncodeShopOffers: 30 offers
+[EXIT BATTLE] Done.
+[STATUS-DEBUG] player=42 | raw_status=-64
+[MEMBER-STATUS] player=42 | client sent (fake)=-64 | server real=0
+kiwi>
+
+
+
+
+
+
+       [22:08:36] [DEBUG] Packet → id=14366, len=1
+kiwi>
+
+
+
+
+
+
+       [22:08:36] [DEBUG] Handling 14366 (PlayerStatusMessage)
+kiwi>
+
+
+
+
+
+
+       [STATUS-DEBUG] player=42 | raw_status=3
+kiwi>
+
+
+
+
+
+
+       [23:02:54] [DEBUG] New connection: 192.168.0.100:39092
+kiwi>
+
+
+
+
+
+
+       [PLAYER] Players created. Brawlers: 35, Skins: 171, SPG: 125, Pins: 22
+kiwi>
+
+
+
+
+
+
+       [23:02:54] [ OK  ] Client thread started. Total: 2
+kiwi>
+
+
+
+
+
+
+       [23:02:55] [DEBUG] Packet → id=10101, len=252
+kiwi>
+
+
+
+
+
+
+       [23:02:55] [DEBUG] Handling 10101 (LoginMessage)
+kiwi>
+
+
+
+
+
+
+       [LOGIN-DECODE] high_id=0, low_id=1, token='mY8akZSireFLxXfUm4m0sk0cPr0YHRyCB3B2c2WX'
+[LOGIN] Start: low_id=1, token='mY8akZSireFLxXfUm4m0sk0cPr0YHRyCB3B2c2WX'
+kiwi>
+
+
+
+
+
+
+       [23:02:55] [ OK  ] Client registered: low_id=42
+kiwi>
+
+
+
+
+
+
+       [23:02:55] [DEBUG] Packet → id=10099, len=4
+kiwi>
+
+
+
+
+
+
+       [23:02:55] [DEBUG] Handling 10099 (AnalyticsEventMessage)
+kiwi>
+
+
+
+
+
+
+       [23:02:55] [DEBUG] Packet → id=10110, len=81
+kiwi>
+
+
+
+
+
+
+       [23:02:55] [DEBUG] Handling 10110 (AnalyticsEventMessage)
+kiwi>
+
+
+
+
+
+
+       [23:02:55] [DEBUG] Packet → id=10110, len=190
+kiwi>
+
+
+
+
+
+
+       [23:02:55] [DEBUG] Handling 10110 (AnalyticsEventMessage)
+kiwi>
+
+
+
+
+
+
+       [23:02:55] [DEBUG] Packet → id=10110, len=190
+kiwi>
+
+
+
+
+
+
+       [23:02:55] [DEBUG] Handling 10110 (AnalyticsEventMessage)
+kiwi>
+
+
+
+
+
+
+       [LOGIN] After loadAccount: low_id=42, name='fear my bibi'
+[LOGIN] Account exists, logging in...
+[LOGIN] → LoginOkMessage sent
+[LOGIN] → OwnHomeDataMessage sending...
+[SHOP] EncodeShopOffers: 30 offers
+[LOGIN] → OwnHomeDataMessage sent OK
+[LOGIN] → LobbyInfoMessage sent (count=1)
+[LOGIN] → Club messages sent
+[LOGIN] → FriendListMessage sent
+[LOGIN] → roomID reset to 0
+[LOGIN] Done (existing account)
+kiwi>
+
+
+
+
+
+
+       [23:02:55] [DEBUG] Packet → id=10110, len=190
+kiwi>
+
+
+
+
+
+
+       [23:02:55] [DEBUG] Handling 10110 (AnalyticsEventMessage)
+kiwi>
+
+
+
+
+
+
+       [23:02:55] [DEBUG] Packet → id=10110, len=190
+kiwi>
+
+
+
+
+
+
+       [23:02:55] [DEBUG] Handling 10110 (AnalyticsEventMessage)
+kiwi>
+
+
+
+
+
+
+       [23:02:55] [DEBUG] Packet → id=10110, len=190
+kiwi>
+
+
+
+
+
+
+       [23:02:55] [DEBUG] Handling 10110 (AnalyticsEventMessage)
+kiwi>
+
+
+
+
+
+
+       exit[23:02:59] [DEBUG] Packet → id=10108, len=0
+kiwi> exit
+
+
+
+
+
+
+           [23:02:59] [DEBUG] Handling 10108 (KeepAliveMessage)
+kiwi> exit
+
+
+
+
+
+
+           [23:02:59] [DEBUG] Packet → id=10099, len=4
+kiwi> exit
+
+
+
+
+
+
+           [23:02:59] [DEBUG] Handling 10099 (AnalyticsEventMessage)
+kiwi> exit
+
+
+
+
+
+
+           [23:02:59] [DEBUG] Packet → id=10110, len=81
+kiwi> exit
+
+
+
+
+
+
+           [23:02:59] [DEBUG] Handling 10110 (AnalyticsEventMessage)
+kiwi> exit
+
+
+
+
+
+
+           kiwi> exit
+
+Bye!
+[23:02:59] [INFO ] Shutting down...
+[23:02:59] [ OK  ] Server socket closed

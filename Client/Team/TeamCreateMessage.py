@@ -18,10 +18,15 @@ class TeamCreateMessage(BSMessageReader):
         print(f"[TEAM-2] TeamCreate.decode: mapSlot={self.mapSlot} map_id={self.map_id} roomType={self.roomType}")
 
     def process(self):
+        # ── Сохраняем выбор игрока в player (живёт до дисконнекта) ──
+        self.player.event_type = self.roomType
+        self.player.map_id     = self.map_id
+
         self.player.room_id = Helpers.new_room_id()
         print(f"[TEAM-2] TeamCreate: player={self.player.low_id} → new room_id={self.player.room_id}")
 
-        Gameroom.create(self, self.roomType, 14)
+        # ── Используем РЕАЛЬНЫЕ значения от клиента (раньше был хардкод 14) ──
+        Gameroom.create(self, self.roomType, self.map_id)
 
         DataBase.replaceValue(self, 'roomID', self.player.room_id)
         print(f"[TEAM-2] TeamCreate: sending TeamMessage to SELF")

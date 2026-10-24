@@ -2,6 +2,7 @@ from Utils.Reader import BSMessageReader
 from Server.Team.TeamMessage import TeamMessage
 from database.DataBase import DataBase
 from Utils.Helpers import Helpers
+from Utils.Gameroom import Gameroom
 
 
 class TeamSearch(BSMessageReader):
@@ -22,12 +23,15 @@ class TeamSearch(BSMessageReader):
                 break
 
         if target is None:
-            # Нет свободных комнат — создаём свою
+            # Нет свободных комнат — создаём свою с СОХРАНЁННЫМ выбором
+            room_type = getattr(self.player, 'event_type', 1)
+            map_id    = getattr(self.player, 'map_id', 14)
+
             self.player.room_id = Helpers.new_room_id()
-            Gameroom = __import__('Utils.Gameroom', fromlist=['Gameroom']).Gameroom
-            Gameroom.create(self, 1, 14)
+            Gameroom.create(self, room_type, map_id)
             DataBase.replaceValue(self, 'roomID', self.player.room_id)
-            print(f"[ROOM] TeamSearch: no rooms, created new id={self.player.room_id}")
+            print(f"[ROOM] TeamSearch: no rooms, created new id={self.player.room_id} "
+                  f"(roomType={room_type}, map={map_id})")
             TeamMessage(self.client, self.player).send()
             return
 
@@ -36,6 +40,11 @@ class TeamSearch(BSMessageReader):
         target['plrs'].append(new_player)
         self.player.room_id = int(target['roomID'])
         DataBase.replaceValue(self, 'roomID', self.player.room_id)
-        print(f"[ROOM] TeamSearch: player {self.player.low_id} → room {self.player.room_id}")
 
+        # Синхронизируем player с параметрами комнаты (чтобы при re-Play
+        # у игрока сохранялся последний увиденный ивент/карта)
+        self.player.event_type = target['roomType']
+        self.player.map_id     = target['map_id']
+
+        print(f"[ROOM] TeamSearch: player {self.player.low_id} → room {self.player.room_id}")
         TeamMessage(self.client, self.player).send()

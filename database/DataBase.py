@@ -274,20 +274,48 @@ class DataBase:
         self.con = sql.connect("database/Club/chats.db")
         self.cur = self.conn.cursor()
         self.c = self.con.cursor()
-        self.cur.execute(f"CREATE TABLE IF NOT EXISTS clubs (clubID INT, name TEXT, desc TEXT, region TEXT, badgeID INT, type INT, trophiesneeded INT, friendlyfamily INT, trophies INT, members JSON, notif JSON)")
-        self.c.execute(f"CREATE TABLE IF NOT EXISTS chats (clubID INT, Event INT, Tick INT, plrid INT, plrname TEXT, plrrole INT, Msg TEXT)")
-        self.con.commit()
+
+        self.cur.execute("""CREATE TABLE IF NOT EXISTS clubs (
+            clubID INT, name TEXT, desc TEXT, region TEXT, badgeID INT,
+            type INT, trophiesneeded INT, friendlyfamily INT, trophies INT,
+            members JSON, notif JSON
+        )""")
+        self.c.execute("""CREATE TABLE IF NOT EXISTS chats (
+            clubID INT, Event INT, Tick INT, plrid INT,
+            plrname TEXT, plrrole INT, Msg TEXT
+        )""")
         self.conn.commit()
-        data = {"members": {self.player.low_id: self.player.name}}
+        self.con.commit()
+
+        data = {"members": {str(self.player.low_id): self.player.name}}
         notif = {}
-        var = clubid, str(self.clubName), str(self.clubdescription), "RU", self.clubbadgeID, self.clubtype, self.clubtrophiesneeded, self.clubfriendlyfamily, self.player.trophies, json.dumps(data), json.dumps(notif)
-        self.cur.execute(f"INSERT INTO clubs VALUES (?,?,?,?,?,?,?,?,?,?,?)", var)
+
+        self.cur.execute(
+            "INSERT INTO clubs VALUES (?,?,?,?,?,?,?,?,?,?,?)",
+            (
+                clubid,
+                str(self.clubName),
+                str(self.clubdescription),
+                "RU",
+                self.clubbadgeID,
+                self.clubtype,
+                self.clubtrophiesneeded,
+                self.clubfriendlyfamily,
+                self.player.trophies,
+                json.dumps(data),
+                json.dumps(notif),
+            ),
+        )
         self.conn.commit()
 
-        sss = "INSERT INTO chats VALUES (?, ?, ?,?,?,?,?)"
-        var = clubid, 2, 1, self.player.low_id, str(self.player.name), 2, "Привет"
-        self.c.execute(sss, var)
+        self.c.execute(
+            "INSERT INTO chats VALUES (?,?,?,?,?,?,?)",
+            (clubid, 2, 1, self.player.low_id, str(self.player.name), 2, "Привет"),
+        )
         self.con.commit()
+
+        self.conn.close()
+        self.con.close()
 
     def setNotifData(self, text, by):
         self.conn = sql.connect("database/Club/clubs.db")
@@ -308,111 +336,143 @@ class DataBase:
     def CountClub(self):
         self.AllianceCount = 0
         self.club_list = []
-        self.conn = sql.connect("database/Club/clubs.db")
-        self.con = sql.connect("database/Club/chats.db")
-        self.cur = self.conn.cursor()
-        self.c = self.con.cursor()
         try:
-            self.cur.execute(f"SELECT * FROM clubs")
-            fetch = self.cur.fetchall()
-            if len(fetch) > 0:
-                for i in fetch:
-                    self.club_list.append(int(i[0]))
-                    self.AllianceCount += 1
+            self.conn = sql.connect("database/Club/clubs.db")
+            self.cur = self.conn.cursor()
+            self.cur.execute("SELECT clubID FROM clubs")
+            for row in self.cur.fetchall():
+                self.club_list.append(int(row[0]))
+                self.AllianceCount += 1
             self.conn.close()
-            self.con.close()
-        except:
-            pass
+        except Exception as e:
+            print(f"[DB] CountClub error: {e}")
 
     def LeaderClub(self):
         self.AllianceCount = 0
         self.club_list = []
-        self.conn = sql.connect("database/Club/clubs.db")
-        self.con = sql.connect("database/Club/chats.db")
-        self.cur = self.conn.cursor()
-        self.c = self.con.cursor()
         try:
-            self.cur.execute(f"SELECT * FROM clubs ORDER BY trophies DESC LIMIT 200")
-            fetch = self.cur.fetchall()
-            if len(fetch) > 0:
-                for i in fetch:
-                    self.club_list.append(int(i[0]))
-                    self.AllianceCount += 1
+            self.conn = sql.connect("database/Club/clubs.db")
+            self.cur = self.conn.cursor()
+            self.cur.execute("SELECT clubID FROM clubs ORDER BY trophies DESC LIMIT 200")
+            for row in self.cur.fetchall():
+                self.club_list.append(int(row[0]))
+                self.AllianceCount += 1
             self.conn.close()
-            self.con.close()
-        except:
-            pass
+        except Exception as e:
+            print(f"[DB] LeaderClub error: {e}")
 
     def loadClub(self, clubid):
-        self.conn = sql.connect("database/Club/clubs.db")
-        self.con = sql.connect("database/Club/chats.db")
-        self.cur = self.conn.cursor()
-        self.c = self.con.cursor()
+        # ── Дефолты, чтобы encode() никогда не падал ──
+        self.clubName = ""
+        self.clubdescription = ""
+        self.clubregion = "RU"
+        self.clubbadgeID = 0
+        self.clubtype = 1
+        self.clubtrophiesneeded = 0
+        self.clubfriendlyfamily = 0
+        self.clubtrophies = 0
+        self.clubmembercount = 0
+        self.plrids = []
+        self.notifData = {}
 
-        self.cur.execute(f"SELECT * FROM clubs WHERE clubID={clubid}")
-        fetch = self.cur.fetchall()
-        if len(fetch) > 0:
-            for i in fetch:
-                self.clubmembercount = 0
-                self.plrids = []
-                self.clubName = i[1]
-                self.clubdescription = i[2]
-                self.clubregion = i[3]
-                self.clubbadgeID = i[4]
-                self.clubtype = i[5]
-                self.clubtrophiesneeded = i[6]
-                self.clubfriendlyfamily = i[7]
-                try:
-                    self.notifData = json.loads(i[10])
-                except:
-                    self.cur.execute("ALTER TABLE clubs ADD COLUMN notif JSON")
-                    self.conn.commit()
-                self.clubtrophies = 0
-                data = json.loads(i[9])
-                for ID in data["members"]:
-                    if ID != "members":
-                        self.plrids.append(int(ID))
-                        self.clubmembercount += 1
-                        DataBase.GetMemberData(self, int(ID))
-                        self.clubtrophies += self.plrtrophies
-                self.conn.commit()
+        try:
+            self.conn = sql.connect("database/Club/clubs.db")
+            self.cur = self.conn.cursor()
+            self.cur.execute("SELECT * FROM clubs WHERE clubID=?", (clubid,))
+            fetch = self.cur.fetchall()
+
+            if not fetch:
                 self.conn.close()
-                self.con.close()
+                return
+
+            i = fetch[0]
+            self.clubName = i[1] or ""
+            self.clubdescription = i[2] or ""
+            self.clubregion = i[3] or "RU"
+            self.clubbadgeID = i[4] or 0
+            self.clubtype = i[5] or 1
+            self.clubtrophiesneeded = i[6] or 0
+            self.clubfriendlyfamily = i[7] or 0
+
+            try:
+                self.notifData = json.loads(i[10]) if i[10] else {}
+            except Exception:
+                self.notifData = {}
+
+            try:
+                data = json.loads(i[9]) if i[9] else {"members": {}}
+            except Exception:
+                data = {"members": {}}
+
+            for pid_str in data.get("members", {}):
+                try:
+                    self.plrids.append(int(pid_str))
+                    self.clubmembercount += 1
+                except (ValueError, TypeError):
+                    continue
+
+            # Кубки клуба = сумма кубков всех участников
+            total = 0
+            for pid in self.plrids:
+                m = DataBase.loadbyID(self, pid)
+                if m and len(m) > 3:
+                    total += m[3] or 0
+            self.clubtrophies = total
+
+            self.conn.close()
+        except Exception as e:
+            print(f"[DB] loadClub({clubid}) error: {type(e).__name__}: {e}")
 
     def AddMember(self, AllianceID, PlayerID, PlayerName, Action):
-        self.conn = sql.connect("database/Club/clubs.db")
-        self.con = sql.connect("database/Club/chats.db")
-        self.cur = self.conn.cursor()
-        self.chat = self.con.cursor()
-        query = Query()
-        self.cur.execute(f"SELECT * FROM clubs WHERE clubID={AllianceID}")
-        fetch = self.cur.fetchall()
-        if len(fetch) > 0:
-            data = json.loads(fetch[0][9])
+        try:
+            self.conn = sql.connect("database/Club/clubs.db")
+            self.con = sql.connect("database/Club/chats.db")
+            self.cur = self.conn.cursor()
+            self.chat = self.con.cursor()
+
+            self.cur.execute("SELECT * FROM clubs WHERE clubID=?", (AllianceID,))
+            fetch = self.cur.fetchall()
+            if not fetch:
+                self.conn.close()
+                self.con.close()
+                return
+
+            data = json.loads(fetch[0][9]) if fetch[0][9] else {"members": {}}
+            members = data.get("members", {})
+
             if Action == 0:
-                self.chat.execute(f"DELETE FROM chats WHERE clubID={AllianceID}")
-                self.cur.execute(f"DELETE FROM clubs WHERE clubID={AllianceID}")
+                self.chat.execute("DELETE FROM chats WHERE clubID=?", (AllianceID,))
+                self.cur.execute("DELETE FROM clubs WHERE clubID=?", (AllianceID,))
                 self.con.commit()
                 self.conn.commit()
+
             elif Action == 1:
-                data["members"][str(PlayerID)] = PlayerName
-                self.cur.execute(f"UPDATE clubs SET members=? WHERE clubID=?", (json.dumps(data), AllianceID))
-                ol = fetch[0][8]
-                self.cur.execute(f"UPDATE clubs SET trophies={ol + self.player.trophies} WHERE clubID={AllianceID}")
+                members[str(PlayerID)] = PlayerName
+                data["members"] = members
+                self.cur.execute(
+                    "UPDATE clubs SET members=? WHERE clubID=?",
+                    (json.dumps(data), AllianceID),
+                )
                 self.conn.commit()
+
             elif Action == 2:
-                data['members'].pop(str(PlayerID))
-                self.cur.execute(f"UPDATE clubs SET members=? WHERE clubID=?", (json.dumps(data), AllianceID))
-                ol = fetch[0][8]
-                self.cur.execute(f"UPDATE clubs SET trophies={ol - self.player.trophies} WHERE clubID={AllianceID}")
+                members.pop(str(PlayerID), None)
+                data["members"] = members
+                self.cur.execute(
+                    "UPDATE clubs SET members=? WHERE clubID=?",
+                    (json.dumps(data), AllianceID),
+                )
                 self.conn.commit()
-            self.con.close()
+
             self.conn.close()
+            self.con.close()
+        except Exception as e:
+            print(f"[DB] AddMember error: {type(e).__name__}: {e}")
 
     def GetMemberData(self, Low_id):
         try:
             self.players = DataBase.loadbyID(self, Low_id)
-            if self.players[1] == int(Low_id):
+            if self.players and self.players[1] == int(Low_id):
                 self.lowplrid = self.players[1]
                 self.plrrole = self.players[12]
                 self.plrtrophies = self.players[3]
@@ -422,70 +482,70 @@ class DataBase:
                 self.plrexperience = self.players[21]
                 self.plrstatus = self.players[19]
                 self.plrvip = self.players[20]
-        except Exception as e:
+            else:
+                raise ValueError("not found")
+        except Exception:
             self.lowplrid = 1
             self.plrrole = 0
-            self.plrtrophies = 0
-            self.plrname = "Falied to load account!"
-            self.plricon = 5
+            self.plrtrophies = 67
+            self.plrname = "err_accout_not_valid"
+            self.plricon = 24
             self.plrnamecolor = 1
             self.plrexperience = 999
             self.plrvip = 0
             self.plrstatus = 0
 
-    def replaceClubValue(self, target, inf1, inf2, inf3, inf4, inf5):
-        self.conn = sql.connect("database/Club/clubs.db")
-        self.con = sql.connect("database/Club/chats.db")
-        self.cur = self.conn.cursor()
-        self.chat = self.con.cursor()
-        query = Query()
-        self.cur.execute(f"SELECT * FROM clubs WHERE clubID={self.player.club_low_id}")
-        fetch = self.chat.fetchall()
-        if 1 == 1:
-            self.cur.execute(f"UPDATE clubs SET desc='{inf1}' WHERE clubID={self.player.club_low_id}")
-            self.cur.execute(f"UPDATE clubs SET badgeID={inf2} WHERE clubID={self.player.club_low_id}")
-            self.cur.execute(f"UPDATE clubs SET type={inf3} WHERE clubID={self.player.club_low_id}")
-            self.cur.execute(f"UPDATE clubs SET trophiesneeded={inf4} WHERE clubID={self.player.club_low_id}")
-            self.cur.execute(f"UPDATE clubs SET friendlyfamily={inf5} WHERE clubID={self.player.club_low_id}")
+    def replaceClubValue(self, target, desc, badgeID, club_type, trophies_needed, friendly):
+        try:
+            self.conn = sql.connect("database/Club/clubs.db")
+            self.cur = self.conn.cursor()
+            self.cur.execute(
+                "UPDATE clubs SET desc=?, badgeID=?, type=?, trophiesneeded=?, friendlyfamily=? "
+                "WHERE clubID=?",
+                (desc, badgeID, club_type, trophies_needed, friendly, self.player.club_low_id),
+            )
             self.conn.commit()
             self.conn.close()
-            self.con.close()
+        except Exception as e:
+            print(f"[DB] replaceClubValue error: {e}")
 
     def GetmsgCount(self, clubID):
-        clubid = clubID
-        self.conn = sql.connect("database/Club/clubs.db")
-        self.con = sql.connect("database/Club/chats.db")
-        self.cur = self.conn.cursor()
-        self.chat = self.con.cursor()
-        self.chat.execute(f"SELECT * FROM chats WHERE clubID={clubID}")
-        fetch = self.chat.fetchall()
-        if len(fetch) > 0:
-            self.MessageCount = len(fetch)
-        else:
+        try:
+            self.con = sql.connect("database/Club/chats.db")
+            self.chat = self.con.cursor()
+            self.chat.execute("SELECT COUNT(*) FROM chats WHERE clubID=?", (clubID,))
+            self.MessageCount = self.chat.fetchone()[0]
+            if self.MessageCount <= 0:
+                self.MessageCount = 1
+            self.con.close()
+        except Exception as e:
+            print(f"[DB] GetmsgCount error: {e}")
             self.MessageCount = 1
-        self.conn.close()
-        self.con.close()
 
     def Addmsg(self, clubID, event, tick, Low_id, name, role, msg):
-        clubid = self.player.club_low_id
-        self.conn = sql.connect("database/Club/clubs.db")
-        self.con = sql.connect("database/Club/chats.db")
-        self.cur = self.conn.cursor()
-        self.chat = self.con.cursor()
-        self.chat.execute(f"SELECT * FROM chats WHERE clubID={clubID}")
-        fetch = self.chat.fetchall()
-        sss = "INSERT INTO chats VALUES (?, ?, ?,?,?,?,?)"
-        var = clubid, event, len(fetch) + 1, Low_id, name, role, msg
-        self.chat.execute(sss, var)
-        self.con.commit()
-        self.con.close()
-        self.conn.close()
+        try:
+            self.con = sql.connect("database/Club/chats.db")
+            self.chat = self.con.cursor()
+            self.chat.execute("SELECT COUNT(*) FROM chats WHERE clubID=?", (clubID,))
+            next_tick = self.chat.fetchone()[0] + 1
+            self.chat.execute(
+                "INSERT INTO chats VALUES (?,?,?,?,?,?,?)",
+                (clubID, event, next_tick, Low_id, name, role, msg),
+            )
+            self.con.commit()
+            self.con.close()
+        except Exception as e:
+            print(f"[DB] Addmsg error: {e}")
 
     def DeleteAllMsg(self, clubID):
-        self.con = sql.connect("database/Club/chats.db")
-        self.chat = self.con.cursor()
-        self.chat.execute(f"SELECT * FROM chats WHERE clubID={clubID}")
-        fetch = self.chat.fetchall()
-        if len(fetch) >= 50:
-            self.chat.execute(f"DELETE FROM chats WHERE clubID={clubID}")
-            self.con.commit()
+        try:
+            self.con = sql.connect("database/Club/chats.db")
+            self.chat = self.con.cursor()
+            self.chat.execute("SELECT COUNT(*) FROM chats WHERE clubID=?", (clubID,))
+            count = self.chat.fetchone()[0]
+            if count >= 50:
+                self.chat.execute("DELETE FROM chats WHERE clubID=?", (clubID,))
+                self.con.commit()
+            self.con.close()
+        except Exception as e:
+            print(f"[DB] DeleteAllMsg error: {e}")

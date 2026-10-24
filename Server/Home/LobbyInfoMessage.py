@@ -9,5 +9,11 @@ class LobbyInfoMessage(Writer):
         self.count = count
 
     def encode(self):
+        # 1) Количество игроков онлайн
         self.writeVint(self.count)
+
+        # 2) Текст в лобби
         self.writeString(f"Игроков онлайн: {self.count}")
+
+        # 3) EntryCount — пустой массив записей (клиент v26 ждёт)
+        self.writeVint(0)
